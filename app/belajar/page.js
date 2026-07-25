@@ -1,20 +1,31 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // KOMPONEN AJAIB UNTUK MENGHEMAT KUOTA DATA GAMBAR
+import Image from 'next/image';
 
 export default function HalamanBelajar() {
   const [activeMenu, setActiveMenu] = useState("utama");
 
+  useEffect(() => {
+    const loadVoices = () => {
+      window.speechSynthesis.getVoices();
+    };
+    loadVoices();
+    if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+  }, []);
+
   const playAudio = (text) => {
     if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); 
+      
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US'; 
       utterance.rate = 0.8; 
       
       const voices = window.speechSynthesis.getVoices();
-      
       const femaleVoice = voices.find(voice => 
         voice.lang.includes('en') && 
         (voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Victoria') || voice.name.includes('Google US English'))
@@ -517,80 +528,90 @@ export default function HalamanBelajar() {
     </div>
   );
 
-  const StoryGroup = ({ title, data, icon }) => (
-    <div className="mb-8">
-      <div className="flex items-center gap-2 mb-4 px-2">
-        <span className="text-2xl">{icon}</span>
-        <h2 className="text-xl font-black text-amber-600">{title}</h2>
-      </div>
-      <div className="space-y-6">
+  // ==========================================
+  // FITUR BARU: CERITA ANAK SCROLL KE BAWAH (SEMUA ADEGAN DALAM SATU HALAMAN)
+  // ==========================================
+  const StoryGroup = ({ data }) => {
+    return (
+      <div className="flex flex-col gap-10 w-full">
         {data.map((item, idx) => (
-          <div key={idx} className="flex flex-col bg-amber-50 p-6 rounded-[2rem] border-b-[6px] border-amber-200 shadow-sm relative">
-            <div className="absolute top-0 left-6 -translate-y-1/2 bg-amber-200 text-amber-800 font-black px-4 py-1.5 rounded-full text-xs shadow-sm border-2 border-white">
-              Adegan {item.scene}
-            </div>
+          <div key={idx} className="flex flex-col bg-white rounded-[2rem] shadow-sm border-2 border-gray-100 overflow-hidden">
             
-            <div className="flex justify-center mt-4 mb-5 w-full relative h-56">
+            {/* Gambar Edge-to-Edge, Latar Belakang Dihilangkan */}
+            <div className="relative w-full flex justify-center items-center bg-gray-50 pt-4">
+              <div className="absolute top-4 left-4 z-10 bg-amber-500 text-white font-black px-4 py-1.5 rounded-full text-xs shadow-md">
+                Adegan {item.scene} dari {data.length}
+              </div>
+
               {item.image ? (
                 <Image 
                   src={item.image} 
                   alt={`Scene ${item.scene}`} 
-                  width={500} 
-                  height={500} 
-                  className="w-full max-h-56 object-contain rounded-xl drop-shadow-md border-4 border-white mx-auto bg-amber-100" 
+                  width={800} 
+                  height={800} 
+                  className="w-full h-auto max-h-[50vh] object-contain" 
+                  priority={idx === 0} 
                 />
               ) : (
-                <span className="text-[80px] drop-shadow-md">{item.emoji}</span>
+                <span className="text-[150px] drop-shadow-md py-16">{item.emoji}</span>
               )}
             </div>
 
-            <div className="flex flex-col text-center w-full mb-5">
-              <span className="text-[22px] font-black text-gray-900 leading-snug mb-2">{item.en}</span>
-              <span className="text-[15px] font-bold text-gray-600 mb-2">"{item.id}"</span>
-              <span className="text-[13px] font-bold text-orange-500 bg-orange-100 px-3 py-1 rounded-full mx-auto w-fit">
-                Cara baca: {item.read}
-              </span>
-            </div>
-            <button 
-              onClick={() => playAudio(item.en)}
-              className="mx-auto bg-amber-500 hover:bg-amber-600 active:bg-amber-700 active:translate-y-1 w-full py-3 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_0_#B45309] transition-all mb-4"
-            >
-              <span className="text-2xl text-white">🔊</span>
-              <span className="text-white font-black text-lg">Dengarkan Cerita</span>
-            </button>
-            {item.breakdown && (
-              <div className="pt-4 border-t-2 border-dashed border-amber-300">
-                <p className="text-[11px] font-black text-amber-700 mb-2 uppercase tracking-wider text-center">💡 Kosakata Kunci:</p>
-                <div className="grid grid-cols-2 gap-2 mt-2">
-                  {item.breakdown.map((b, i) => (
-                    <div key={i} className="flex flex-col bg-white p-2.5 rounded-xl border border-amber-100 shadow-sm text-center">
-                      <span className="font-black text-amber-600 text-sm mb-0.5">{b.word}</span>
-                      <span className="font-bold text-gray-500 text-xs">{b.meaning}</span>
-                    </div>
-                  ))}
-                </div>
+            {/* Bagian Konten (Teks, Audio, Kosakata) */}
+            <div className="px-6 py-8">
+              <div className="flex flex-col text-center w-full mb-6">
+                <span className="text-[26px] font-black text-gray-900 leading-snug mb-2">{item.en}</span>
+                <span className="text-[16px] font-bold text-gray-600 mb-3">"{item.id}"</span>
+                <span className="text-[14px] font-bold text-orange-500 bg-orange-100 px-4 py-1.5 rounded-full mx-auto w-fit">
+                  Cara baca: {item.read}
+                </span>
               </div>
-            )}
+
+              <button 
+                onClick={() => playAudio(item.en)}
+                className="mx-auto bg-amber-500 hover:bg-amber-600 active:bg-amber-700 active:translate-y-1 w-full py-4 rounded-2xl flex items-center justify-center gap-3 shadow-[0_6px_0_#B45309] transition-all mb-6"
+              >
+                <span className="text-3xl text-white">🔊</span>
+                <span className="text-white font-black text-xl">Dengarkan</span>
+              </button>
+
+              {item.breakdown && (
+                <div className="pt-5 border-t-2 border-dashed border-amber-200">
+                  <p className="text-[13px] font-black text-amber-700 mb-3 uppercase tracking-wider text-center">💡 Kosakata Kunci:</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {item.breakdown.map((b, i) => (
+                      <div key={i} className="flex flex-col bg-amber-50 p-3 rounded-xl border border-amber-100 shadow-sm text-center">
+                        <span className="font-black text-amber-600 text-[16px] mb-1">{b.word}</span>
+                        <span className="font-bold text-gray-500 text-[13px]">{b.meaning}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
           </div>
         ))}
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
-    <div className="relative mx-auto w-full max-w-md h-[100dvh] overflow-hidden font-sans">
+    <div className={`relative mx-auto w-full max-w-md h-[100dvh] overflow-hidden font-sans ${activeMenu.startsWith('story_') ? 'bg-white' : ''}`}>
       
-      {/* --- LAYER LATAR BELAKANG --- */}
-      <div 
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ backgroundImage: "url('/bg-forest.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
-      />
+      {/* --- LAYER LATAR BELAKANG (Disembunyikan pada Halaman Cerita) --- */}
+      {!activeMenu.startsWith("story_") && (
+        <div 
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ backgroundImage: "url('/bg-forest.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+        />
+      )}
 
       {/* --- LAYER KONTEN UTAMA --- */}
-      <div className="relative z-10 h-full w-full overflow-y-auto pb-12">
+      <div className="relative z-10 h-full w-full overflow-y-auto">
         
-        {/* Header Dinamis */}
-        <div className="bg-white p-5 rounded-b-3xl shadow-sm flex items-center gap-4 sticky top-0 z-50">
+        {/* Header Dinamis (Efek bayangan/rounded menyesuaikan halaman cerita) */}
+        <div className={`bg-white p-5 shadow-sm flex items-center gap-4 sticky top-0 z-50 ${activeMenu.startsWith('story_') ? '' : 'rounded-b-3xl'}`}>
           {activeMenu === "utama" ? (
             <Link href="/" className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">
               ⬅️ Kembali
@@ -605,7 +626,8 @@ export default function HalamanBelajar() {
           </h1>
         </div>
 
-        <div className="p-5">
+        {/* --- WADAH KONTEN (Padding dihilangkan pada halaman cerita) --- */}
+        <div className={activeMenu.startsWith("story_") ? "pb-12" : "p-5 pb-12"}>
           
           {/* ========================================================
               TAMPILAN 1: MENU ROOT
@@ -894,18 +916,14 @@ export default function HalamanBelajar() {
           )}
 
           {/* ========================================================
-              TAMPILAN MATERI CERITA ANAK
+              TAMPILAN MATERI CERITA ANAK (VERSI SCROLL)
               ======================================================== */}
           {activeMenu === "story_crow" && (
-            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
-              <StoryGroup title="The Thirsty Crow" icon="🐦" data={storyCrow} />
-            </div>
+            <StoryGroup data={storyCrow} />
           )}
 
           {activeMenu === "story_rabbit" && (
-            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
-              <StoryGroup title="The Rabbit & The Turtle" icon="🐢" data={storyRabbit} />
-            </div>
+            <StoryGroup data={storyRabbit} />
           )}
 
         </div>
