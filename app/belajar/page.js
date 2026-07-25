@@ -11,13 +11,24 @@ export default function HalamanBelajar() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US'; 
       utterance.rate = 0.8; 
+      
+      const voices = window.speechSynthesis.getVoices();
+      
+      const femaleVoice = voices.find(voice => 
+        voice.lang.includes('en') && 
+        (voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Victoria') || voice.name.includes('Google US English'))
+      );
+
+      if (femaleVoice) {
+        utterance.voice = femaleVoice;
+      }
+
       window.speechSynthesis.speak(utterance);
     } else {
       alert("Maaf, browsermu tidak mendukung fitur suara.");
     }
   };
 
-  // Logika Tombol Kembali yang Pintar
   const handleBack = () => {
     if (["alfabet", "angka", "orang", "hewan", "buah", "sayur", "benda", "aktivitas"].includes(activeMenu)) {
       setActiveMenu("kosakata");
@@ -78,6 +89,11 @@ export default function HalamanBelajar() {
     { id: "Orang Tua", en: "Parents", read: "pe-rents", icon: "👨‍👩‍👧‍👦" }, { id: "Kakek", en: "Grandfather", read: "grend-fa-dher", icon: "👴" },
     { id: "Nenek", en: "Grandmother", read: "grend-ma-dher", icon: "👵" }, { id: "Saudara Kandung", en: "Sibling", read: "sib-ling", icon: "🧒👧" },
     { id: "Saudara Laki-laki", en: "Brother", read: "bra-dher", icon: "👦" }, { id: "Saudara Perempuan", en: "Sister", read: "sis-ter", icon: "👧" },
+    { id: "Paman", en: "Uncle", read: "ang-kel", icon: "🧔‍♂️" }, { id: "Bibi", en: "Aunt", read: "ant", icon: "👩‍🦱" },
+    { id: "Anak Laki-laki (Kandung)", en: "Son", read: "san", icon: "👦" }, { id: "Anak Perempuan (Kandung)", en: "Daughter", read: "do-ter", icon: "👧" },
+    { id: "Sepupu", en: "Cousin", read: "ka-zen", icon: "🧒" }, { id: "Keponakan Laki-laki", en: "Nephew", read: "ne-fyu", icon: "👦" },
+    { id: "Keponakan Perempuan", en: "Niece", read: "nis", icon: "👧" }, { id: "Suami", en: "Husband", read: "has-bend", icon: "👨" },
+    { id: "Istri", en: "Wife", read: "waif", icon: "👩" }
   ];
 
   // ==========================================
@@ -185,7 +201,7 @@ export default function HalamanBelajar() {
   ];
 
   // ==========================================
-  // 7. DATA BENDA HAL SEKITAR LENGKAP UTUH + TAMBAHAN
+  // 7. DATA BENDA (HAL DI SEKITAR)
   // ==========================================
   const bendaRumahRuangan = [
     { id: "Rumah", en: "House", read: "haus", icon: "🏠" }, { id: "Kamar Tidur", en: "Bedroom", read: "bed-rum", icon: "🛏️" }, { id: "Kamar Mandi", en: "Bathroom", read: "bath-rum", icon: "🛁" }, 
@@ -224,7 +240,8 @@ export default function HalamanBelajar() {
   const bendaSekolah = [
     { id: "Buku", en: "Book", read: "buk", icon: "📖" }, { id: "Kertas", en: "Paper", read: "pei-per", icon: "📄" }, { id: "Pensil", en: "Pencil", read: "pen-sil", icon: "✏️" }, 
     { id: "Pulpen", en: "Pen", read: "pen", icon: "🖊️" }, { id: "Spidol", en: "Marker", read: "mar-ker", icon: "🖍️" }, { id: "Kapur", en: "Chalk", read: "cok", icon: "🖍️" }, 
-    { id: "Penghapus", en: "Eraser", read: "i-rei-ser", icon: "🧽" }, { id: "Papan Tulis Spidol", en: "Whiteboard", read: "wait-bord", icon: "📝" }, { id: "Papan Tulis Kapur", en: "Blackboard", read: "blek-bord", icon: "🏫" }
+    { id: "Penghapus", en: "Eraser", read: "i-rei-ser", icon: "🧽" }, { id: "Papan Tulis Spidol", en: "Whiteboard", read: "wait-bord", icon: "📝" }, { id: "Papan Tulis Kapur", en: "Blackboard", read: "blek-bord", icon: "🏫" },
+    { id: "Tas Sekolah", en: "School Bag", read: "skul beg", icon: "🎒" }
   ];
   const bendaAlam = [
     { id: "Air", en: "Water", read: "wo-ter", icon: "💧" }, { id: "Api", en: "Fire", read: "fai-yer", icon: "🔥" }, { id: "Pohon", en: "Tree", read: "tri", icon: "🌳" }, 
@@ -232,7 +249,6 @@ export default function HalamanBelajar() {
     { id: "Rumput", en: "Grass", read: "gres", icon: "🌿" }, { id: "Batu", en: "Stone", read: "stoun", icon: "🪨" }, { id: "Kerikil", en: "Pebble", read: "pe-bel", icon: "🪨" }, 
     { id: "Pasir", en: "Sand", read: "send", icon: "🏜️" }, { id: "Jalanan", en: "Street", read: "strit", icon: "🛣️" }, { id: "Kayu", en: "Wood", read: "wud", icon: "🪵" }
   ];
-  // TAMBAHAN: Kuburan, Makam, Hantu
   const bendaPedesaan = [
     { id: "Toko", en: "Shop", read: "sop", icon: "🏪" }, { id: "Warung", en: "Stall", read: "stol", icon: "🛖" }, { id: "Restoran", en: "Restaurant", read: "res-to-ren", icon: "🍽️" }, 
     { id: "Rumah Makan", en: "Eatery", read: "i-te-ri", icon: "🍛" }, { id: "Bola", en: "Ball", read: "bol", icon: "⚽" }, { id: "Rokok", en: "Cigarette", read: "si-ga-ret", icon: "🚬" }, 
@@ -339,50 +355,48 @@ export default function HalamanBelajar() {
   // ==========================================
   // 9. DATA CERITA ANAK (STORYTELLING)
   // ==========================================
-  // UPDATE: Menggunakan Gambar Khusus (image) sesuai request
   const storyCrow = [
     {
-      scene: 1, image: "/Gagak_yang_Haus_1.png", en: "One hot day, a crow is very thirsty.", id: "Suatu hari yang panas, seekor gagak sangat kehausan.", read: "wan hot dei, e krou is ve-ri thers-ti.",
+      scene: 1, image: "/Gagak_yang_Haus/Gagak_yang_Haus_1.png", en: "One hot day, a crow is very thirsty.", id: "Suatu hari yang panas, seekor gagak sangat kehausan.", read: "wan hot dei, e krou is ve-ri thers-ti.",
       breakdown: [{ word: "Crow", meaning: "Gagak" }, { word: "Thirsty", meaning: "Haus" }]
     },
     {
-      scene: 2, image: "/Gagak_yang_Haus_2.png", en: "He sees a pitcher with a little water.", id: "Dia melihat sebuah kendi dengan sedikit air.", read: "hi sis e pi-cer with e li-tel wo-ter.",
+      scene: 2, image: "/Gagak_yang_Haus/Gagak_yang_Haus_2.png", en: "He sees a pitcher with a little water.", id: "Dia melihat sebuah kendi dengan sedikit air.", read: "hi sis e pi-cer with e li-tel wo-ter.",
       breakdown: [{ word: "Sees", meaning: "Melihat" }, { word: "Pitcher", meaning: "Kendi / Teko" }, { word: "Little water", meaning: "Sedikit air" }]
     },
     {
-      scene: 3, image: "/Gagak_yang_Haus_3.png", en: "But, he cannot reach the water.", id: "Tapi, dia tidak bisa menjangkau air itu.", read: "bat, hi ken-not ric dhe wo-ter.",
+      scene: 3, image: "/Gagak_yang_Haus/Gagak_yang_Haus_3.png", en: "But, he cannot reach the water.", id: "Tapi, dia tidak bisa menjangkau air itu.", read: "bat, hi ken-not ric dhe wo-ter.",
       breakdown: [{ word: "Cannot", meaning: "Tidak bisa" }, { word: "Reach", meaning: "Menjangkau" }]
     },
     {
-      scene: 4, image: "/Gagak_yang_Haus_4.png", en: "He drops stones into the pitcher.", id: "Dia menjatuhkan batu-batu ke dalam kendi.", read: "hi drops stouns in-tu dhe pi-cer.",
+      scene: 4, image: "/Gagak_yang_Haus/Gagak_yang_Haus_4.png", en: "He drops stones into the pitcher.", id: "Dia menjatuhkan batu-batu ke dalam kendi.", read: "hi drops stouns in-tu dhe pi-cer.",
       breakdown: [{ word: "Drops", meaning: "Menjatuhkan" }, { word: "Stones", meaning: "Batu-batu" }]
     },
     {
-      scene: 5, image: "/Gagak_yang_Haus_5.png", en: "The water goes up, and the crow drinks.", id: "Air naik, dan gagak itu minum.", read: "dhe wo-ter gous ap, en dhe krou drinks.",
+      scene: 5, image: "/Gagak_yang_Haus/Gagak_yang_Haus_5.png", en: "The water goes up, and the crow drinks.", id: "Air naik, dan gagak itu minum.", read: "dhe wo-ter gous ap, en dhe krou drinks.",
       breakdown: [{ word: "Goes up", meaning: "Naik" }, { word: "Drinks", meaning: "Minum" }]
     }
   ];
 
-  // Kura-kura masih menggunakan Emoji (belum ada gambarnya)
   const storyRabbit = [
     {
-      scene: 1, emoji: "🐇⚡", en: "The rabbit can run very fast.", id: "Kelinci bisa berlari sangat cepat.", read: "dhe re-bit ken ran ve-ri fest.",
+      scene: 1, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_1.png", en: "The rabbit can run very fast.", id: "Kelinci bisa berlari sangat cepat.", read: "dhe re-bit ken ran ve-ri fest.",
       breakdown: [{ word: "Rabbit", meaning: "Kelinci" }, { word: "Fast", meaning: "Cepat" }]
     },
     {
-      scene: 2, emoji: "🐢🐌", en: "The turtle walks very slowly.", id: "Kura-kura berjalan sangat lambat.", read: "dhe ter-tel woks ve-ri slou-li.",
+      scene: 2, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_2.png", en: "The turtle walks very slowly.", id: "Kura-kura berjalan sangat lambat.", read: "dhe ter-tel woks ve-ri slou-li.",
       breakdown: [{ word: "Turtle", meaning: "Kura-kura" }, { word: "Walks", meaning: "Berjalan" }, { word: "Slowly", meaning: "Dengan lambat" }]
     },
     {
-      scene: 3, emoji: "🏁🐇", en: "They race. The rabbit runs far ahead.", id: "Mereka berlomba. Kelinci berlari jauh di depan.", read: "dhei reis. dhe re-bit rans far e-hed.",
+      scene: 3, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_3.png", en: "They race. The rabbit runs far ahead.", id: "Mereka berlomba. Kelinci berlari jauh di depan.", read: "dhei reis. dhe re-bit rans far e-hed.",
       breakdown: [{ word: "Race", meaning: "Berlomba" }, { word: "Far ahead", meaning: "Jauh di depan" }]
     },
     {
-      scene: 4, emoji: "🌳😴", en: "The rabbit sleeps under a tree.", id: "Kelinci tidur di bawah sebuah pohon.", read: "dhe re-bit slips an-der e tri.",
+      scene: 4, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_4.png", en: "The rabbit sleeps under a tree.", id: "Kelinci tidur di bawah sebuah pohon.", read: "dhe re-bit slips an-der e tri.",
       breakdown: [{ word: "Sleeps", meaning: "Tidur" }, { word: "Under", meaning: "Di bawah" }, { word: "Tree", meaning: "Pohon" }]
     },
     {
-      scene: 5, emoji: "🐢🏆", en: "The turtle keeps walking and wins!", id: "Kura-kura terus berjalan dan menang!", read: "dhe ter-tel kips wo-king en wins!",
+      scene: 5, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_5.png", en: "The turtle keeps walking and wins!", id: "Kura-kura terus berjalan dan menang!", read: "dhe ter-tel kips wo-king en wins!",
       breakdown: [{ word: "Keeps walking", meaning: "Terus berjalan" }, { word: "Wins", meaning: "Menang" }]
     }
   ];
@@ -412,7 +426,7 @@ export default function HalamanBelajar() {
           {data.map((item) => (
             <div key={item.en} className={`flex items-center justify-between ${tSplit[1]} p-5 rounded-[1.5rem] border-b-4 ${tSplit[2]}`}>
               <div className="flex flex-col">
-                <span className="text-4xl mb-2 drop-shadow-sm tracking-widest">{item.icon || item.num}</span>
+                <span className="text-4xl mb-2 drop-shadow-sm tracking-widest text-black font-black">{item.icon || item.num}</span>
                 <span className="text-sm font-bold text-gray-500">{item.id}</span>
                 <span className="text-xl font-black text-gray-900 leading-tight">{item.en}</span>
                 <span className="text-xs font-bold text-orange-500 mt-1">Dibaca: "{item.read}"</span>
@@ -502,7 +516,6 @@ export default function HalamanBelajar() {
     </div>
   );
 
-  // UPDATE: StoryGroup sekarang mendukung gambar khusus (image)
   const StoryGroup = ({ title, data, icon }) => (
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-4 px-2">
@@ -516,10 +529,14 @@ export default function HalamanBelajar() {
               Adegan {item.scene}
             </div>
             
-            {/* Visual/Gambar Cerita (Otomatis mendeteksi gambar atau emoji) */}
             <div className="flex justify-center mt-4 mb-5 w-full">
               {item.image ? (
-                <img src={item.image} alt={`Scene ${item.scene}`} className="w-full h-auto rounded-xl drop-shadow-md border-4 border-white" />
+                <img 
+                  src={item.image} 
+                  alt={`Scene ${item.scene}`} 
+                  loading="lazy" 
+                  className="w-full max-h-56 object-contain rounded-xl drop-shadow-md border-4 border-white mx-auto bg-amber-100" 
+                />
               ) : (
                 <span className="text-[80px] drop-shadow-md">{item.emoji}</span>
               )}
@@ -593,19 +610,22 @@ export default function HalamanBelajar() {
               ======================================================== */}
           {activeMenu === "utama" && (
             <div className="flex flex-col gap-5 mt-4">
-              <button onClick={() => setActiveMenu("kosakata")} className="w-full bg-[#3B82F6] active:translate-y-1 text-white py-8 rounded-[2rem] shadow-[0_8px_0_#1D4ED8] transition-all flex flex-col items-center justify-center gap-3">
-                <span className="text-6xl drop-shadow-md">📖</span>
-                <span className="font-black text-3xl tracking-wide">Kosakata</span>
+              <button onClick={() => setActiveMenu("kosakata")} className="w-full bg-[#3B82F6] active:translate-y-1 text-white py-8 rounded-[2rem] shadow-[0_8px_0_#1D4ED8] transition-all flex flex-col items-center justify-center gap-2">
+                <span className="text-6xl drop-shadow-md mb-1">📖</span>
+                <span className="font-black text-3xl tracking-wide leading-none">Kosakata</span>
+                <span className="font-bold text-lg text-blue-200">Vocabulary</span>
               </button>
               
-              <button onClick={() => setActiveMenu("percakapan")} className="w-full bg-[#8B5CF6] active:translate-y-1 text-white py-8 rounded-[2rem] shadow-[0_8px_0_#6D28D9] transition-all flex flex-col items-center justify-center gap-3">
-                <span className="text-6xl drop-shadow-md">💬</span>
-                <span className="font-black text-3xl tracking-wide">Percakapan</span>
+              <button onClick={() => setActiveMenu("percakapan")} className="w-full bg-[#8B5CF6] active:translate-y-1 text-white py-8 rounded-[2rem] shadow-[0_8px_0_#6D28D9] transition-all flex flex-col items-center justify-center gap-2">
+                <span className="text-6xl drop-shadow-md mb-1">💬</span>
+                <span className="font-black text-3xl tracking-wide leading-none">Percakapan</span>
+                <span className="font-bold text-lg text-violet-200">Conversation</span>
               </button>
 
-              <button onClick={() => setActiveMenu("cerita")} className="w-full bg-[#EAB308] active:translate-y-1 text-white py-8 rounded-[2rem] shadow-[0_8px_0_#A16207] transition-all flex flex-col items-center justify-center gap-3">
-                <span className="text-6xl drop-shadow-md">📚</span>
-                <span className="font-black text-3xl tracking-wide">Cerita Anak</span>
+              <button onClick={() => setActiveMenu("cerita")} className="w-full bg-[#EAB308] active:translate-y-1 text-white py-8 rounded-[2rem] shadow-[0_8px_0_#A16207] transition-all flex flex-col items-center justify-center gap-2">
+                <span className="text-6xl drop-shadow-md mb-1">📚</span>
+                <span className="font-black text-3xl tracking-wide leading-none">Cerita Anak</span>
+                <span className="font-bold text-lg text-amber-200">Children's Stories</span>
               </button>
             </div>
           )}
@@ -615,37 +635,68 @@ export default function HalamanBelajar() {
               ======================================================== */}
           {activeMenu === "kosakata" && (
             <div className="flex flex-col gap-4 mt-2">
-              <button onClick={() => setActiveMenu("alfabet")} className="w-full bg-[#3B82F6] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#1D4ED8] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🔤</span>
-                <span className="font-black text-xl">Alfabet</span>
+              <button onClick={() => setActiveMenu("alfabet")} className="w-full bg-[#3B82F6] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#1D4ED8] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🔤</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Alfabet</span>
+                  <span className="text-sm text-blue-200 font-bold mt-1">Alphabet</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("angka")} className="w-full bg-[#A855F7] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#7E22CE] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🔢</span>
-                <span className="font-black text-xl">Angka</span>
+              
+              <button onClick={() => setActiveMenu("angka")} className="w-full bg-[#A855F7] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#7E22CE] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🔢</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Angka</span>
+                  <span className="text-sm text-purple-200 font-bold mt-1">Numbers</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("orang")} className="w-full bg-[#EC4899] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#BE185D] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">👨‍👩‍👧‍👦</span>
-                <span className="font-black text-xl">Orang</span>
+              
+              <button onClick={() => setActiveMenu("orang")} className="w-full bg-[#EC4899] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#BE185D] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">👨‍👩‍👧‍👦</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Orang</span>
+                  <span className="text-sm text-pink-200 font-bold mt-1">People</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("hewan")} className="w-full bg-[#22C55E] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#15803D] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🦁</span>
-                <span className="font-black text-xl">Hewan</span>
+              
+              <button onClick={() => setActiveMenu("hewan")} className="w-full bg-[#22C55E] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#15803D] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🦁</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Hewan</span>
+                  <span className="text-sm text-green-200 font-bold mt-1">Animals</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("buah")} className="w-full bg-[#F43F5E] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#BE123C] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🍎</span>
-                <span className="font-black text-xl">Buah</span>
+              
+              <button onClick={() => setActiveMenu("buah")} className="w-full bg-[#F43F5E] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#BE123C] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🍎</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Buah</span>
+                  <span className="text-sm text-rose-200 font-bold mt-1">Fruits</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("sayur")} className="w-full bg-[#10B981] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#047857] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🥕</span>
-                <span className="font-black text-xl">Sayuran</span>
+              
+              <button onClick={() => setActiveMenu("sayur")} className="w-full bg-[#10B981] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#047857] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🥕</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Sayuran</span>
+                  <span className="text-sm text-emerald-200 font-bold mt-1">Vegetables</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("benda")} className="w-full bg-[#F59E0B] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#B45309] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🏠</span>
-                <span className="font-black text-xl">Di Sekitar</span>
+              
+              <button onClick={() => setActiveMenu("benda")} className="w-full bg-[#F59E0B] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#B45309] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🏠</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Di Sekitar</span>
+                  <span className="text-sm text-amber-200 font-bold mt-1">Around Us</span>
+                </div>
               </button>
-              <button onClick={() => setActiveMenu("aktivitas")} className="w-full bg-[#14B8A6] active:translate-y-1 text-white py-5 rounded-[1.5rem] shadow-[0_6px_0_#0F766E] transition-all flex items-center justify-center gap-4">
-                <span className="text-4xl drop-shadow-md">🏃</span>
-                <span className="font-black text-xl">Aktivitas</span>
+              
+              <button onClick={() => setActiveMenu("aktivitas")} className="w-full bg-[#14B8A6] active:translate-y-1 text-white py-4 rounded-[1.5rem] shadow-[0_6px_0_#0F766E] transition-all flex items-center px-6 gap-5">
+                <span className="text-4xl drop-shadow-md w-12 text-center">🏃</span>
+                <div className="flex flex-col flex-1 text-left">
+                  <span className="font-black text-xl leading-none">Aktivitas</span>
+                  <span className="text-sm text-teal-200 font-bold mt-1">Activities</span>
+                </div>
               </button>
             </div>
           )}
@@ -655,17 +706,22 @@ export default function HalamanBelajar() {
               ======================================================== */}
           {activeMenu === "percakapan" && (
             <div className="flex flex-col gap-4 mt-2">
-              <button onClick={() => setActiveMenu("conv_perkenalan")} className="w-full bg-[#8B5CF6] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#6D28D9] transition-all flex flex-col items-center justify-center gap-2">
-                <span className="text-5xl drop-shadow-md">👋</span>
-                <span className="font-black text-2xl">Cara Berkenalan</span>
+              <button onClick={() => setActiveMenu("conv_perkenalan")} className="w-full bg-[#8B5CF6] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#6D28D9] transition-all flex flex-col items-center justify-center gap-1">
+                <span className="text-5xl drop-shadow-md mb-1">👋</span>
+                <span className="font-black text-2xl leading-none">Cara Berkenalan</span>
+                <span className="text-sm font-bold text-violet-200 mt-1">Introductions</span>
               </button>
-              <button onClick={() => setActiveMenu("conv_kabar")} className="w-full bg-[#6366F1] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#4F46E5] transition-all flex flex-col items-center justify-center gap-2">
-                <span className="text-5xl drop-shadow-md">❓</span>
-                <span className="font-black text-2xl">Menanyakan Kabar</span>
+              
+              <button onClick={() => setActiveMenu("conv_kabar")} className="w-full bg-[#6366F1] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#4F46E5] transition-all flex flex-col items-center justify-center gap-1">
+                <span className="text-5xl drop-shadow-md mb-1">❓</span>
+                <span className="font-black text-2xl leading-none">Menanyakan Kabar</span>
+                <span className="text-sm font-bold text-indigo-200 mt-1">Greetings</span>
               </button>
-              <button onClick={() => setActiveMenu("conv_sehari")} className="w-full bg-[#0EA5E9] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#0369A1] transition-all flex flex-col items-center justify-center gap-2">
-                <span className="text-5xl drop-shadow-md">🗣️</span>
-                <span className="font-black text-2xl">Sehari-Hari</span>
+              
+              <button onClick={() => setActiveMenu("conv_sehari")} className="w-full bg-[#0EA5E9] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#0369A1] transition-all flex flex-col items-center justify-center gap-1">
+                <span className="text-5xl drop-shadow-md mb-1">🗣️</span>
+                <span className="font-black text-2xl leading-none">Sehari-Hari</span>
+                <span className="text-sm font-bold text-sky-200 mt-1">Daily Conversations</span>
               </button>
             </div>
           )}
@@ -677,17 +733,19 @@ export default function HalamanBelajar() {
             <div className="flex flex-col gap-5 mt-2">
               <button onClick={() => setActiveMenu("story_crow")} className="w-full bg-[#F59E0B] active:translate-y-1 text-white py-8 rounded-[1.5rem] shadow-[0_6px_0_#B45309] transition-all flex flex-col items-center justify-center gap-2 border-4 border-amber-300">
                 <span className="text-6xl drop-shadow-md">🐦</span>
-                <span className="font-black text-2xl mt-2 text-center leading-tight">Gagak yang Haus<br/><span className="text-sm text-amber-100 font-bold tracking-wide">The Thirsty Crow</span></span>
+                <span className="font-black text-2xl mt-2 text-center leading-tight">Gagak yang Haus</span>
+                <span className="text-sm text-amber-100 font-bold tracking-wide">The Thirsty Crow</span>
               </button>
               <button onClick={() => setActiveMenu("story_rabbit")} className="w-full bg-[#10B981] active:translate-y-1 text-white py-8 rounded-[1.5rem] shadow-[0_6px_0_#047857] transition-all flex flex-col items-center justify-center gap-2 border-4 border-emerald-300">
                 <span className="text-6xl drop-shadow-md">🐢</span>
-                <span className="font-black text-2xl mt-2 text-center leading-tight">Kelinci & Kura-Kura<br/><span className="text-sm text-emerald-100 font-bold tracking-wide">The Rabbit & The Turtle</span></span>
+                <span className="font-black text-2xl mt-2 text-center leading-tight">Kelinci & Kura-Kura</span>
+                <span className="text-sm text-emerald-100 font-bold tracking-wide">The Rabbit & The Turtle</span>
               </button>
             </div>
           )}
 
           {/* ========================================================
-              TAMPILAN MATERI KOSAKATA (100% LENGKAP)
+              TAMPILAN MATERI KOSAKATA
               ======================================================== */}
           {activeMenu === "alfabet" && (
             <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50 space-y-6">
@@ -791,7 +849,7 @@ export default function HalamanBelajar() {
           )}
 
           {/* ========================================================
-              TAMPILAN MATERI PERCAKAPAN (100% LENGKAP 12 VARIANT)
+              TAMPILAN MATERI PERCAKAPAN
               ======================================================== */}
           {activeMenu === "conv_perkenalan" && (
             <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
