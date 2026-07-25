@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // KOMPONEN AJAIB UNTUK MENGHEMAT KUOTA DATA GAMBAR
 
 export default function HalamanBelajar() {
   const [activeMenu, setActiveMenu] = useState("utama");
@@ -529,12 +530,13 @@ export default function HalamanBelajar() {
               Adegan {item.scene}
             </div>
             
-            <div className="flex justify-center mt-4 mb-5 w-full">
+            <div className="flex justify-center mt-4 mb-5 w-full relative h-56">
               {item.image ? (
-                <img 
+                <Image 
                   src={item.image} 
                   alt={`Scene ${item.scene}`} 
-                  loading="lazy" 
+                  width={500} 
+                  height={500} 
                   className="w-full max-h-56 object-contain rounded-xl drop-shadow-md border-4 border-white mx-auto bg-amber-100" 
                 />
               ) : (
