@@ -46,7 +46,7 @@ export default function HalamanBelajar() {
       setActiveMenu("kosakata");
     } else if (["conv_perkenalan", "conv_kabar", "conv_sehari", "conv_posisi"].includes(activeMenu)) {
       setActiveMenu("percakapan");
-    } else if (["story_crow", "story_rabbit"].includes(activeMenu)) {
+    } else if (["story_crow", "story_rabbit", "story_timun_mas", "story_kancil"].includes(activeMenu)) {
       setActiveMenu("cerita");
     } else if (activeMenu === "angka_contoh") {
       setActiveMenu("angka");
@@ -88,6 +88,8 @@ export default function HalamanBelajar() {
       case "conv_posisi": return "Posisi & Letak";
       case "story_crow": return "Gagak yang Haus";
       case "story_rabbit": return "Kelinci & Kura-kura";
+      case "story_timun_mas": return "Timun Mas";
+      case "story_kancil": return "Kancil & Buaya";
       default: return "Ayo Belajar!";
     }
   };
@@ -701,7 +703,6 @@ export default function HalamanBelajar() {
     { en: "You're welcome.", id: "Sama-sama.", read: "yor wel-kam.", breakdown: [{ word: "You are", meaning: "Kamu" }, { word: "Welcome", meaning: "Terima (Kembali)" }] },
   ];
 
-  // TAMBAHAN: DATA PERCAKAPAN POSISI & LETAK (in, on, at, above, below, under, inside, outside)
   const convPosisi = [
     {
       icon: "📦",
@@ -716,10 +717,10 @@ export default function HalamanBelajar() {
       note: "'on' digunakan untuk sesuatu yang berada di atas dan menempel langsung pada permukaannya."
     },
     {
-      icon: "🚪",
-      en: "I am at the door.", id: "Aku ada di pintu.", read: "ai em et dhe dor.",
-      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Am", meaning: "Ada" }, { word: "At", meaning: "Di" }, { word: "The door", meaning: "Pintu itu" }],
-      note: "'at' digunakan untuk menunjukkan lokasi atau titik yang sangat spesifik (contoh: tepat di pintu)."
+      icon: "🏫",
+      en: "I am at school.", id: "Aku ada di sekolah.", read: "ai em et skul.",
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Am", meaning: "Ada" }, { word: "At", meaning: "Di" }, { word: "School", meaning: "Sekolah" }],
+      note: "'at' digunakan untuk menunjukkan lokasi atau titik yang spesifik (seperti di sekolah, di rumah, di kantor)."
     },
     {
       icon: "🦅",
@@ -758,47 +759,103 @@ export default function HalamanBelajar() {
   // ==========================================
   const storyCrow = [
     {
-      scene: 1, image: "/Gagak_yang_Haus/Gagak_yang_Haus_1.png", en: "One hot day, a crow is very thirsty.", id: "Suatu hari yang panas, seekor gagak sangat kehausan.", read: "wan hot dei, e krou is ve-ri thers-ti.",
+      scene: 1, image: "/Gagak_yang_Haus/Gagak_yang_Haus_1.png", emoji: "🐦", en: "One hot day, a crow is very thirsty.", id: "Suatu hari yang panas, seekor gagak sangat kehausan.", read: "wan hot dei, e krou is ve-ri thers-ti.",
       breakdown: [{ word: "Crow", meaning: "Gagak" }, { word: "Thirsty", meaning: "Haus" }]
     },
     {
-      scene: 2, image: "/Gagak_yang_Haus/Gagak_yang_Haus_2.png", en: "He sees a pitcher with a little water.", id: "Dia melihat sebuah kendi dengan sedikit air.", read: "hi sis e pi-cer with e li-tel wo-ter.",
+      scene: 2, image: "/Gagak_yang_Haus/Gagak_yang_Haus_2.png", emoji: "🏺", en: "He sees a pitcher with a little water.", id: "Dia melihat sebuah kendi dengan sedikit air.", read: "hi sis e pi-cer with e li-tel wo-ter.",
       breakdown: [{ word: "Sees", meaning: "Melihat" }, { word: "Pitcher", meaning: "Kendi / Teko" }, { word: "Little water", meaning: "Sedikit air" }]
     },
     {
-      scene: 3, image: "/Gagak_yang_Haus/Gagak_yang_Haus_3.png", en: "But, he cannot reach the water.", id: "Tapi, dia tidak bisa menjangkau air itu.", read: "bat, hi ken-not ric dhe wo-ter.",
+      scene: 3, image: "/Gagak_yang_Haus/Gagak_yang_Haus_3.png", emoji: "😕", en: "But, he cannot reach the water.", id: "Tapi, dia tidak bisa menjangkau air itu.", read: "bat, hi ken-not ric dhe wo-ter.",
       breakdown: [{ word: "Cannot", meaning: "Tidak bisa" }, { word: "Reach", meaning: "Menjangkau" }]
     },
     {
-      scene: 4, image: "/Gagak_yang_Haus/Gagak_yang_Haus_4.png", en: "He drops stones into the pitcher.", id: "Dia menjatuhkan batu-batu ke dalam kendi.", read: "hi drops stouns in-tu dhe pi-cer.",
+      scene: 4, image: "/Gagak_yang_Haus/Gagak_yang_Haus_4.png", emoji: "🪨", en: "He drops stones into the pitcher.", id: "Dia menjatuhkan batu-batu ke dalam kendi.", read: "hi drops stouns in-tu dhe pi-cer.",
       breakdown: [{ word: "Drops", meaning: "Menjatuhkan" }, { word: "Stones", meaning: "Batu-batu" }]
     },
     {
-      scene: 5, image: "/Gagak_yang_Haus/Gagak_yang_Haus_5.png", en: "The water goes up, and the crow drinks.", id: "Air naik, dan gagak itu minum.", read: "dhe wo-ter gous ap, en dhe krou drinks.",
+      scene: 5, image: "/Gagak_yang_Haus/Gagak_yang_Haus_5.png", emoji: "💧", en: "The water goes up, and the crow drinks.", id: "Air naik, dan gagak itu minum.", read: "dhe wo-ter gous ap, en dhe krou drinks.",
       breakdown: [{ word: "Goes up", meaning: "Naik" }, { word: "Drinks", meaning: "Minum" }]
     }
   ];
 
   const storyRabbit = [
     {
-      scene: 1, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_1.png", en: "The rabbit can run very fast.", id: "Kelinci bisa berlari sangat cepat.", read: "dhe re-bit ken ran ve-ri fest.",
+      scene: 1, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_1.png", emoji: "🐇", en: "The rabbit can run very fast.", id: "Kelinci bisa berlari sangat cepat.", read: "dhe re-bit ken ran ve-ri fest.",
       breakdown: [{ word: "Rabbit", meaning: "Kelinci" }, { word: "Fast", meaning: "Cepat" }]
     },
     {
-      scene: 2, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_2.png", en: "The turtle walks very slowly.", id: "Kura-kura berjalan sangat lambat.", read: "dhe ter-tel woks ve-ri slou-li.",
+      scene: 2, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_2.png", emoji: "🐢", en: "The turtle walks very slowly.", id: "Kura-kura berjalan sangat lambat.", read: "dhe ter-tel woks ve-ri slou-li.",
       breakdown: [{ word: "Turtle", meaning: "Kura-kura" }, { word: "Walks", meaning: "Berjalan" }, { word: "Slowly", meaning: "Dengan lambat" }]
     },
     {
-      scene: 3, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_3.png", en: "They race. The rabbit runs far ahead.", id: "Mereka berlomba. Kelinci berlari jauh di depan.", read: "dhei reis. dhe re-bit rans far e-hed.",
+      scene: 3, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_3.png", emoji: "🏁", en: "They race. The rabbit runs far ahead.", id: "Mereka berlomba. Kelinci berlari jauh di depan.", read: "dhei reis. dhe re-bit rans far e-hed.",
       breakdown: [{ word: "Race", meaning: "Berlomba" }, { word: "Far ahead", meaning: "Jauh di depan" }]
     },
     {
-      scene: 4, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_4.png", en: "The rabbit sleeps under a tree.", id: "Kelinci tidur di bawah sebuah pohon.", read: "dhe re-bit slips an-der e tri.",
+      scene: 4, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_4.png", emoji: "😴", en: "The rabbit sleeps under a tree.", id: "Kelinci tidur di bawah sebuah pohon.", read: "dhe re-bit slips an-der e tri.",
       breakdown: [{ word: "Sleeps", meaning: "Tidur" }, { word: "Under", meaning: "Di bawah" }, { word: "Tree", meaning: "Pohon" }]
     },
     {
-      scene: 5, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_5.png", en: "The turtle keeps walking and wins!", id: "Kura-kura terus berjalan dan menang!", read: "dhe ter-tel kips wo-king en wins!",
+      scene: 5, image: "/Kelinci_dan_Kura_Kura/Kelinci_dan_Kura_Kura_5.png", emoji: "🏆", en: "The turtle keeps walking and wins!", id: "Kura-kura terus berjalan dan menang!", read: "dhe ter-tel kips wo-king en wins!",
       breakdown: [{ word: "Keeps walking", meaning: "Terus berjalan" }, { word: "Wins", meaning: "Menang" }]
+    }
+  ];
+
+  // Cerita Baru 1: Timun Mas
+  const storyTimunMas = [
+    {
+      scene: 1, image: "", emoji: "👹", en: "An old widow gets a magic seed from a scary giant.", id: "Seorang janda tua mendapat biji ajaib dari raksasa menakutkan.", read: "en ould wi-dou gets e me-jik sid from e ske-ri jai-yent.",
+      breakdown: [{ word: "Widow", meaning: "Janda" }, { word: "Magic", meaning: "Ajaib" }, { word: "Seed", meaning: "Biji" }, { word: "Giant", meaning: "Raksasa" }]
+    },
+    {
+      scene: 2, image: "", emoji: "🥒", en: "The seed grows into a big golden cucumber with a baby girl inside.", id: "Biji itu tumbuh menjadi mentimun emas besar berisi bayi perempuan.", read: "dhe sid grous in-tu e big gol-den kyu-kam-ber widh e bei-bi gerl in-said.",
+      breakdown: [{ word: "Grows", meaning: "Tumbuh" }, { word: "Golden", meaning: "Emas" }, { word: "Cucumber", meaning: "Mentimun" }, { word: "Inside", meaning: "Di dalam" }]
+    },
+    {
+      scene: 3, image: "", emoji: "👧", en: "She is named Timun Mas. She grows into a brave and beautiful girl.", id: "Dia diberi nama Timun Mas. Dia tumbuh menjadi gadis yang berani dan cantik.", read: "si is neimd ti-mun mas. si grous in-tu e breiv en byu-ti-ful gerl.",
+      breakdown: [{ word: "Brave", meaning: "Berani" }, { word: "Beautiful", meaning: "Cantik" }, { word: "Girl", meaning: "Anak perempuan" }]
+    },
+    {
+      scene: 4, image: "", emoji: "🏃‍♀️", en: "The giant comes back to eat her! Timun Mas runs away very fast.", id: "Raksasa itu kembali untuk memakannya! Timun Mas berlari sangat cepat.", read: "dhe jai-yent kams bek tu it her! ti-mun mas rans e-wei ve-ri fest.",
+      breakdown: [{ word: "Comes back", meaning: "Kembali" }, { word: "Eat", meaning: "Makan" }, { word: "Fast", meaning: "Cepat" }]
+    },
+    {
+      scene: 5, image: "", emoji: "🌊", en: "She throws magic salt. It becomes a very deep and wide sea!", id: "Dia melempar garam ajaib. Itu menjadi lautan yang sangat dalam dan luas!", read: "si throus me-jik solt. it bi-kams e ve-ri dip en waid si!",
+      breakdown: [{ word: "Throws", meaning: "Melempar" }, { word: "Salt", meaning: "Garam" }, { word: "Deep", meaning: "Dalam" }, { word: "Sea", meaning: "Laut/Lautan" }]
+    },
+    {
+      scene: 6, image: "", emoji: "🌋", en: "Finally, she throws magic mud. The giant sinks and Timun Mas is safe!", id: "Akhirnya, dia melempar lumpur ajaib. Raksasa itu tenggelam dan Timun Mas selamat!", read: "fai-ne-li, si throus me-jik mad. dhe jai-yent sinks en ti-mun mas is seif!",
+      breakdown: [{ word: "Mud", meaning: "Lumpur" }, { word: "Sinks", meaning: "Tenggelam" }, { word: "Safe", meaning: "Aman/Selamat" }]
+    }
+  ];
+
+  // Cerita Baru 2: Kancil & Buaya
+  const storyKancil = [
+    {
+      scene: 1, image: "", emoji: "🦌", en: "A smart mouse deer is walking in the forest. He is very hungry.", id: "Seekor kancil yang pintar sedang berjalan di hutan. Dia sangat lapar.", read: "e smart maus dir is wo-king in dhe fo-rest. hi is ve-ri hang-gri.",
+      breakdown: [{ word: "Smart", meaning: "Pintar" }, { word: "Mouse deer", meaning: "Kancil" }, { word: "Forest", meaning: "Hutan" }, { word: "Hungry", meaning: "Lapar" }]
+    },
+    {
+      scene: 2, image: "", emoji: "🍎", en: "He sees yummy red apples across a big and dangerous river.", id: "Dia melihat apel merah yang lezat di seberang sungai yang besar dan berbahaya.", read: "hi sis ya-mi red e-pels e-kros e big en dein-je-res ri-ver.",
+      breakdown: [{ word: "Sees", meaning: "Melihat" }, { word: "Yummy", meaning: "Lezat" }, { word: "Across", meaning: "Di seberang" }, { word: "Dangerous", meaning: "Berbahaya" }]
+    },
+    {
+      scene: 3, image: "", emoji: "🐊", en: "But the river is full of big, green, and hungry crocodiles!", id: "Tapi sungai itu penuh dengan buaya yang besar, hijau, dan lapar!", read: "bat dhe ri-ver is ful of big, grin, en hang-gri kro-ko-dails!",
+      breakdown: [{ word: "Full of", meaning: "Penuh dengan" }, { word: "Green", meaning: "Hijau" }, { word: "Crocodiles", meaning: "Buaya-buaya" }]
+    },
+    {
+      scene: 4, image: "", emoji: "💡", en: "The mouse deer has a bright idea. He calls the crocodiles to line up.", id: "Kancil punya ide cemerlang. Dia memanggil buaya-buaya untuk berbaris.", read: "dhe maus dir hes e brait ai-di-ya. hi kols dhe kro-ko-dails tu lain ap.",
+      breakdown: [{ word: "Bright idea", meaning: "Ide cemerlang" }, { word: "Calls", meaning: "Memanggil" }, { word: "Line up", meaning: "Berbaris" }]
+    },
+    {
+      scene: 5, image: "", emoji: "🌉", en: "The king wants to count you! he says. The crocodiles make a long bridge.", id: "Raja ingin menghitung kalian! katanya. Buaya-buaya membuat jembatan yang panjang.", read: "dhe king wonts tu kaunt yu! hi seis. dhe kro-ko-dails meik e long brij.",
+      breakdown: [{ word: "King", meaning: "Raja" }, { word: "Count", meaning: "Menghitung" }, { word: "Long", meaning: "Panjang" }, { word: "Bridge", meaning: "Jembatan" }]
+    },
+    {
+      scene: 6, image: "", emoji: "😆", en: "He jumps on their heads and crosses safely. Now he can eat the apples!", id: "Dia melompat di atas kepala mereka dan menyeberang dengan aman. Sekarang dia bisa makan apel!", read: "hi jamps on dheir heds en kro-ses seif-li. nau hi ken it dhe e-pels!",
+      breakdown: [{ word: "Jumps", meaning: "Melompat" }, { word: "Heads", meaning: "Kepala-kepala" }, { word: "Safely", meaning: "Dengan aman" }]
     }
   ];
 
@@ -1191,6 +1248,18 @@ export default function HalamanBelajar() {
                 <span className="font-black text-2xl mt-2 text-center leading-tight">Kelinci & Kura-Kura</span>
                 <span className="text-sm text-emerald-100 font-bold tracking-wide">The Rabbit & The Turtle</span>
               </button>
+              
+              {/* DIPERBARUI: Tombol untuk cerita baru */}
+              <button onClick={() => setActiveMenu("story_timun_mas")} className="w-full bg-[#EC4899] active:translate-y-1 text-white py-8 rounded-[1.5rem] shadow-[0_6px_0_#BE185D] transition-all flex flex-col items-center justify-center gap-2 border-4 border-pink-300">
+                <span className="text-6xl drop-shadow-md">👹</span>
+                <span className="font-black text-2xl mt-2 text-center leading-tight">Timun Mas & Raksasa</span>
+                <span className="text-sm text-pink-100 font-bold tracking-wide">The Golden Cucumber</span>
+              </button>
+              <button onClick={() => setActiveMenu("story_kancil")} className="w-full bg-[#0EA5E9] active:translate-y-1 text-white py-8 rounded-[1.5rem] shadow-[0_6px_0_#0369A1] transition-all flex flex-col items-center justify-center gap-2 border-4 border-sky-300">
+                <span className="text-6xl drop-shadow-md">🦌</span>
+                <span className="font-black text-2xl mt-2 text-center leading-tight">Kancil & Buaya</span>
+                <span className="text-sm text-sky-100 font-bold tracking-wide">The Smart Mouse Deer</span>
+              </button>
             </div>
           )}
 
@@ -1388,6 +1457,15 @@ export default function HalamanBelajar() {
 
           {activeMenu === "story_rabbit" && (
             <StoryGroup data={storyRabbit} />
+          )}
+
+          {/* DIPERBARUI: TAMPILAN UNTUK 2 CERITA BARU */}
+          {activeMenu === "story_timun_mas" && (
+            <StoryGroup data={storyTimunMas} />
+          )}
+
+          {activeMenu === "story_kancil" && (
+            <StoryGroup data={storyKancil} />
           )}
 
         </div>
