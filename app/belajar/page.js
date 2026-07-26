@@ -44,7 +44,7 @@ export default function HalamanBelajar() {
   const handleBack = () => {
     if (["alfabet", "angka", "orang", "hewan", "buah", "sayur", "benda", "aktivitas"].includes(activeMenu)) {
       setActiveMenu("kosakata");
-    } else if (["conv_perkenalan", "conv_kabar", "conv_sehari"].includes(activeMenu)) {
+    } else if (["conv_perkenalan", "conv_kabar", "conv_sehari", "conv_posisi"].includes(activeMenu)) {
       setActiveMenu("percakapan");
     } else if (["story_crow", "story_rabbit"].includes(activeMenu)) {
       setActiveMenu("cerita");
@@ -85,6 +85,7 @@ export default function HalamanBelajar() {
       case "conv_perkenalan": return "Cara Berkenalan";
       case "conv_kabar": return "Tanya Kabar";
       case "conv_sehari": return "Sehari-Hari";
+      case "conv_posisi": return "Posisi & Letak";
       case "story_crow": return "Gagak yang Haus";
       case "story_rabbit": return "Kelinci & Kura-kura";
       default: return "Ayo Belajar!";
@@ -460,7 +461,6 @@ export default function HalamanBelajar() {
     { id: "Menggendong", en: "Carry", read: "ke-ri", icon: "🎒", v1: "Carry", v2: "Carried", v3: "Carried" }
   ];
 
-  // TAMBAHAN: Contoh Penggunaan V1, V2, V3
   const aktivitasContoh = [
     {
       icon: "🎨",
@@ -699,6 +699,58 @@ export default function HalamanBelajar() {
     { en: "I am sorry.", id: "Saya minta maaf.", read: "ai em so-ri.", breakdown: [{ word: "I am", meaning: "Saya" }, { word: "Sorry", meaning: "Maaf" }] },
     { en: "Excuse me.", id: "Permisi.", read: "eks-kyus mi.", breakdown: [{ word: "Excuse", meaning: "Permisi / Maafkan" }, { word: "Me", meaning: "Saya" }] },
     { en: "You're welcome.", id: "Sama-sama.", read: "yor wel-kam.", breakdown: [{ word: "You are", meaning: "Kamu" }, { word: "Welcome", meaning: "Terima (Kembali)" }] },
+  ];
+
+  // TAMBAHAN: DATA PERCAKAPAN POSISI & LETAK (in, on, at, above, below, under, inside, outside)
+  const convPosisi = [
+    {
+      icon: "📦",
+      en: "The ball is in the box.", id: "Bola itu ada di dalam kotak.", read: "dhe bol is in dhe boks.",
+      breakdown: [{ word: "The ball", meaning: "Bola itu" }, { word: "Is", meaning: "Ada" }, { word: "In", meaning: "Di dalam" }, { word: "The box", meaning: "Kotak itu" }],
+      note: "'in' digunakan untuk posisi yang berada di dalam suatu ruang atau wadah."
+    },
+    {
+      icon: "📕",
+      en: "The book is on the table.", id: "Buku itu ada di atas meja.", read: "dhe buk is on dhe tei-bel.",
+      breakdown: [{ word: "The book", meaning: "Buku itu" }, { word: "Is", meaning: "Ada" }, { word: "On", meaning: "Di atas" }, { word: "The table", meaning: "Meja itu" }],
+      note: "'on' digunakan untuk sesuatu yang berada di atas dan menempel langsung pada permukaannya."
+    },
+    {
+      icon: "🚪",
+      en: "I am at the door.", id: "Aku ada di pintu.", read: "ai em et dhe dor.",
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Am", meaning: "Ada" }, { word: "At", meaning: "Di" }, { word: "The door", meaning: "Pintu itu" }],
+      note: "'at' digunakan untuk menunjukkan lokasi atau titik yang sangat spesifik (contoh: tepat di pintu)."
+    },
+    {
+      icon: "🦅",
+      en: "The bird flies above the tree.", id: "Burung itu terbang di atas pohon.", read: "dhe berd flais e-bav dhe tri.",
+      breakdown: [{ word: "The bird", meaning: "Burung itu" }, { word: "Flies", meaning: "Terbang" }, { word: "Above", meaning: "Di atas" }, { word: "The tree", meaning: "Pohon itu" }],
+      note: "'above' juga berarti di atas, tapi posisinya lebih tinggi dan TIDAK menempel (melayang atau menggantung)."
+    },
+    {
+      icon: "🐈",
+      en: "The cat sleeps under the chair.", id: "Kucing itu tidur di bawah kursi.", read: "dhe ket slips an-der dhe cer.",
+      breakdown: [{ word: "The cat", meaning: "Kucing itu" }, { word: "Sleeps", meaning: "Tidur" }, { word: "Under", meaning: "Di bawah" }, { word: "The chair", meaning: "Kursi itu" }],
+      note: "'under' berarti tepat di bawah suatu benda dan biasanya tertutupi oleh benda tersebut."
+    },
+    {
+      icon: "🖼️",
+      en: "The picture is below the clock.", id: "Gambar itu ada di bawah jam.", read: "dhe pik-cer is bi-lou dhe klok.",
+      breakdown: [{ word: "The picture", meaning: "Gambar itu" }, { word: "Is", meaning: "Ada" }, { word: "Below", meaning: "Di bawah" }, { word: "The clock", meaning: "Jam itu" }],
+      note: "'below' berarti posisinya lebih rendah dari benda lain, tapi tidak selalu tepat tertutupi di bawahnya."
+    },
+    {
+      icon: "🏠",
+      en: "The dog is inside the house.", id: "Anjing itu ada di dalam rumah.", read: "dhe dog is in-said dhe haus.",
+      breakdown: [{ word: "The dog", meaning: "Anjing itu" }, { word: "Is", meaning: "Ada" }, { word: "Inside", meaning: "Di bagian dalam" }, { word: "The house", meaning: "Rumah itu" }],
+      note: "'inside' hampir sama dengan 'in', tapi lebih menekankan bahwa benda itu benar-benar berada di bagian dalam ruangan."
+    },
+    {
+      icon: "🪁",
+      en: "We play outside.", id: "Kami bermain di luar.", read: "wi plei aut-said.",
+      breakdown: [{ word: "We", meaning: "Kami" }, { word: "Play", meaning: "Bermain" }, { word: "Outside", meaning: "Di luar" }],
+      note: "'outside' berarti berada di area luar suatu ruangan, wadah, atau bangunan."
+    }
   ];
 
   // ==========================================
@@ -1115,6 +1167,12 @@ export default function HalamanBelajar() {
                 <span className="font-black text-2xl leading-none">Sehari-Hari</span>
                 <span className="text-sm font-bold text-sky-200 mt-1">Daily Conversations</span>
               </button>
+
+              <button onClick={() => setActiveMenu("conv_posisi")} className="w-full bg-[#10B981] active:translate-y-1 text-white py-6 rounded-[1.5rem] shadow-[0_6px_0_#047857] transition-all flex flex-col items-center justify-center gap-1">
+                <span className="text-5xl drop-shadow-md mb-1">📍</span>
+                <span className="font-black text-2xl leading-none">Posisi & Letak</span>
+                <span className="text-sm font-bold text-emerald-200 mt-1">Positions</span>
+              </button>
             </div>
           )}
 
@@ -1312,6 +1370,12 @@ export default function HalamanBelajar() {
               <ConversationGroup title="Cuaca & Alam" icon="🌤️" data={convWeather} />
               <div className="border-t-2 border-dashed border-gray-200 my-6"></div>
               <ConversationGroup title="Sopan Santun" icon="🙏" data={convPolite} />
+            </div>
+          )}
+
+          {activeMenu === "conv_posisi" && (
+            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50 overflow-y-auto">
+              <ConversationGroup title="Belajar Posisi (Letak)" icon="📍" data={convPosisi} />
             </div>
           )}
 
