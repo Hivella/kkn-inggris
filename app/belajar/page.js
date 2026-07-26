@@ -48,6 +48,14 @@ export default function HalamanBelajar() {
       setActiveMenu("percakapan");
     } else if (["story_crow", "story_rabbit"].includes(activeMenu)) {
       setActiveMenu("cerita");
+    } else if (activeMenu === "angka_contoh") {
+      setActiveMenu("angka");
+    } else if (activeMenu === "orang_contoh") {
+      setActiveMenu("orang");
+    } else if (activeMenu === "hewan_contoh") {
+      setActiveMenu("hewan");
+    } else if (activeMenu === "buah_contoh") {
+      setActiveMenu("buah");
     } else if (activeMenu === "kosakata" || activeMenu === "percakapan" || activeMenu === "cerita") {
       setActiveMenu("utama");
     }
@@ -61,9 +69,13 @@ export default function HalamanBelajar() {
       case "cerita": return "Cerita Anak";
       case "alfabet": return "Belajar Alfabet";
       case "orang": return "Nama Orang";
+      case "orang_contoh": return "Contoh Penggunaan";
       case "hewan": return "Nama Hewan";
+      case "hewan_contoh": return "Contoh Penggunaan";
       case "angka": return "Belajar Angka";
+      case "angka_contoh": return "Contoh Penggunaan";
       case "buah": return "Nama Buah";
+      case "buah_contoh": return "Contoh Penggunaan";
       case "sayur": return "Nama Sayuran";
       case "benda": return "Hal di Sekitar";
       case "aktivitas": return "Aktivitas Harian";
@@ -95,17 +107,97 @@ export default function HalamanBelajar() {
     { id: "Wanita (Satu)", en: "Woman", read: "wu-men", icon: "👩" }, { id: "Wanita (Lebih dari 1)", en: "Women", read: "wi-min", icon: "👩👩👩" },
     { id: "Anak Laki-laki (Satu)", en: "Boy", read: "boi", icon: "👦" }, { id: "Anak Laki-laki (Banyak)", en: "Boys", read: "bois", icon: "👦👦" },
     { id: "Anak Perempuan (Satu)", en: "Girl", read: "gerl", icon: "👧" }, { id: "Anak Perempuan (Banyak)", en: "Girls", read: "gerls", icon: "👧👧👧" },
+    { id: "Teman (Satu)", en: "Friend", read: "frend", icon: "🧒" }, { id: "Teman (Banyak)", en: "Friends", read: "frends", icon: "🧒🧒" }
   ];
   const orangKeluarga = [
     { id: "Ibu (Mom)", en: "Mother", read: "ma-dher", icon: "👩" }, { id: "Ayah (Dad)", en: "Father", read: "fa-dher", icon: "👨" },
     { id: "Orang Tua", en: "Parents", read: "pe-rents", icon: "👨‍👩‍👧‍👦" }, { id: "Kakek", en: "Grandfather", read: "grend-fa-dher", icon: "👴" },
-    { id: "Nenek", en: "Grandmother", read: "grend-ma-dher", icon: "👵" }, { id: "Saudara Kandung", en: "Sibling", read: "sib-ling", icon: "🧒👧" },
+    { id: "Nenek", en: "Grandmother", read: "grend-ma-dher", icon: "👵" }, 
+    { id: "Saudara Kandung (Satu)", en: "Sibling", read: "sib-ling", icon: "🧒/👧" }, 
+    { id: "Saudara Kandung (Banyak)", en: "Siblings", read: "sib-lings", icon: "🧒👧" },
     { id: "Saudara Laki-laki", en: "Brother", read: "bra-dher", icon: "👦" }, { id: "Saudara Perempuan", en: "Sister", read: "sis-ter", icon: "👧" },
+    { id: "Kakak Laki-laki", en: "Older brother", read: "oul-der bra-dher", icon: "👦" }, { id: "Kakak Perempuan", en: "Older sister", read: "oul-der sis-ter", icon: "👧" },
+    { id: "Adik Laki-laki", en: "Younger brother", read: "yang-ger bra-dher", icon: "👶" }, { id: "Adik Perempuan", en: "Younger sister", read: "yang-ger sis-ter", icon: "👶👧" },
     { id: "Paman", en: "Uncle", read: "ang-kel", icon: "🧔‍♂️" }, { id: "Bibi", en: "Aunt", read: "ant", icon: "👩‍🦱" },
     { id: "Anak Laki-laki (Kandung)", en: "Son", read: "san", icon: "👦" }, { id: "Anak Perempuan (Kandung)", en: "Daughter", read: "do-ter", icon: "👧" },
     { id: "Sepupu", en: "Cousin", read: "ka-zen", icon: "🧒" }, { id: "Keponakan Laki-laki", en: "Nephew", read: "ne-fyu", icon: "👦" },
     { id: "Keponakan Perempuan", en: "Niece", read: "nis", icon: "👧" }, { id: "Suami", en: "Husband", read: "has-bend", icon: "👨" },
     { id: "Istri", en: "Wife", read: "waif", icon: "👩" }
+  ];
+  const orangContoh = [
+    { 
+      icon: "👨",
+      en: "I am a man.", id: "Aku adalah seorang pria.", read: "ai em a men.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Am", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Man", meaning: "Pria" }],
+      note: "'am' berarti adalah, hanya digunakan untuk 'I' (Aku). 'a' berarti sebuah atau seorang."
+    },
+    { 
+      icon: "👨",
+      en: "My father is a man.", id: "Ayahku adalah seorang pria.", read: "mai fa-dher is a men.", 
+      breakdown: [{ word: "My", meaning: "Milikku" }, { word: "Father", meaning: "Ayah" }, { word: "Is", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Man", meaning: "Pria" }]
+    },
+    { 
+      icon: "👨🌳",
+      en: "I see 1 man under a tree.", id: "Aku melihat 1 pria di bawah pohon.", read: "ai si wan men an-der a tri.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "See", meaning: "Melihat" }, { word: "1 (One)", meaning: "Satu" }, { word: "Man", meaning: "Pria" }, { word: "Under", meaning: "Di bawah" }, { word: "A tree", meaning: "Sebuah pohon" }]
+    },
+    { 
+      icon: "👨👨👨",
+      en: "I see 3 men sitting.", id: "Aku melihat 3 pria duduk.", read: "ai si thri men si-ting.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "See", meaning: "Melihat" }, { word: "3 (Three)", meaning: "Tiga" }, { word: "Men", meaning: "Pria (Lebih dari 1)" }, { word: "Sitting", meaning: "Duduk" }]
+    },
+    { 
+      icon: "👩",
+      en: "My mother is a woman.", id: "Ibuku adalah seorang wanita.", read: "mai ma-dher is a wu-men.", 
+      breakdown: [{ word: "My", meaning: "Milikku" }, { word: "Mother", meaning: "Ibu" }, { word: "Is", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Woman", meaning: "Wanita" }]
+    },
+    { 
+      icon: "👩👩🏃‍♀️",
+      en: "2 women running.", id: "2 wanita berlari.", read: "tu wi-min ra-ning.", 
+      breakdown: [{ word: "2 (Two)", meaning: "Dua" }, { word: "Women", meaning: "Wanita (Lebih dari 1)" }, { word: "Running", meaning: "Berlari" }]
+    },
+    { 
+      icon: "👦",
+      en: "My brother is a boy.", id: "Saudara laki-lakiku adalah seorang anak laki-laki.", read: "mai bra-dher is a boi.", 
+      breakdown: [{ word: "My", meaning: "Milikku" }, { word: "Brother", meaning: "Saudara laki-laki" }, { word: "Is", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Boy", meaning: "Anak laki-laki" }]
+    },
+    { 
+      icon: "👦",
+      en: "I am a boy.", id: "Aku adalah seorang anak laki-laki.", read: "ai em a boi.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Am", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Boy", meaning: "Anak laki-laki" }]
+    },
+    { 
+      icon: "👦👦",
+      en: "We are boys.", id: "Kami adalah anak laki-laki.", read: "wi ar bois.", 
+      breakdown: [{ word: "We", meaning: "Kami" }, { word: "Are", meaning: "Adalah" }, { word: "Boys", meaning: "Anak laki-laki (Lebih dari 1)" }],
+      note: "'are' berarti adalah, digunakan untuk subjek yang berjumlah lebih dari satu (seperti we, they)."
+    },
+    { 
+      icon: "👧",
+      en: "You are a girl.", id: "Kamu adalah seorang anak perempuan.", read: "yu ar a gerl.", 
+      breakdown: [{ word: "You", meaning: "Kamu" }, { word: "Are", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Girl", meaning: "Anak perempuan" }],
+      note: "'are' berarti adalah, juga selalu digunakan untuk 'You' (Kamu)."
+    },
+    { 
+      icon: "👧👧",
+      en: "We are girls.", id: "Kami adalah anak perempuan.", read: "wi ar gerls.", 
+      breakdown: [{ word: "We", meaning: "Kami" }, { word: "Are", meaning: "Adalah" }, { word: "Girls", meaning: "Anak perempuan (Lebih dari 1)" }]
+    },
+    { 
+      icon: "👩",
+      en: "You are a mother.", id: "Kamu adalah seorang ibu.", read: "yu ar a ma-dher.", 
+      breakdown: [{ word: "You", meaning: "Kamu" }, { word: "Are", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Mother", meaning: "Ibu" }]
+    },
+    { 
+      icon: "👨",
+      en: "You are a father.", id: "Kamu adalah seorang ayah.", read: "yu ar a fa-dher.", 
+      breakdown: [{ word: "You", meaning: "Kamu" }, { word: "Are", meaning: "Adalah" }, { word: "A", meaning: "Seorang" }, { word: "Father", meaning: "Ayah" }]
+    },
+    { 
+      icon: "👨‍👩‍👧‍👦",
+      en: "They are parents.", id: "Mereka adalah orang tua.", read: "dhei ar pe-rents.", 
+      breakdown: [{ word: "They", meaning: "Mereka" }, { word: "Are", meaning: "Adalah" }, { word: "Parents", meaning: "Orang tua" }]
+    }
   ];
 
   // ==========================================
@@ -128,6 +220,90 @@ export default function HalamanBelajar() {
   ];
   const animalLand = [
     { id: "Belalang", en: "Grasshopper", read: "gres-ho-per", icon: "🦗" }, { id: "Cacing", en: "Worm", read: "werm", icon: "🪱" }, { id: "Ular", en: "Snake", read: "snek", icon: "🐍" },
+  ];
+  const hewanContoh = [
+    {
+      icon: "🐈",
+      en: "The cat is walking.", id: "Kucing itu sedang berjalan.", read: "dhe ket is wo-king.",
+      breakdown: [{ word: "The cat", meaning: "Kucing itu (satu)" }, { word: "Is walking", meaning: "Sedang berjalan" }],
+      note: "Kenapa pakai 'is'? Kata 'is' digunakan karena hewannya hanya SATU (tunggal). Selain itu, kata 'is' ditambah kata kerja berakhiran '-ing' menunjukkan aktivitas SEDANG dilakukan. Walk = Berjalan. Walking = Sedang berjalan."
+    },
+    {
+      icon: "🐕",
+      en: "The dog is running.", id: "Anjing itu sedang berlari.", read: "dhe dog is ra-ning.",
+      breakdown: [{ word: "The dog", meaning: "Anjing itu" }, { word: "Is running", meaning: "Sedang berlari" }],
+      note: "Run = Berlari. Running = Sedang berlari."
+    },
+    {
+      icon: "🐁",
+      en: "The mouse is sleeping.", id: "Tikus itu sedang tidur.", read: "dhe maus is sli-ping.",
+      breakdown: [{ word: "The mouse", meaning: "Tikus itu" }, { word: "Is sleeping", meaning: "Sedang tidur" }],
+      note: "Sleep = Tidur. Sleeping = Sedang tidur."
+    },
+    {
+      icon: "🦎",
+      en: "The lizard is climbing.", id: "Kadal itu sedang memanjat.", read: "dhe li-zerd is klai-ming.",
+      breakdown: [{ word: "The lizard", meaning: "Kadal itu" }, { word: "Is climbing", meaning: "Sedang memanjat" }]
+    },
+    {
+      icon: "🪳",
+      en: "The cockroach is flying.", id: "Kecoa itu sedang terbang.", read: "dhe kok-rouc is flai-ying.",
+      breakdown: [{ word: "The cockroach", meaning: "Kecoa itu" }, { word: "Is flying", meaning: "Sedang terbang" }]
+    },
+    {
+      icon: "🪰",
+      en: "The fly is eating.", id: "Lalat itu sedang makan.", read: "dhe flai is i-ting.",
+      breakdown: [{ word: "The fly", meaning: "Lalat itu" }, { word: "Is eating", meaning: "Sedang makan" }],
+      note: "Eat = Makan. Eating = Sedang makan."
+    },
+    {
+      icon: "🦟",
+      en: "The mosquito is sucking.", id: "Nyamuk itu sedang mengisap.", read: "dhe mes-ki-tou is sa-king.",
+      breakdown: [{ word: "The mosquito", meaning: "Nyamuk itu" }, { word: "Is sucking", meaning: "Sedang mengisap" }]
+    },
+    {
+      icon: "🐜",
+      en: "The ant is building.", id: "Semut itu sedang membangun.", read: "dhe ent is bil-ding.",
+      breakdown: [{ word: "The ant", meaning: "Semut itu" }, { word: "Is building", meaning: "Sedang membangun" }]
+    },
+    {
+      icon: "🕷️",
+      en: "The spider is gliding.", id: "Laba-laba itu sedang meluncur.", read: "dhe spai-der is glai-ding.",
+      breakdown: [{ word: "The spider", meaning: "Laba-laba itu" }, { word: "Is gliding", meaning: "Sedang meluncur" }]
+    },
+    {
+      icon: "🐓",
+      en: "The chicken is jumping.", id: "Ayam itu sedang melompat.", read: "dhe ci-ken is jam-ping.",
+      breakdown: [{ word: "The chicken", meaning: "Ayam itu" }, { word: "Is jumping", meaning: "Sedang melompat" }],
+      note: "Jump = Melompat. Jumping = Sedang melompat."
+    },
+    {
+      icon: "🦆🦆",
+      en: "The ducks are swimming.", id: "Bebek-bebek itu sedang berenang.", read: "dhe daks ar swi-ming.",
+      breakdown: [{ word: "The ducks", meaning: "Bebek-bebek itu" }, { word: "Are swimming", meaning: "Sedang berenang" }],
+      note: "Kenapa pakai 'are'? Kata 'are' digunakan karena hewannya LEBIH DARI SATU (jamak). Perhatikan juga nama hewannya ditambah huruf 's' (duck menjadi ducks). Swim = Berenang. Swimming = Sedang berenang."
+    },
+    {
+      icon: "🐄🐄",
+      en: "The cows are drinking.", id: "Sapi-sapi itu sedang minum.", read: "dhe kaus ar dring-king.",
+      breakdown: [{ word: "The cows", meaning: "Sapi-sapi itu" }, { word: "Are drinking", meaning: "Sedang minum" }],
+      note: "Sama seperti kalimat di atas, karena sapinya ada banyak, kita pakai 'are' dan kata cow ditambah huruf 's' menjadi cows."
+    },
+    {
+      icon: "🐐🐐",
+      en: "The goats are eating.", id: "Kambing-kambing itu sedang makan.", read: "dhe gouts ar i-ting.",
+      breakdown: [{ word: "The goats", meaning: "Kambing-kambing itu" }, { word: "Are eating", meaning: "Sedang makan" }]
+    },
+    {
+      icon: "🐎🐎",
+      en: "The horses are running.", id: "Kuda-kuda itu sedang berlari.", read: "dhe hor-ses ar ra-ning.",
+      breakdown: [{ word: "The horses", meaning: "Kuda-kuda itu" }, { word: "Are running", meaning: "Sedang berlari" }]
+    },
+    {
+      icon: "🐦🐦",
+      en: "The birds are flying.", id: "Burung-burung itu sedang terbang.", read: "dhe berds ar flai-ying.",
+      breakdown: [{ word: "The birds", meaning: "Burung-burung itu" }, { word: "Are flying", meaning: "Sedang terbang" }]
+    }
   ];
 
   // ==========================================
@@ -168,6 +344,62 @@ export default function HalamanBelajar() {
     { num: "1.000", en: "One Thousand", read: "wan tau-zen", id: "Seribu" }, { num: "2.000", en: "Two Thousand", read: "tu tau-zen", id: "Dua Ribu" },
     { num: "5.000", en: "Five Thousand", read: "faiv tau-zen", id: "Lima Ribu" }, { num: "10.000", en: "Ten Thousand", read: "ten tau-zen", id: "Sepuluh Ribu" },
     { num: "700.000", en: "Seven Hundred Thousand", read: "se-ven han-dred tau-zen", id: "Tujuh Ratus Ribu" }, { num: "1.000.000", en: "One Million", read: "wan mil-yen", id: "Satu Juta" }
+  ];
+  const numbersMixedThousands = [
+    { num: "1.432", en: "One Thousand Four Hundred Thirty Two", read: "wan tau-zen for han-dred ther-ti tu", id: "Seribu Empat Ratus Tiga Puluh Dua" },
+    { num: "7.021", en: "Seven Thousand Twenty One", read: "se-ven tau-zen twen-ti wan", id: "Tujuh Ribu Dua Puluh Satu" },
+    { num: "5.005", en: "Five Thousand Five", read: "faiv tau-zen faiv", id: "Lima Ribu Lima" }
+  ];
+
+  const angkaContoh = [
+    { 
+      icon: "🍦",
+      en: "I have 1 ice cream.", id: "Aku punya 1 es krim.", read: "ai hev wan ais krim.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Have", meaning: "Punya" }, { word: "1 (One)", meaning: "Satu" }, { word: "Ice cream", meaning: "Es krim" }],
+      note: "TIDAK ditambahkan huruf 's' pada 'ice cream' karena es krimnya hanya ada satu."
+    },
+    { 
+      icon: "🍦🍦",
+      en: "I have 2 ice creams.", id: "Aku punya 2 es krim.", read: "ai hev tu ais krims.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Have", meaning: "Punya" }, { word: "2 (Two)", meaning: "Dua" }, { word: "Ice creams", meaning: "Es krim" }],
+      note: "Ada huruf 's' di belakang kata 'ice cream' (menjadi 'ice creams') karena es krimnya ada lebih dari satu."
+    },
+    { 
+      icon: "🧒",
+      en: "I have 1 friend.", id: "Aku punya 1 teman.", read: "ai hev wan frend.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Have", meaning: "Punya" }, { word: "1 (One)", meaning: "Satu" }, { word: "Friend", meaning: "Teman" }],
+      note: "TIDAK ditambahkan huruf 's' pada 'friend' karena temannya hanya ada satu."
+    },
+    { 
+      icon: "🧒🧒",
+      en: "I have 2 friends.", id: "Aku punya 2 teman.", read: "ai hev tu frends.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Have", meaning: "Punya" }, { word: "2 (Two)", meaning: "Dua" }, { word: "Friends", meaning: "Teman-teman" }],
+      note: "Ada huruf 's' di belakang kata 'friend' (menjadi 'friends') karena temannya ada lebih dari satu."
+    },
+    { 
+      icon: "📖",
+      en: "I need 1 book.", id: "Aku butuh 1 buku.", read: "ai nid wan buk.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Need", meaning: "Butuh" }, { word: "1 (One)", meaning: "Satu" }, { word: "Book", meaning: "Buku" }],
+      note: "TIDAK ditambahkan huruf 's' pada 'book' karena bukunya hanya ada satu."
+    },
+    { 
+      icon: "📚",
+      en: "I need 10 books.", id: "Aku butuh 10 buku.", read: "ai nid ten buks.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Need", meaning: "Butuh" }, { word: "10 (Ten)", meaning: "Sepuluh" }, { word: "Books", meaning: "Buku-buku" }],
+      note: "Ada huruf 's' di belakang kata 'book' (menjadi 'books') karena bukunya ada lebih dari satu (sepuluh)."
+    },
+    { 
+      icon: "✏️✏️✏️",
+      en: "I need 3 pencils.", id: "Aku butuh 3 pensil.", read: "ai nid thri pen-sils.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Need", meaning: "Butuh" }, { word: "3 (Three)", meaning: "Tiga" }, { word: "Pencils", meaning: "Pensil-pensil" }],
+      note: "Ada huruf 's' di belakang kata 'pencil' (menjadi 'pencils') karena pensilnya ada lebih dari satu."
+    },
+    { 
+      icon: "👨",
+      en: "I have 1 father.", id: "Aku punya 1 ayah.", read: "ai hev wan fa-dher.", 
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Have", meaning: "Punya" }, { word: "1 (One)", meaning: "Satu" }, { word: "Father", meaning: "Ayah" }],
+      note: "TIDAK ditambahkan huruf 's' pada 'father' karena ayahnya hanya ada satu."
+    }
   ];
 
   // ==========================================
@@ -210,6 +442,54 @@ export default function HalamanBelajar() {
     { id: "Wortel", en: "Carrot", read: "ke-ret", icon: "🥕" }, { id: "Kentang", en: "Potato", read: "po-tei-tou", icon: "🥔" }, { id: "Jagung", en: "Corn", read: "korn", icon: "🌽" }, 
     { id: "Singkong", en: "Cassava", read: "ka-sa-va", icon: "🍠" }, { id: "Bayam", en: "Spinach", read: "spi-nic", icon: "🥬" }, { id: "Tomat", en: "Tomato", read: "to-ma-tou", icon: "🍅" }, 
     { id: "Cabai", en: "Chili", read: "ci-li", icon: "🌶️" }, { id: "Brokoli", en: "Broccoli", read: "bro-ko-li", icon: "🥦" }, { id: "Bawang", en: "Onion", read: "o-ni-yen", icon: "🧅" },
+  ];
+
+  // TAMBAHAN: Contoh Penggunaan Buah dengan Grammar "an" dan "eat" vs "eating"
+  const buahContoh = [
+    {
+      icon: "🍎🍎",
+      en: "I eat apples.", id: "Aku makan apel.", read: "ai it e-pels.",
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Eat", meaning: "Makan" }, { word: "Apples", meaning: "Apel (banyak)" }],
+      note: "Kata 'eat' (tanpa -ing) digunakan untuk menyatakan kebiasaan umum atau hal yang sering dilakukan."
+    },
+    {
+      icon: "🍎",
+      en: "I am eating an apple.", id: "Aku sedang memakan sebuah apel.", read: "ai em i-ting en e-pel.",
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Am eating", meaning: "Sedang makan" }, { word: "An", meaning: "Sebuah" }, { word: "Apple", meaning: "Apel" }],
+      note: "'am' + 'eating' berarti SEDANG dilakukan sekarang. Kata 'an' digunakan untuk 'sebuah' benda tunggal yang huruf awalnya vokal (A, I, U, E, O)."
+    },
+    {
+      icon: "🍊🍊",
+      en: "You eat oranges.", id: "Kamu makan jeruk.", read: "yu it o-rin-jes.",
+      breakdown: [{ word: "You", meaning: "Kamu" }, { word: "Eat", meaning: "Makan" }, { word: "Oranges", meaning: "Jeruk (banyak)" }]
+    },
+    {
+      icon: "🍊",
+      en: "You are eating an orange.", id: "Kamu sedang memakan sebuah jeruk.", read: "yu ar i-ting en o-rinj.",
+      breakdown: [{ word: "You", meaning: "Kamu" }, { word: "Are eating", meaning: "Sedang makan" }, { word: "An", meaning: "Sebuah" }, { word: "Orange", meaning: "Jeruk" }],
+      note: "'are' + 'eating' digunakan untuk You yang SEDANG melakukan sesuatu. Dan perhatikan juga penggunaan 'an' untuk orange."
+    },
+    {
+      icon: "🍌",
+      en: "We eat banana.", id: "Kami makan pisang.", read: "wi it ba-na-na.",
+      breakdown: [{ word: "We", meaning: "Kami" }, { word: "Eat", meaning: "Makan" }, { word: "Banana", meaning: "Pisang" }]
+    },
+    {
+      icon: "🍌🍌🍌",
+      en: "We are eating 3 bananas.", id: "Kami sedang memakan 3 pisang.", read: "wi ar i-ting thri ba-na-nas.",
+      breakdown: [{ word: "We", meaning: "Kami" }, { word: "Are eating", meaning: "Sedang makan" }, { word: "3 (Three)", meaning: "Tiga" }, { word: "Bananas", meaning: "Pisang (Lebih dari 1)" }],
+      note: "Ada tambahan huruf 's' di belakang kata banana (menjadi bananas) karena jumlahnya ada lebih dari satu (tiga)."
+    },
+    {
+      icon: "🥭",
+      en: "They eat mango.", id: "Mereka makan mangga.", read: "dhei it meng-gou.",
+      breakdown: [{ word: "They", meaning: "Mereka" }, { word: "Eat", meaning: "Makan" }, { word: "Mango", meaning: "Mangga" }]
+    },
+    {
+      icon: "🥭🥭🥭", 
+      en: "They are eating 5 mangos.", id: "Mereka sedang memakan 5 mangga.", read: "dhei ar i-ting faiv meng-gous.",
+      breakdown: [{ word: "They", meaning: "Mereka" }, { word: "Are eating", meaning: "Sedang makan" }, { word: "5 (Five)", meaning: "Lima" }, { word: "Mangos", meaning: "Mangga (Lebih dari 1)" }]
+    }
   ];
 
   // ==========================================
@@ -495,6 +775,12 @@ export default function HalamanBelajar() {
       <div className="space-y-4">
         {data.map((item, idx) => (
           <div key={idx} className="flex flex-col bg-indigo-50 p-5 rounded-[1.5rem] border-b-4 border-indigo-200">
+            {item.icon && (
+              <div className="text-[55px] text-center mb-4 drop-shadow-md tracking-widest leading-none">
+                {item.icon}
+              </div>
+            )}
+            
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col w-full pr-4">
                 <span className="text-sm font-bold text-gray-500 mb-1">{item.id}</span>
@@ -522,22 +808,26 @@ export default function HalamanBelajar() {
                 </div>
               </div>
             )}
+
+            {item.note && (
+              <div className="mt-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 rounded-r-xl">
+                <p className="text-[12px] font-bold text-yellow-800 leading-tight">
+                  💡 <span className="font-black">Catatan:</span> {item.note}
+                </p>
+              </div>
+            )}
           </div>
         ))}
       </div>
     </div>
   );
 
-  // ==========================================
-  // FITUR BARU: CERITA ANAK SCROLL KE BAWAH (SEMUA ADEGAN DALAM SATU HALAMAN)
-  // ==========================================
   const StoryGroup = ({ data }) => {
     return (
       <div className="flex flex-col gap-10 w-full">
         {data.map((item, idx) => (
           <div key={idx} className="flex flex-col bg-white rounded-[2rem] shadow-sm border-2 border-gray-100 overflow-hidden">
             
-            {/* Gambar Edge-to-Edge, Latar Belakang Dihilangkan */}
             <div className="relative w-full flex justify-center items-center bg-gray-50 pt-4">
               <div className="absolute top-4 left-4 z-10 bg-amber-500 text-white font-black px-4 py-1.5 rounded-full text-xs shadow-md">
                 Adegan {item.scene} dari {data.length}
@@ -557,7 +847,6 @@ export default function HalamanBelajar() {
               )}
             </div>
 
-            {/* Bagian Konten (Teks, Audio, Kosakata) */}
             <div className="px-6 py-8">
               <div className="flex flex-col text-center w-full mb-6">
                 <span className="text-[26px] font-black text-gray-900 leading-snug mb-2">{item.en}</span>
@@ -599,7 +888,7 @@ export default function HalamanBelajar() {
   return (
     <div className={`relative mx-auto w-full max-w-md h-[100dvh] overflow-hidden font-sans ${activeMenu.startsWith('story_') ? 'bg-white' : ''}`}>
       
-      {/* --- LAYER LATAR BELAKANG (Disembunyikan pada Halaman Cerita) --- */}
+      {/* --- LAYER LATAR BELAKANG --- */}
       {!activeMenu.startsWith("story_") && (
         <div 
           className="absolute inset-0 w-full h-full pointer-events-none"
@@ -610,23 +899,34 @@ export default function HalamanBelajar() {
       {/* --- LAYER KONTEN UTAMA --- */}
       <div className="relative z-10 h-full w-full overflow-y-auto">
         
-        {/* Header Dinamis (Efek bayangan/rounded menyesuaikan halaman cerita) */}
-        <div className={`bg-white p-5 shadow-sm flex items-center gap-4 sticky top-0 z-50 ${activeMenu.startsWith('story_') ? '' : 'rounded-b-3xl'}`}>
-          {activeMenu === "utama" ? (
-            <Link href="/" className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">
-              ⬅️ Kembali
-            </Link>
-          ) : (
-            <button onClick={handleBack} className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">
-              ⬅️ Kembali
+        {/* Header Dinamis dengan Tombol "Contoh" Khusus */}
+        <div className={`bg-white p-5 shadow-sm flex items-center justify-between sticky top-0 z-50 ${activeMenu.startsWith('story_') ? '' : 'rounded-b-3xl'}`}>
+          <div className="flex items-center gap-4">
+            {activeMenu === "utama" ? (
+              <Link href="/" className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">
+                ⬅️ Kembali
+              </Link>
+            ) : (
+              <button onClick={handleBack} className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">
+                ⬅️ Kembali
+              </button>
+            )}
+            <h1 className="text-xl font-black text-gray-800 line-clamp-1">
+              {getHeaderTitle()}
+            </h1>
+          </div>
+          
+          {/* Tombol Contoh Penggunaan (Khusus Menu Angka, Orang, Hewan, Buah) */}
+          {(activeMenu === "angka" || activeMenu === "orang" || activeMenu === "hewan" || activeMenu === "buah") && (
+            <button 
+              onClick={() => setActiveMenu(activeMenu === "angka" ? "angka_contoh" : activeMenu === "orang" ? "orang_contoh" : activeMenu === "hewan" ? "hewan_contoh" : "buah_contoh")}
+              className="bg-purple-100 text-purple-700 px-3 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform whitespace-nowrap shadow-sm border-2 border-purple-200 shrink-0"
+            >
+              💡 Contoh
             </button>
           )}
-          <h1 className="text-xl font-black text-gray-800 line-clamp-1">
-            {getHeaderTitle()}
-          </h1>
         </div>
 
-        {/* --- WADAH KONTEN (Padding dihilangkan pada halaman cerita) --- */}
         <div className={activeMenu.startsWith("story_") ? "pb-12" : "p-5 pb-12"}>
           
           {/* ========================================================
@@ -792,6 +1092,12 @@ export default function HalamanBelajar() {
             </div>
           )}
 
+          {activeMenu === "orang_contoh" && (
+            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
+              <ConversationGroup title="Contoh Penggunaan" icon="💡" data={orangContoh} />
+            </div>
+          )}
+
           {activeMenu === "hewan" && (
             <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
               <AnimalGroup title="Di Sekitar Rumah" icon="🏠" data={animalHouse} />
@@ -803,6 +1109,12 @@ export default function HalamanBelajar() {
               <AnimalGroup title="Hewan Air" icon="🐟" data={animalWater} />
               <div className="border-t-2 border-dashed border-gray-200 my-6"></div>
               <AnimalGroup title="Hewan Tanah & Hutan" icon="🌲" data={animalLand} />
+            </div>
+          )}
+
+          {activeMenu === "hewan_contoh" && (
+            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
+              <ConversationGroup title="Contoh Penggunaan" icon="💡" data={hewanContoh} />
             </div>
           )}
 
@@ -819,12 +1131,26 @@ export default function HalamanBelajar() {
               <VocabGroup title="Latihan Ratusan" icon="🏆" data={numbersMixedHundreds} themeColor="purple" />
               <div className="border-t-2 border-dashed border-gray-200 my-6"></div>
               <VocabGroup title="Ribuan & Jutaan" icon="🚀" data={numbersThousandsMillions} themeColor="purple" />
+              <div className="border-t-2 border-dashed border-gray-200 my-6"></div>
+              <VocabGroup title="Latihan Ribuan" icon="🎯" data={numbersMixedThousands} themeColor="purple" />
+            </div>
+          )}
+
+          {activeMenu === "angka_contoh" && (
+            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
+              <ConversationGroup title="Contoh Penggunaan" icon="💡" data={angkaContoh} />
             </div>
           )}
 
           {activeMenu === "buah" && (
             <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
               <VocabGroup title="Buah-buahan" icon="🍎" data={buahBuahan} themeColor="rose" />
+            </div>
+          )}
+
+          {activeMenu === "buah_contoh" && (
+            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
+              <ConversationGroup title="Contoh Penggunaan" icon="💡" data={buahContoh} />
             </div>
           )}
 
@@ -916,7 +1242,7 @@ export default function HalamanBelajar() {
           )}
 
           {/* ========================================================
-              TAMPILAN MATERI CERITA ANAK (VERSI SCROLL)
+              TAMPILAN MATERI CERITA ANAK
               ======================================================== */}
           {activeMenu === "story_crow" && (
             <StoryGroup data={storyCrow} />
