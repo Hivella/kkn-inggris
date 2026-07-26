@@ -56,6 +56,8 @@ export default function HalamanBelajar() {
       setActiveMenu("hewan");
     } else if (activeMenu === "buah_contoh") {
       setActiveMenu("buah");
+    } else if (activeMenu === "aktivitas_contoh") {
+      setActiveMenu("aktivitas");
     } else if (activeMenu === "kosakata" || activeMenu === "percakapan" || activeMenu === "cerita") {
       setActiveMenu("utama");
     }
@@ -79,6 +81,7 @@ export default function HalamanBelajar() {
       case "sayur": return "Nama Sayuran";
       case "benda": return "Hal di Sekitar";
       case "aktivitas": return "Aktivitas Harian";
+      case "aktivitas_contoh": return "Contoh Penggunaan";
       case "conv_perkenalan": return "Cara Berkenalan";
       case "conv_kabar": return "Tanya Kabar";
       case "conv_sehari": return "Sehari-Hari";
@@ -406,28 +409,83 @@ export default function HalamanBelajar() {
   // 5. DATA AKTIVITAS
   // ==========================================
   const activityMovements = [
-    { id: "Berjalan", en: "Walk", read: "wok", icon: "🚶" }, { id: "Berlari", en: "Run", read: "ran", icon: "🏃" }, { id: "Lompat", en: "Jump", read: "jamp", icon: "🦘" }, 
-    { id: "Memanjat", en: "Climb", read: "klaim", icon: "🧗" }, { id: "Melempar", en: "Throw", read: "throu", icon: "⚾" }, { id: "Menendang", en: "Kick", read: "kik", icon: "⚽" }, 
-    { id: "Memukul", en: "Hit", read: "hit", icon: "🥊" }, { id: "Terbang", en: "Fly", read: "flai", icon: "🦅" },
+    { id: "Berjalan", en: "Walk", read: "wok", icon: "🚶", v1: "Walk", v2: "Walked", v3: "Walked" }, 
+    { id: "Berlari", en: "Run", read: "ran", icon: "🏃", v1: "Run", v2: "Ran", v3: "Run" }, 
+    { id: "Lompat", en: "Jump", read: "jamp", icon: "🦘", v1: "Jump", v2: "Jumped", v3: "Jumped" }, 
+    { id: "Memanjat", en: "Climb", read: "klaim", icon: "🧗", v1: "Climb", v2: "Climbed", v3: "Climbed" }, 
+    { id: "Melempar", en: "Throw", read: "throu", icon: "⚾", v1: "Throw", v2: "Threw", v3: "Thrown" }, 
+    { id: "Menendang", en: "Kick", read: "kik", icon: "⚽", v1: "Kick", v2: "Kicked", v3: "Kicked" }, 
+    { id: "Memukul", en: "Hit", read: "hit", icon: "🥊", v1: "Hit", v2: "Hit", v3: "Hit" }, 
+    { id: "Terbang", en: "Fly", read: "flai", icon: "🦅", v1: "Fly", v2: "Flew", v3: "Flown" }
   ];
   const activityHome = [
-    { id: "Makan", en: "Eat", read: "it", icon: "🍽️" }, { id: "Minum", en: "Drink", read: "dringk", icon: "🥤" }, { id: "Memasak", en: "Cook", read: "kuk", icon: "🍳" }, 
-    { id: "Tidur", en: "Sleep", read: "slip", icon: "😴" }, { id: "Duduk", en: "Sit", read: "sit", icon: "🪑" }, { id: "Membuka", en: "Open", read: "o-pen", icon: "🚪" }, 
-    { id: "Menutup", en: "Close", read: "klouz", icon: "🚪" }, { id: "Menyalakan", en: "Turn On", read: "tern on", icon: "💡" }, { id: "Mematikan", en: "Turn Off", read: "tern of", icon: "🔌" }, 
-    { id: "Menggunakan Pakaian / Sepatu", en: "Wear", read: "wer", icon: "👕" }, { id: "Buang Air Kecil (Pipis)", en: "Pee", read: "pi", icon: "🚽" }, { id: "Buang Air Besar (Eek)", en: "Poop", read: "pup", icon: "💩" }, 
-    { id: "Mandi", en: "Take a bath", read: "teik e bath", icon: "🛁" }, { id: "Menggosok Gigi", en: "Brush teeth", read: "bras tith", icon: "🪥" }, { id: "Keramas", en: "Wash hair", read: "wos her", icon: "🧴" },
+    { id: "Makan", en: "Eat", read: "it", icon: "🍽️", v1: "Eat", v2: "Ate", v3: "Eaten" }, 
+    { id: "Minum", en: "Drink", read: "dringk", icon: "🥤", v1: "Drink", v2: "Drank", v3: "Drunk" }, 
+    { id: "Memasak", en: "Cook", read: "kuk", icon: "🍳", v1: "Cook", v2: "Cooked", v3: "Cooked" }, 
+    { id: "Tidur", en: "Sleep", read: "slip", icon: "😴", v1: "Sleep", v2: "Slept", v3: "Slept" }, 
+    { id: "Duduk", en: "Sit", read: "sit", icon: "🪑", v1: "Sit", v2: "Sat", v3: "Sat" }, 
+    { id: "Membuka", en: "Open", read: "o-pen", icon: "🚪", v1: "Open", v2: "Opened", v3: "Opened" }, 
+    { id: "Menutup", en: "Close", read: "klouz", icon: "🚪", v1: "Close", v2: "Closed", v3: "Closed" }, 
+    { id: "Menyalakan", en: "Turn On", read: "tern on", icon: "💡", v1: "Turn on", v2: "Turned on", v3: "Turned on" }, 
+    { id: "Mematikan", en: "Turn Off", read: "tern of", icon: "🔌", v1: "Turn off", v2: "Turned off", v3: "Turned off" }, 
+    { id: "Menggunakan Pakaian / Sepatu", en: "Wear", read: "wer", icon: "👕", v1: "Wear", v2: "Wore", v3: "Worn" }, 
+    { id: "Buang Air Kecil (Pipis)", en: "Pee", read: "pi", icon: "🚽", v1: "Pee", v2: "Peed", v3: "Peed" }, 
+    { id: "Buang Air Besar (Eek)", en: "Poop", read: "pup", icon: "💩", v1: "Poop", v2: "Pooped", v3: "Pooped" }, 
+    { id: "Mandi", en: "Take a bath", read: "teik e bath", icon: "🛁", v1: "Take a bath", v2: "Took a bath", v3: "Taken a bath" }, 
+    { id: "Menggosok Gigi", en: "Brush teeth", read: "bras tith", icon: "🪥", v1: "Brush teeth", v2: "Brushed teeth", v3: "Brushed teeth" }, 
+    { id: "Keramas", en: "Wash hair", read: "wos her", icon: "🧴", v1: "Wash hair", v2: "Washed hair", v3: "Washed hair" }
   ];
   const activityRural = [
-    { id: "Menanam", en: "Plant", read: "plent", icon: "🌱" }, { id: "Menyiram", en: "Water", read: "wo-ter", icon: "🚿" }, { id: "Memanen", en: "Harvest", read: "har-vest", icon: "🌾" }, 
-    { id: "Memancing", en: "Fish", read: "fis", icon: "🎣" }, { id: "Mengendarai", en: "Ride", read: "raid", icon: "🚲" },
+    { id: "Menanam", en: "Plant", read: "plent", icon: "🌱", v1: "Plant", v2: "Planted", v3: "Planted" }, 
+    { id: "Menyiram", en: "Water", read: "wo-ter", icon: "🚿", v1: "Water", v2: "Watered", v3: "Watered" }, 
+    { id: "Memanen", en: "Harvest", read: "har-vest", icon: "🌾", v1: "Harvest", v2: "Harvested", v3: "Harvested" }, 
+    { id: "Memancing", en: "Fish", read: "fis", icon: "🎣", v1: "Fish", v2: "Fished", v3: "Fished" }, 
+    { id: "Mengendarai", en: "Ride", read: "raid", icon: "🚲", v1: "Ride", v2: "Rode", v3: "Ridden" }
   ];
   const activitySensesStudy = [
-    { id: "Melihat", en: "See", read: "si", icon: "👀" }, { id: "Mendengar", en: "Hear", read: "hir", icon: "👂" }, { id: "Mendengarkan", en: "Listen", read: "lis-sen", icon: "🎧" }, 
-    { id: "Menonton", en: "Watch", read: "woc", icon: "📺" }, { id: "Membaca", en: "Read", read: "rid", icon: "📖" }, { id: "Menggambar", en: "Draw", read: "dro", icon: "🎨" }, 
-    { id: "Belajar", en: "Study", read: "sta-di", icon: "📚" }, { id: "Bernyanyi", en: "Sing", read: "sing", icon: "🎤" }, { id: "Bermain", en: "Play", read: "plei", icon: "🪁" },
+    { id: "Melihat", en: "See", read: "si", icon: "👀", v1: "See", v2: "Saw", v3: "Seen" }, 
+    { id: "Mendengar", en: "Hear", read: "hir", icon: "👂", v1: "Hear", v2: "Heard", v3: "Heard" }, 
+    { id: "Mendengarkan", en: "Listen", read: "lis-sen", icon: "🎧", v1: "Listen", v2: "Listened", v3: "Listened" }, 
+    { id: "Menonton", en: "Watch", read: "woc", icon: "📺", v1: "Watch", v2: "Watched", v3: "Watched" }, 
+    { id: "Membaca", en: "Read", read: "rid", icon: "📖", v1: "Read", v2: "Read", v3: "Read" }, 
+    { id: "Menggambar", en: "Draw", read: "dro", icon: "🎨", v1: "Draw", v2: "Drew", v3: "Drawn" }, 
+    { id: "Belajar", en: "Study", read: "sta-di", icon: "📚", v1: "Study", v2: "Studied", v3: "Studied" }, 
+    { id: "Bernyanyi", en: "Sing", read: "sing", icon: "🎤", v1: "Sing", v2: "Sang", v3: "Sung" }, 
+    { id: "Bermain", en: "Play", read: "plei", icon: "🪁", v1: "Play", v2: "Played", v3: "Played" }
   ];
   const activityEffort = [
-    { id: "Membawa", en: "Bring", read: "bring", icon: "📦" }, { id: "Mendorong", en: "Push", read: "pus", icon: "🛒" }, { id: "Menarik", en: "Pull", read: "pul", icon: "🪢" }, { id: "Menggendong", en: "Carry", read: "ke-ri", icon: "🎒" }
+    { id: "Membawa", en: "Bring", read: "bring", icon: "📦", v1: "Bring", v2: "Brought", v3: "Brought" }, 
+    { id: "Mendorong", en: "Push", read: "pus", icon: "🛒", v1: "Push", v2: "Pushed", v3: "Pushed" }, 
+    { id: "Menarik", en: "Pull", read: "pul", icon: "🪢", v1: "Pull", v2: "Pulled", v3: "Pulled" }, 
+    { id: "Menggendong", en: "Carry", read: "ke-ri", icon: "🎒", v1: "Carry", v2: "Carried", v3: "Carried" }
+  ];
+
+  // TAMBAHAN: Contoh Penggunaan V1, V2, V3
+  const aktivitasContoh = [
+    {
+      icon: "🎨",
+      en: "I draw a train.", id: "Aku menggambar sebuah kereta.", read: "ai dro e trein.",
+      breakdown: [{ word: "I", meaning: "Aku" }, { word: "Draw", meaning: "Menggambar (V1)" }, { word: "A", meaning: "Sebuah" }, { word: "Train", meaning: "Kereta" }],
+      note: "Kata 'draw' adalah Verb 1 (V1). Digunakan untuk kebiasaan, fakta, atau sesuatu yang dilakukan di masa sekarang."
+    },
+    {
+      icon: "🚂",
+      en: "This morning, I drew a train. Now, I sing.", id: "Pagi ini, aku menggambar sebuah kereta. Sekarang, aku bernyanyi.", read: "dhis mor-ning, ai dru e trein. nau, ai sing.",
+      breakdown: [{ word: "This morning", meaning: "Pagi ini" }, { word: "I", meaning: "Aku" }, { word: "Drew", meaning: "Menggambar (V2)" }, { word: "A train", meaning: "Sebuah kereta" }, { word: "Now", meaning: "Sekarang" }, { word: "Sing", meaning: "Bernyanyi (V1)" }],
+      note: "Kata 'drew' adalah Verb 2 (V2) dari draw. Digunakan karena kejadiannya sudah lewat (pagi ini). Sedangkan 'sing' kembali ke V1 karena dilakukan sekarang (now)."
+    },
+    {
+      icon: "⏳",
+      en: "I have drawn for 2 years.", id: "Aku telah menggambar selama 2 tahun.", read: "ai hev dron for tu yirs.",
+      breakdown: [{ word: "I have", meaning: "Aku telah" }, { word: "Drawn", meaning: "Menggambar (V3)" }, { word: "For", meaning: "Selama" }, { word: "2 (Two)", meaning: "Dua" }, { word: "Years", meaning: "Tahun" }],
+      note: "Kata 'drawn' adalah Verb 3 (V3). Digunakan setelah kata bantu seperti 'have'/'has' untuk menyatakan sesuatu yang SUDAH atau TELAH dilakukan."
+    },
+    {
+      icon: "👧🎨",
+      en: "This drawing is drawn by Stella.", id: "Gambar ini digambar oleh Stella.", read: "dhis dro-wing is dron bai ste-la.",
+      breakdown: [{ word: "This drawing", meaning: "Gambar ini" }, { word: "Is drawn", meaning: "Digambar (Pasif)" }, { word: "By", meaning: "Oleh" }, { word: "Stella", meaning: "Stella" }],
+      note: "Verb 3 ('drawn') juga digunakan untuk kalimat pasif (Passive Voice), yang artinya dikenai tindakan (DIgambar, DIbaca, DImakan)."
+    }
   ];
 
   // ==========================================
@@ -438,13 +496,6 @@ export default function HalamanBelajar() {
     { id: "Semangka", en: "Watermelon", read: "wo-ter-me-len", icon: "🍉" }, { id: "Mangga", en: "Mango", read: "meng-gou", icon: "🥭" }, { id: "Stroberi", en: "Strawberry", read: "stro-be-ri", icon: "🍓" }, 
     { id: "Nanas", en: "Pineapple", read: "pain-e-pel", icon: "🍍" }, { id: "Pepaya", en: "Papaya", read: "pa-pai-ya", icon: "🍈" },
   ];
-  const sayurSayuran = [
-    { id: "Wortel", en: "Carrot", read: "ke-ret", icon: "🥕" }, { id: "Kentang", en: "Potato", read: "po-tei-tou", icon: "🥔" }, { id: "Jagung", en: "Corn", read: "korn", icon: "🌽" }, 
-    { id: "Singkong", en: "Cassava", read: "ka-sa-va", icon: "🍠" }, { id: "Bayam", en: "Spinach", read: "spi-nic", icon: "🥬" }, { id: "Tomat", en: "Tomato", read: "to-ma-tou", icon: "🍅" }, 
-    { id: "Cabai", en: "Chili", read: "ci-li", icon: "🌶️" }, { id: "Brokoli", en: "Broccoli", read: "bro-ko-li", icon: "🥦" }, { id: "Bawang", en: "Onion", read: "o-ni-yen", icon: "🧅" },
-  ];
-
-  // TAMBAHAN: Contoh Penggunaan Buah dengan Grammar "an" dan "eat" vs "eating"
   const buahContoh = [
     {
       icon: "🍎🍎",
@@ -490,6 +541,12 @@ export default function HalamanBelajar() {
       en: "They are eating 5 mangos.", id: "Mereka sedang memakan 5 mangga.", read: "dhei ar i-ting faiv meng-gous.",
       breakdown: [{ word: "They", meaning: "Mereka" }, { word: "Are eating", meaning: "Sedang makan" }, { word: "5 (Five)", meaning: "Lima" }, { word: "Mangos", meaning: "Mangga (Lebih dari 1)" }]
     }
+  ];
+
+  const sayurSayuran = [
+    { id: "Wortel", en: "Carrot", read: "ke-ret", icon: "🥕" }, { id: "Kentang", en: "Potato", read: "po-tei-tou", icon: "🥔" }, { id: "Jagung", en: "Corn", read: "korn", icon: "🌽" }, 
+    { id: "Singkong", en: "Cassava", read: "ka-sa-va", icon: "🍠" }, { id: "Bayam", en: "Spinach", read: "spi-nic", icon: "🥬" }, { id: "Tomat", en: "Tomato", read: "to-ma-tou", icon: "🍅" }, 
+    { id: "Cabai", en: "Chili", read: "ci-li", icon: "🌶️" }, { id: "Brokoli", en: "Broccoli", read: "bro-ko-li", icon: "🥦" }, { id: "Bawang", en: "Onion", read: "o-ni-yen", icon: "🧅" },
   ];
 
   // ==========================================
@@ -721,7 +778,18 @@ export default function HalamanBelajar() {
                 <span className="text-4xl mb-2 drop-shadow-sm tracking-widest text-black font-black">{item.icon || item.num}</span>
                 <span className="text-sm font-bold text-gray-500">{item.id}</span>
                 <span className="text-xl font-black text-gray-900 leading-tight">{item.en}</span>
-                <span className="text-xs font-bold text-orange-500 mt-1">Dibaca: "{item.read}"</span>
+                <span className="text-xs font-bold text-orange-500 mt-1 mb-1">Dibaca: "{item.read}"</span>
+                
+                {item.v1 && (
+                  <div className="mt-2 text-[11px] font-bold text-gray-600 bg-white/60 px-3 py-2 rounded-lg border border-gray-200 w-fit">
+                    <div className="flex gap-3">
+                      <span><span className="text-blue-600 font-black">V1:</span> {item.v1}</span>
+                      <span><span className="text-green-600 font-black">V2:</span> {item.v2}</span>
+                      <span><span className="text-rose-600 font-black">V3:</span> {item.v3}</span>
+                    </div>
+                  </div>
+                )}
+
               </div>
               <button 
                 onClick={() => playAudio(item.audio || item.en)}
@@ -916,10 +984,10 @@ export default function HalamanBelajar() {
             </h1>
           </div>
           
-          {/* Tombol Contoh Penggunaan (Khusus Menu Angka, Orang, Hewan, Buah) */}
-          {(activeMenu === "angka" || activeMenu === "orang" || activeMenu === "hewan" || activeMenu === "buah") && (
+          {/* Tombol Contoh Penggunaan (Khusus Menu Tertentu) */}
+          {(["angka", "orang", "hewan", "buah", "aktivitas"].includes(activeMenu)) && (
             <button 
-              onClick={() => setActiveMenu(activeMenu === "angka" ? "angka_contoh" : activeMenu === "orang" ? "orang_contoh" : activeMenu === "hewan" ? "hewan_contoh" : "buah_contoh")}
+              onClick={() => setActiveMenu(activeMenu + "_contoh")}
               className="bg-purple-100 text-purple-700 px-3 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform whitespace-nowrap shadow-sm border-2 border-purple-200 shrink-0"
             >
               💡 Contoh
@@ -1195,6 +1263,12 @@ export default function HalamanBelajar() {
               <VocabGroup title="Panca Indera & Belajar" icon="🧠" data={activitySensesStudy} themeColor="teal" />
               <div className="border-t-2 border-dashed border-gray-200 my-6"></div>
               <VocabGroup title="Menggunakan Tenaga" icon="💪" data={activityEffort} themeColor="teal" />
+            </div>
+          )}
+
+          {activeMenu === "aktivitas_contoh" && (
+            <div className="bg-white p-5 rounded-[1.5rem] shadow-sm border-2 border-white/50">
+              <ConversationGroup title="Contoh Penggunaan V1, V2, V3" icon="💡" data={aktivitasContoh} />
             </div>
           )}
 
