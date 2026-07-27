@@ -4,12 +4,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 // ==========================================
-// BANK DATA KOSAKATA & GRAMMAR (SUPER MINIFIED - 200+ SOAL)
+// BANK DATA KOSAKATA (100% LENGKAP DARI HALAMAN BELAJAR - 277 KATA)
 // ==========================================
 const kamusKosakata = [
-  {en:"Cat",id:"Kucing",icon:"🐈"},{en:"Dog",id:"Anjing",icon:"🐕"},{en:"Bird",id:"Burung",icon:"🐦"},{en:"Fish",id:"Ikan",icon:"🐟"},{en:"Apple",id:"Apel",icon:"🍎"},{en:"Banana",id:"Pisang",icon:"🍌"},{en:"Carrot",id:"Wortel",icon:"🥕"},{en:"House",id:"Rumah",icon:"🏠"},{en:"Book",id:"Buku",icon:"📖"},{en:"Car",id:"Mobil",icon:"🚗"},{en:"Table",id:"Meja",icon:"🪑"},{en:"Shoes",id:"Sepatu",icon:"👟"},{en:"Man",id:"Pria",icon:"👨"},{en:"Woman",id:"Wanita",icon:"👩"},{en:"Boy",id:"Anak Laki-laki",icon:"👦"},{en:"Girl",id:"Anak Perempuan",icon:"👧"},{en:"Water",id:"Air",icon:"💧"},{en:"Fire",id:"Api",icon:"🔥"},{en:"Tree",id:"Pohon",icon:"🌳"},{en:"Flower",id:"Bunga",icon:"🌸"},{en:"Sun",id:"Matahari",icon:"☀️"},{en:"Moon",id:"Bulan",icon:"🌙"},{en:"Star",id:"Bintang",icon:"⭐"},{en:"Cloud",id:"Awan",icon:"☁️"},{en:"Pants",id:"Celana",icon:"👖"},{en:"Shirt",id:"Kemeja",icon:"👕"},{en:"Glasses",id:"Kacamata",icon:"👓"},{en:"Chicken",id:"Ayam",icon:"🐓"},{en:"Cow",id:"Sapi",icon:"🐄"},{en:"Horse",id:"Kuda",icon:"🐎"},
-  {en:"Fly",id:"Lalat",icon:"🪰"},{en:"Mosquito",id:"Nyamuk",icon:"🦟"},{en:"Ant",id:"Semut",icon:"🐜"},{en:"Spider",id:"Laba-laba",icon:"🕷️"},{en:"Duck",id:"Bebek",icon:"🦆"},{en:"Goat",id:"Kambing",icon:"🐐"},{en:"Frog",id:"Katak",icon:"🐸"},{en:"Turtle",id:"Kura-kura",icon:"🐢"},{en:"Snake",id:"Ular",icon:"🐍"},{en:"Strawberry",id:"Stroberi",icon:"🍓"},{en:"Pineapple",id:"Nanas",icon:"🍍"},{en:"Mango",id:"Mangga",icon:"🥭"},{en:"Watermelon",id:"Semangka",icon:"🍉"},{en:"Tomato",id:"Tomat",icon:"🍅"},{en:"Broccoli",id:"Brokoli",icon:"🥦"},{en:"Bed",id:"Kasur",icon:"🛌"},{en:"Door",id:"Pintu",icon:"🚪"},{en:"Window",id:"Jendela",icon:"🪟"},{en:"Computer",id:"Komputer",icon:"💻"},{en:"Spoon",id:"Sendok",icon:"🥄"},
-  {en:"One",id:"Satu",icon:"1️⃣"},{en:"Two",id:"Dua",icon:"2️⃣"},{en:"Three",id:"Tiga",icon:"3️⃣"},{en:"Ten",id:"Sepuluh",icon:"🔟"},{en:"Walk",id:"Berjalan",icon:"🚶"},{en:"Run",id:"Berlari",icon:"🏃"},{en:"Jump",id:"Lompat",icon:"🦘"},{en:"Eat",id:"Makan",icon:"🍽️"},{en:"Drink",id:"Minum",icon:"🥤"},{en:"Sleep",id:"Tidur",icon:"😴"},{en:"Sit",id:"Duduk",icon:"🪑"},{en:"Open",id:"Membuka",icon:"🚪"},{en:"Pee",id:"Pipis",icon:"🚽"},{en:"Poop",id:"Eek",icon:"💩"},{en:"Bath",id:"Mandi",icon:"🛁"},{en:"Plant",id:"Menanam",icon:"🌱"},{en:"Harvest",id:"Memanen",icon:"🌾"},{en:"Fish",id:"Memancing",icon:"🎣"},{en:"Ride",id:"Mengendarai",icon:"🚲"},{en:"See",id:"Melihat",icon:"👀"},{en:"Hear",id:"Mendengar",icon:"👂"},{en:"Listen",id:"Mendengarkan",icon:"🎧"},{en:"Watch",id:"Menonton",icon:"📺"},{en:"Read",id:"Membaca",icon:"📖"},{en:"Draw",id:"Menggambar",icon:"🎨"},{en:"Study",id:"Belajar",icon:"📚"},{en:"Sing",id:"Bernyanyi",icon:"🎤"},{en:"Play",id:"Bermain",icon:"🪁"},{en:"Bring",id:"Membawa",icon:"📦"},{en:"Push",id:"Mendorong",icon:"🛒"}
+  {en:"Man",id:"Pria",icon:"👨"},{en:"Men",id:"Para Pria",icon:"👨👨"},{en:"Woman",id:"Wanita",icon:"👩"},{en:"Women",id:"Para Wanita",icon:"👩👩👩"},{en:"Boy",id:"Anak Laki-laki",icon:"👦"},{en:"Boys",id:"Banyak Anak Laki",icon:"👦👦"},{en:"Girl",id:"Anak Perempuan",icon:"👧"},{en:"Girls",id:"Banyak Anak Perempuan",icon:"👧👧👧"},{en:"Friend",id:"Teman",icon:"🧒"},{en:"Friends",id:"Teman-teman",icon:"🧒🧒"},{en:"Mother",id:"Ibu",icon:"👩"},{en:"Father",id:"Ayah",icon:"👨"},{en:"Parents",id:"Orang Tua",icon:"👨‍👩‍👧‍👦"},{en:"Grandfather",id:"Kakek",icon:"👴"},{en:"Grandmother",id:"Nenek",icon:"👵"},{en:"Sibling",id:"Saudara",icon:"🧒/👧"},{en:"Siblings",id:"Saudara-saudara",icon:"🧒👧"},{en:"Brother",id:"Saudara Laki-laki",icon:"👦"},{en:"Sister",id:"Saudara Perempuan",icon:"👧"},{en:"Older brother",id:"Kakak Laki-laki",icon:"👦"},{en:"Older sister",id:"Kakak Perempuan",icon:"👧"},{en:"Younger brother",id:"Adik Laki-laki",icon:"👶"},{en:"Younger sister",id:"Adik Perempuan",icon:"👶👧"},{en:"Uncle",id:"Paman",icon:"🧔‍♂️"},{en:"Aunt",id:"Bibi",icon:"👩‍🦱"},{en:"Son",id:"Anak Laki-laki Kandung",icon:"👦"},{en:"Daughter",id:"Anak Perempuan Kandung",icon:"👧"},{en:"Cousin",id:"Sepupu",icon:"🧒"},{en:"Nephew",id:"Keponakan Laki",icon:"👦"},{en:"Niece",id:"Keponakan Perempuan",icon:"👧"},{en:"Husband",id:"Suami",icon:"👨"},{en:"Wife",id:"Istri",icon:"👩"},
+  {en:"Cat",id:"Kucing",icon:"🐈"},{en:"Dog",id:"Anjing",icon:"🐕"},{en:"Mouse",id:"Tikus",icon:"🐁"},{en:"Lizard",id:"Kadal",icon:"🦎"},{en:"Cockroach",id:"Kecoa",icon:"🪳"},{en:"Fly",id:"Lalat",icon:"🪰"},{en:"Mosquito",id:"Nyamuk",icon:"🦟"},{en:"Ant",id:"Semut",icon:"🐜"},{en:"Spider",id:"Laba-laba",icon:"🕷️"},{en:"Chicken",id:"Ayam",icon:"🐓"},{en:"Duck",id:"Bebek",icon:"🦆"},{en:"Cow",id:"Sapi",icon:"🐄"},{en:"Goat",id:"Kambing",icon:"🐐"},{en:"Horse",id:"Kuda",icon:"🐎"},{en:"Bird",id:"Burung",icon:"🐦"},{en:"Butterfly",id:"Kupu-kupu",icon:"🦋"},{en:"Bee",id:"Lebah",icon:"🐝"},{en:"Fish",id:"Ikan",icon:"🐟"},{en:"Frog",id:"Katak",icon:"🐸"},{en:"Turtle",id:"Kura-kura",icon:"🐢"},{en:"Grasshopper",id:"Belalang",icon:"🦗"},{en:"Worm",id:"Cacing",icon:"🪱"},{en:"Snake",id:"Ular",icon:"🐍"},
+  {en:"Apple",id:"Apel",icon:"🍎"},{en:"Banana",id:"Pisang",icon:"🍌"},{en:"Orange",id:"Jeruk",icon:"🍊"},{en:"Watermelon",id:"Semangka",icon:"🍉"},{en:"Mango",id:"Mangga",icon:"🥭"},{en:"Strawberry",id:"Stroberi",icon:"🍓"},{en:"Pineapple",id:"Nanas",icon:"🍍"},{en:"Papaya",id:"Pepaya",icon:"🍈"},{en:"Carrot",id:"Wortel",icon:"🥕"},{en:"Potato",id:"Kentang",icon:"🥔"},{en:"Corn",id:"Jagung",icon:"🌽"},{en:"Cassava",id:"Singkong",icon:"🍠"},{en:"Spinach",id:"Bayam",icon:"🥬"},{en:"Tomato",id:"Tomat",icon:"🍅"},{en:"Chili",id:"Cabai",icon:"🌶️"},{en:"Broccoli",id:"Brokoli",icon:"🥦"},{en:"Onion",id:"Bawang",icon:"🧅"},
+  {en:"House",id:"Rumah",icon:"🏠"},{en:"Bedroom",id:"Kamar Tidur",icon:"🛏️"},{en:"Bathroom",id:"Kamar Mandi",icon:"🛁"},{en:"Living Room",id:"Ruang Keluarga",icon:"🛋️"},{en:"Kitchen",id:"Dapur",icon:"🍳"},{en:"Guest Room",id:"Ruang Tamu",icon:"🪑"},{en:"Hallway",id:"Lorong",icon:"🚶"},{en:"Yard",id:"Halaman",icon:"🏡"},{en:"Floor",id:"Lantai",icon:"🟫"},{en:"Wall",id:"Dinding",icon:"🧱"},{en:"Wall Paint",id:"Cat Dinding",icon:"🎨"},{en:"Door",id:"Pintu",icon:"🚪"},{en:"Window",id:"Jendela",icon:"🪟"},{en:"Fence",id:"Pagar",icon:"⛩️"},{en:"Bamboo",id:"Bambu",icon:"🎋"},{en:"Bamboo Tree",id:"Pohon Bambu",icon:"🎋"},{en:"Table",id:"Meja",icon:"🪑"},{en:"Chair",id:"Kursi",icon:"🪑"},{en:"Lamp",id:"Lampu",icon:"💡"},{en:"Stove",id:"Kompor",icon:"🍳"},{en:"Broom",id:"Sapu",icon:"🧹"},{en:"Mop",id:"Pel",icon:"🧹"},{en:"Trash Can",id:"Tempat Sampah",icon:"🗑️"},{en:"Carpet",id:"Karpet",icon:"🟥"},{en:"Curtain",id:"Tirai",icon:"🪟"},{en:"Bed",id:"Kasur",icon:"🛌"},{en:"Pillow",id:"Bantal",icon:"☁️"},{en:"Bolster",id:"Guling",icon:"🥖"},{en:"Blanket",id:"Selimut",icon:"🛏️"},{en:"Plate",id:"Piring",icon:"🍽️"},{en:"Spoon",id:"Sendok",icon:"🥄"},{en:"Fork",id:"Garpu",icon:"🍴"},{en:"Glass",id:"Gelas",icon:"🥛"},{en:"Bottle",id:"Botol",icon:"🍾"},{en:"Water Bottle",id:"Botol Air",icon:"🍼"},{en:"Cup",id:"Cangkir",icon:"☕"},
+  {en:"Food",id:"Makanan",icon:"🍱"},{en:"Drink",id:"Minuman",icon:"🍹"},{en:"Snack",id:"Camilan",icon:"🍪"},{en:"Rice",id:"Nasi",icon:"🍚"},{en:"Fried Rice",id:"Nasi Goreng",icon:"🍛"},{en:"Ice Cream",id:"Es Krim",icon:"🍦"},{en:"Iced Tea",id:"Es Teh",icon:"🥤"},{en:"Clothes",id:"Pakaian",icon:"👕"},{en:"T-shirt",id:"Kaos",icon:"👕"},{en:"Shirt",id:"Kemeja",icon:"👔"},{en:"Pants",id:"Celana",icon:"👖"},{en:"Socks",id:"Kaos Kaki",icon:"🧦"},{en:"Shoes",id:"Sepatu",icon:"👟"},{en:"Sandals",id:"Sandal",icon:"🩴"},{en:"Belt",id:"Sabuk",icon:"🥋"},{en:"Glasses",id:"Kacamata",icon:"👓"},{en:"Bracelet",id:"Gelang",icon:"⭕"},{en:"Watch",id:"Jam Tangan",icon:"⌚"},{en:"Bicycle",id:"Sepeda",icon:"🚲"},{en:"Motorcycle",id:"Sepeda Motor",icon:"🏍️"},{en:"Car",id:"Mobil",icon:"🚗"},{en:"Telephone",id:"Telepon",icon:"☎️"},{en:"Mobile Phone",id:"HP",icon:"📱"},{en:"Computer",id:"Komputer",icon:"💻"},{en:"Laptop",id:"Laptop",icon:"💻"},{en:"Book",id:"Buku",icon:"📖"},{en:"Paper",id:"Kertas",icon:"📄"},{en:"Pencil",id:"Pensil",icon:"✏️"},{en:"Pen",id:"Pulpen",icon:"🖊️"},{en:"Marker",id:"Spidol",icon:"🖍️"},{en:"Chalk",id:"Kapur",icon:"🖍️"},{en:"Eraser",id:"Penghapus",icon:"🧽"},{en:"Whiteboard",id:"Papan Tulis Spidol",icon:"📝"},{en:"Blackboard",id:"Papan Tulis Kapur",icon:"🏫"},{en:"School Bag",id:"Tas Sekolah",icon:"🎒"},
+  {en:"Water",id:"Air",icon:"💧"},{en:"Fire",id:"Api",icon:"🔥"},{en:"Tree",id:"Pohon",icon:"🌳"},{en:"Plant",id:"Tumbuhan",icon:"🪴"},{en:"Flower",id:"Bunga",icon:"🌸"},{en:"Leaf",id:"Daun",icon:"🍃"},{en:"Grass",id:"Rumput",icon:"🌿"},{en:"Stone",id:"Batu",icon:"🪨"},{en:"Pebble",id:"Kerikil",icon:"🪨"},{en:"Sand",id:"Pasir",icon:"🏜️"},{en:"Street",id:"Jalanan",icon:"🛣️"},{en:"Wood",id:"Kayu",icon:"🪵"},{en:"Shop",id:"Toko",icon:"🏪"},{en:"Stall",id:"Warung",icon:"🛖"},{en:"Restaurant",id:"Restoran",icon:"🍽️"},{en:"Eatery",id:"Rumah Makan",icon:"🍛"},{en:"Ball",id:"Bola",icon:"⚽"},{en:"Cigarette",id:"Rokok",icon:"🚬"},{en:"Match",id:"Korek Api",icon:"🔥"},{en:"Flag",id:"Bendera",icon:"🚩"},{en:"Pole",id:"Tiang",icon:"💈"},{en:"Flagpole",id:"Tiang Bendera",icon:"🎌"},{en:"Plastic",id:"Plastik",icon:"🛍️"},{en:"Night Market",id:"Pasar Malam",icon:"🎪"},{en:"Sack",id:"Karung",icon:"🥔"},{en:"Paddy",id:"Padi",icon:"🌾"},{en:"Graveyard",id:"Kuburan",icon:"🪦"},{en:"Grave",id:"Makam",icon:"⚰️"},{en:"Ghost",id:"Hantu",icon:"👻"},
+  {en:"Walk",id:"Berjalan",icon:"🚶"},{en:"Run",id:"Berlari",icon:"🏃"},{en:"Jump",id:"Melompat",icon:"🦘"},{en:"Climb",id:"Memanjat",icon:"🧗"},{en:"Throw",id:"Melempar",icon:"⚾"},{en:"Kick",id:"Menendang",icon:"⚽"},{en:"Hit",id:"Memukul",icon:"🥊"},{en:"Fly",id:"Terbang",icon:"🦅"},{en:"Eat",id:"Makan",icon:"🍽️"},{en:"Cook",id:"Memasak",icon:"🍳"},{en:"Sleep",id:"Tidur",icon:"😴"},{en:"Sit",id:"Duduk",icon:"🪑"},{en:"Open",id:"Membuka",icon:"🚪"},{en:"Close",id:"Menutup",icon:"🚪"},{en:"Turn On",id:"Menyalakan",icon:"💡"},{en:"Turn Off",id:"Mematikan",icon:"🔌"},{en:"Wear",id:"Memakai",icon:"👕"},{en:"Pee",id:"Pipis",icon:"🚽"},{en:"Poop",id:"Eek",icon:"💩"},{en:"Take a bath",id:"Mandi",icon:"🛁"},{en:"Brush teeth",id:"Gosok Gigi",icon:"🪥"},{en:"Wash hair",id:"Keramas",icon:"🧴"},{en:"Water the plant",id:"Menyiram",icon:"🚿"},{en:"Harvest",id:"Memanen",icon:"🌾"},{en:"Ride",id:"Mengendarai",icon:"🚲"},{en:"See",id:"Melihat",icon:"👀"},{en:"Hear",id:"Mendengar",icon:"👂"},{en:"Listen",id:"Mendengarkan",icon:"🎧"},{en:"Watch TV",id:"Menonton",icon:"📺"},{en:"Read",id:"Membaca",icon:"📖"},{en:"Draw",id:"Menggambar",icon:"🎨"},{en:"Study",id:"Belajar",icon:"📚"},{en:"Sing",id:"Bernyanyi",icon:"🎤"},{en:"Play",id:"Bermain",icon:"🪁"},{en:"Bring",id:"Membawa",icon:"📦"},{en:"Push",id:"Mendorong",icon:"🛒"},{en:"Pull",id:"Menarik",icon:"🪢"},{en:"Carry",id:"Menggendong",icon:"🎒"},
+  {en:"One",id:"Satu",icon:"1️⃣"},{en:"Two",id:"Dua",icon:"2️⃣"},{en:"Three",id:"Tiga",icon:"3️⃣"},{en:"Four",id:"Empat",icon:"4️⃣"},{en:"Five",id:"Lima",icon:"5️⃣"},{en:"Six",id:"Enam",icon:"6️⃣"},{en:"Seven",id:"Tujuh",icon:"7️⃣"},{en:"Eight",id:"Delapan",icon:"8️⃣"},{en:"Nine",id:"Sembilan",icon:"9️⃣"},{en:"Ten",id:"Sepuluh",icon:"🔟"},{en:"Eleven",id:"Sebelas",icon:"11"},{en:"Twelve",id:"Dua Belas",icon:"12"},{en:"Thirteen",id:"Tiga Belas",icon:"13"},{en:"Fourteen",id:"Empat Belas",icon:"14"},{en:"Fifteen",id:"Lima Belas",icon:"15"},{en:"Sixteen",id:"Enam Belas",icon:"16"},{en:"Seventeen",id:"Tujuh Belas",icon:"17"},{en:"Eighteen",id:"Delapan Belas",icon:"18"},{en:"Nineteen",id:"Sembilan Belas",icon:"19"},{en:"Twenty",id:"Dua Puluh",icon:"20"},{en:"Twenty One",id:"Dua Puluh Satu",icon:"21"},{en:"Twenty Two",id:"Dua Puluh Dua",icon:"22"},{en:"Twenty Three",id:"Dua Puluh Tiga",icon:"23"},{en:"Twenty Four",id:"Dua Puluh Empat",icon:"24"},{en:"Twenty Five",id:"Dua Puluh Lima",icon:"25"},{en:"Twenty Six",id:"Dua Puluh Enam",icon:"26"},{en:"Twenty Seven",id:"Dua Puluh Tujuh",icon:"27"},{en:"Twenty Eight",id:"Dua Puluh Delapan",icon:"28"},{en:"Twenty Nine",id:"Dua Puluh Sembilan",icon:"29"},{en:"Thirty",id:"Tiga Puluh",icon:"30"},{en:"Forty",id:"Empat Puluh",icon:"40"},{en:"Fifty",id:"Lima Puluh",icon:"50"},{en:"Sixty",id:"Enam Puluh",icon:"60"},{en:"Seventy",id:"Tujuh Puluh",icon:"70"},{en:"Eighty",id:"Delapan Puluh",icon:"80"},{en:"Ninety",id:"Sembilan Puluh",icon:"90"},{en:"Thirty Three",id:"Tiga Puluh Tiga",icon:"33"},{en:"Forty Seven",id:"Empat Puluh Tujuh",icon:"47"},{en:"Fifty One",id:"Lima Puluh Satu",icon:"51"},{en:"Sixty Two",id:"Enam Puluh Dua",icon:"62"},{en:"Seventy Six",id:"Tujuh Puluh Enam",icon:"76"},{en:"Eighty Eight",id:"Delapan Puluh Delapan",icon:"88"},{en:"Ninety Four",id:"Sembilan Puluh Empat",icon:"94"},{en:"One Hundred",id:"Seratus",icon:"100"},{en:"Two Hundred",id:"Dua Ratus",icon:"200"},{en:"Three Hundred",id:"Tiga Ratus",icon:"300"},{en:"Four Hundred",id:"Empat Ratus",icon:"400"},{en:"Five Hundred",id:"Lima Ratus",icon:"500"},{en:"Six Hundred",id:"Enam Ratus",icon:"600"},{en:"Seven Hundred",id:"Tujuh Ratus",icon:"700"},{en:"Eight Hundred",id:"Delapan Ratus",icon:"800"},{en:"Nine Hundred",id:"Sembilan Ratus",icon:"900"},{en:"One Hundred Two",id:"Seratus Dua",icon:"102"},{en:"Two Hundred Five",id:"Dua Ratus Lima",icon:"205"},{en:"Three Hundred Forty Seven",id:"Tiga Ratus Empat Puluh Tujuh",icon:"347"},{en:"Four Hundred Eighty One",id:"Empat Ratus Delapan Puluh Satu",icon:"481"},{en:"Nine Hundred Eighty One",id:"Sembilan Ratus Delapan Puluh Satu",icon:"981"},{en:"One Thousand",id:"Seribu",icon:"1000"},{en:"Two Thousand",id:"Dua Ribu",icon:"2000"},{en:"Five Thousand",id:"Lima Ribu",icon:"5000"},{en:"Ten Thousand",id:"Sepuluh Ribu",icon:"10K"},{en:"Seven Hundred Thousand",id:"Tujuh Ratus Ribu",icon:"700K"},{en:"One Million",id:"Satu Juta",icon:"1M"},{en:"One Thousand Four Hundred Thirty Two",id:"Seribu Empat Ratus Tiga Puluh Dua",icon:"1432"},{en:"Seven Thousand Twenty One",id:"Tujuh Ribu Dua Puluh Satu",icon:"7021"},{en:"Five Thousand Five",id:"Lima Ribu Lima",icon:"5005"}
 ];
 
 const kamusGrammar = [
@@ -85,6 +90,16 @@ export default function HalamanLatihan() {
   const [trivCurrentQ, setTrivCurrentQ] = useState(null);
   const [trivSelected, setTrivSelected] = useState(null);
 
+  // STATE: Tantangan Mengeja (Typing Game)
+  const [typeStatus, setTypeStatus] = useState("idle");
+  const [typeScore, setTypeScore] = useState(0);
+  const [typeQnIndex, setTypeQnIndex] = useState(0);
+  const [typeQuestions, setTypeQuestions] = useState([]);
+  const [typeCurrentQ, setTypeCurrentQ] = useState(null);
+  const [typeInput, setTypeInput] = useState("");
+  const [typeChecked, setTypeChecked] = useState(false);
+  const [typeIsCorrect, setTypeIsCorrect] = useState(false);
+
   // Auto-scroll & State Reset saat pindah menu
   useEffect(() => {
     if (scrollContainerRef.current) scrollContainerRef.current.scrollTo(0, 0);
@@ -94,6 +109,7 @@ export default function HalamanLatihan() {
     if (activeExercise !== "posisi") setPosStatus("idle");
     if (activeExercise !== "verb_time") setVtStatus("idle");
     if (activeExercise !== "cerita_trivia") setTrivStatus("idle");
+    if (activeExercise !== "typing") setTypeStatus("idle");
   }, [activeExercise]);
 
   useEffect(() => {
@@ -121,7 +137,7 @@ export default function HalamanLatihan() {
   };
 
   const getHeaderTitle = () => {
-    const titles = { utama:"Menu Latihan", tebak_gambar:"Tebak Gambar", listening:"Dengarkan & Pilih", grammar:"Detektif Tata Bahasa", posisi:"Latihan Letak & Posisi", verb_time:"Mesin Waktu Kata Kerja", cerita_trivia:"Kuis Dongeng" };
+    const titles = { utama:"Menu Latihan", tebak_gambar:"Tebak Gambar", listening:"Dengarkan & Pilih", grammar:"Detektif Tata Bahasa", posisi:"Latihan Letak & Posisi", verb_time:"Mesin Waktu Kata Kerja", cerita_trivia:"Kuis Dongeng", typing:"Tantangan Mengeja" };
     return titles[activeExercise] || "Ayo Latihan!";
   };
 
@@ -231,48 +247,65 @@ export default function HalamanLatihan() {
     playAudio(trivCurrentQ.ans);
   };
 
+  // === LOGIKA GAME 7: TANTANGAN MENGEJA (TYPING) ===
+  const startTypingGame = () => {
+    setTypeScore(0); setTypeQnIndex(0); setTypeStatus("playing");
+    const selected = shuffleArray(kamusKosakata).slice(0, 10);
+    setTypeQuestions(selected);
+    setTypeCurrentQ(selected[0]);
+    setTypeInput("");
+    setTypeChecked(false);
+    setTypeIsCorrect(false);
+  };
+  const handleTypeSubmit = (e) => {
+    if (e) e.preventDefault();
+    if (typeChecked || !typeInput.trim()) return; 
+    
+    const isCorrect = typeInput.trim().toLowerCase() === typeCurrentQ.en.toLowerCase();
+    setTypeIsCorrect(isCorrect);
+    if (isCorrect) setTypeScore(p => p + 10);
+    setTypeChecked(true);
+    
+    playAudio(typeCurrentQ.en);
+  };
+
   const latihanMenus = [
     { id: "tebak_gambar", bg: "bg-[#3B82F6]", shadow: "shadow-[0_6px_0_#1D4ED8]", border: "border-blue-300", icon: "🃏", title: "Tebak Gambar", sub: "Kosakata Visual", tc: "text-blue-100" },
     { id: "listening", bg: "bg-[#A855F7]", shadow: "shadow-[0_6px_0_#7E22CE]", border: "border-purple-300", icon: "🎧", title: "Dengarkan & Pilih", sub: "Uji Pendengaran", tc: "text-purple-100" },
     { id: "grammar", bg: "bg-[#EC4899]", shadow: "shadow-[0_6px_0_#BE185D]", border: "border-pink-300", icon: "🍎", title: "Detektif Tata Bahasa", sub: "Satu atau Banyak?", tc: "text-pink-100" },
     { id: "posisi", bg: "bg-[#10B981]", shadow: "shadow-[0_6px_0_#047857]", border: "border-emerald-300", icon: "📍", title: "Latihan Letak", sub: "Prepositions", tc: "text-emerald-100" },
     { id: "verb_time", bg: "bg-[#F59E0B]", shadow: "shadow-[0_6px_0_#B45309]", border: "border-amber-300", icon: "⏳", title: "Mesin Waktu", sub: "V1, V2, V3", tc: "text-amber-100" },
-    { id: "cerita_trivia", bg: "bg-[#0EA5E9]", shadow: "shadow-[0_6px_0_#0369A1]", border: "border-sky-300", icon: "🏆", title: "Kuis Dongeng", sub: "Story Trivia", tc: "text-sky-100" }
+    { id: "cerita_trivia", bg: "bg-[#0EA5E9]", shadow: "shadow-[0_6px_0_#0369A1]", border: "border-sky-300", icon: "🏆", title: "Kuis Dongeng", sub: "Story Trivia", tc: "text-sky-100" },
+    { id: "typing", bg: "bg-[#F43F5E]", shadow: "shadow-[0_6px_0_#BE123C]", border: "border-rose-300", icon: "⌨️", title: "Tantangan Mengeja", sub: "Ketik Jawabannya", tc: "text-rose-100" }
   ];
 
   return (
-    <div className="relative mx-auto w-full max-w-md h-[100dvh] overflow-hidden font-sans bg-white">
+    <div className="relative mx-auto w-full max-w-md h-[100dvh] overflow-hidden font-sans bg-white flex flex-col">
       {activeExercise === "utama" && (
         <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ backgroundImage: "url('/bg-forest.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}/>
       )}
 
-      <div ref={scrollContainerRef} className="relative z-10 h-full w-full overflow-y-auto">
-        
-        {/* =======================================================
-            HEADER DENGAN LAYOUT 3 KOLOM SEIMBANG (ANTI GEPENG)
-            ======================================================= */}
-        <div className={`bg-white px-4 py-3 shadow-sm flex items-center justify-between sticky top-0 z-50 gap-2 ${activeExercise !== 'utama' ? '' : 'rounded-b-3xl'}`}>
-          <div className="flex-1 flex justify-start">
-            {activeExercise === "utama" ? (
-              <Link href="/" className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
-                ⬅️ Kembali
-              </Link>
-            ) : (
-              <button onClick={handleBack} className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
-                ⬅️ Kembali
-              </button>
-            )}
-          </div>
-          
-          <h1 className="text-[16px] sm:text-[17px] font-black text-gray-800 truncate text-center shrink-0 px-1">
-            {getHeaderTitle()}
-          </h1>
-          
-          {/* Kolom kosong untuk menyeimbangkan Header agar Title tetap berada tepat di tengah */}
-          <div className="flex-1 flex justify-end"></div>
+      {/* HEADER 3 KOLOM KONSISTEN */}
+      <div className={`flex-none bg-white px-4 py-3 shadow-sm flex items-center justify-between z-50 gap-2 ${activeExercise !== 'utama' ? 'border-b border-gray-100' : 'rounded-b-3xl'}`}>
+        <div className="flex-1 flex justify-start">
+          {activeExercise === "utama" ? (
+            <Link href="/" className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
+              ⬅️ Kembali
+            </Link>
+          ) : (
+            <button onClick={handleBack} className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
+              ⬅️ Kembali
+            </button>
+          )}
         </div>
+        <h1 className="text-[16px] sm:text-[17px] font-black text-gray-800 truncate text-center shrink-0 px-1">
+          {getHeaderTitle()}
+        </h1>
+        <div className="flex-1 flex justify-end"></div>
+      </div>
 
-        <div className={activeExercise !== "utama" ? "pb-12" : "p-5 pb-12"}>
+      <div ref={scrollContainerRef} className="relative z-10 w-full flex-1 overflow-y-auto">
+        <div className={activeExercise !== "utama" ? "p-4 pb-12 w-full h-full flex flex-col" : "p-5 pb-12"}>
           
           {/* MENU UTAMA */}
           {activeExercise === "utama" && (
@@ -293,7 +326,7 @@ export default function HalamanLatihan() {
           {activeExercise === "tebak_gambar" && (
             <div className="flex flex-col w-full h-full pt-4">
               {tgStatus === "idle" && (
-                <div className="flex flex-col items-center justify-center text-center mt-10">
+                <div className="flex flex-col items-center justify-center text-center mt-6">
                   <div className="text-[100px] mb-4 drop-shadow-lg animate-bounce">🃏</div>
                   <h2 className="text-3xl font-black text-gray-800 mb-2">Tebak Gambar</h2>
                   <p className="text-gray-500 font-bold mb-10 px-6">Lihat gambarnya dan pilih kata bahasa Inggris yang paling tepat!</p>
@@ -301,7 +334,7 @@ export default function HalamanLatihan() {
                 </div>
               )}
               {tgStatus === "playing" && tgCurrentQ && (
-                <div className="flex flex-col w-full px-4">
+                <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {tgQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {tgScore}</span>
                   </div>
@@ -321,12 +354,8 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-                  {/* Tombol Lanjut (Muncul setelah memilih) */}
                   {tgSelected && (
-                    <button 
-                      onClick={() => { (tgQnIndex + 1 >= 10) ? setTgStatus("finished") : (setTgQnIndex(p => p + 1), generateTgQuestion(tgQuestions, tgQnIndex + 1)); }} 
-                      className="w-full mt-8 py-4 rounded-2xl bg-blue-600 text-white font-black text-xl shadow-[0_6px_0_#1E3A8A] active:translate-y-1 transition-all"
-                    >
+                    <button onClick={() => { (tgQnIndex + 1 >= 10) ? setTgStatus("finished") : (setTgQnIndex(p => p + 1), generateTgQuestion(tgQuestions, tgQnIndex + 1)); }} className="w-full mt-6 py-4 rounded-2xl bg-blue-600 text-white font-black text-xl shadow-[0_6px_0_#1E3A8A] active:translate-y-1 transition-all">
                       {tgQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
                     </button>
                   )}
@@ -348,7 +377,7 @@ export default function HalamanLatihan() {
           {activeExercise === "listening" && (
             <div className="flex flex-col w-full h-full pt-4">
               {listStatus === "idle" && (
-                <div className="flex flex-col items-center justify-center text-center mt-10">
+                <div className="flex flex-col items-center justify-center text-center mt-6">
                   <div className="text-[100px] mb-4 drop-shadow-lg animate-pulse">🎧</div>
                   <h2 className="text-3xl font-black text-gray-800 mb-2">Dengarkan Kata</h2>
                   <p className="text-gray-500 font-bold mb-10 px-6">Dengarkan kata bahasa Inggrisnya, lalu pilih gambar yang paling tepat!</p>
@@ -356,7 +385,7 @@ export default function HalamanLatihan() {
                 </div>
               )}
               {listStatus === "playing" && listCurrentQ && (
-                <div className="flex flex-col w-full px-4">
+                <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {listQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {listScore}</span>
                   </div>
@@ -380,12 +409,8 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-                  {/* Tombol Lanjut */}
                   {listSelected && (
-                    <button 
-                      onClick={() => { (listQnIndex + 1 >= 10) ? setListStatus("finished") : (setListQnIndex(p => p + 1), generateListQuestion(listQuestions, listQnIndex + 1)); }} 
-                      className="w-full mt-8 py-4 rounded-2xl bg-purple-600 text-white font-black text-xl shadow-[0_6px_0_#581C87] active:translate-y-1 transition-all"
-                    >
+                    <button onClick={() => { (listQnIndex + 1 >= 10) ? setListStatus("finished") : (setListQnIndex(p => p + 1), generateListQuestion(listQuestions, listQnIndex + 1)); }} className="w-full mt-6 py-4 rounded-2xl bg-purple-600 text-white font-black text-xl shadow-[0_6px_0_#581C87] active:translate-y-1 transition-all">
                       {listQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
                     </button>
                   )}
@@ -407,7 +432,7 @@ export default function HalamanLatihan() {
           {activeExercise === "grammar" && (
             <div className="flex flex-col w-full h-full pt-4">
               {gramStatus === "idle" && (
-                <div className="flex flex-col items-center justify-center text-center mt-10">
+                <div className="flex flex-col items-center justify-center text-center mt-6">
                   <div className="text-[100px] mb-4 drop-shadow-lg animate-bounce">🍎</div>
                   <h2 className="text-3xl font-black text-gray-800 mb-2">Detektif Tata Bahasa</h2>
                   <p className="text-gray-500 font-bold mb-10 px-6">Pilih kata yang paling tepat untuk melengkapi bagian rumpang pada kalimat!</p>
@@ -415,7 +440,7 @@ export default function HalamanLatihan() {
                 </div>
               )}
               {gramStatus === "playing" && gramCurrentQ && (
-                <div className="flex flex-col w-full px-4">
+                <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {gramQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {gramScore}</span>
                   </div>
@@ -470,7 +495,7 @@ export default function HalamanLatihan() {
           {activeExercise === "posisi" && (
             <div className="flex flex-col w-full h-full pt-4">
               {posStatus === "idle" && (
-                <div className="flex flex-col items-center justify-center text-center mt-10">
+                <div className="flex flex-col items-center justify-center text-center mt-6">
                   <div className="text-[100px] mb-4 drop-shadow-lg animate-bounce">📍</div>
                   <h2 className="text-3xl font-black text-gray-800 mb-2">Latihan Letak & Posisi</h2>
                   <p className="text-gray-500 font-bold mb-10 px-6">Perhatikan gambarnya dan pilih kata tunjuk letak (preposition) yang tepat!</p>
@@ -478,7 +503,7 @@ export default function HalamanLatihan() {
                 </div>
               )}
               {posStatus === "playing" && posCurrentQ && (
-                <div className="flex flex-col w-full px-4">
+                <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {posQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {posScore}</span>
                   </div>
@@ -534,7 +559,7 @@ export default function HalamanLatihan() {
           {activeExercise === "verb_time" && (
             <div className="flex flex-col w-full h-full pt-4">
               {vtStatus === "idle" && (
-                <div className="flex flex-col items-center justify-center text-center mt-10">
+                <div className="flex flex-col items-center justify-center text-center mt-6">
                   <div className="text-[100px] mb-4 drop-shadow-lg animate-bounce">⏳</div>
                   <h2 className="text-3xl font-black text-gray-800 mb-2">Mesin Waktu Kata Kerja</h2>
                   <p className="text-gray-500 font-bold mb-10 px-6">Pilih bentuk masa lalu (Verb 2) atau kejadian yang telah berlalu (Verb 3) dengan tepat!</p>
@@ -542,7 +567,7 @@ export default function HalamanLatihan() {
                 </div>
               )}
               {vtStatus === "playing" && vtCurrentQ && (
-                <div className="flex flex-col w-full px-4">
+                <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {vtQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {vtScore}</span>
                   </div>
@@ -597,7 +622,7 @@ export default function HalamanLatihan() {
           {activeExercise === "cerita_trivia" && (
             <div className="flex flex-col w-full h-full pt-4">
               {trivStatus === "idle" && (
-                <div className="flex flex-col items-center justify-center text-center mt-10">
+                <div className="flex flex-col items-center justify-center text-center mt-6">
                   <div className="text-[100px] mb-4 drop-shadow-lg animate-pulse">📚</div>
                   <h2 className="text-3xl font-black text-gray-800 mb-2">Kuis Dongeng</h2>
                   <p className="text-gray-500 font-bold mb-10 px-6">Uji ingatanmu tentang kisah Gagak, Kelinci, Timun Mas, dan Kancil!</p>
@@ -605,7 +630,7 @@ export default function HalamanLatihan() {
                 </div>
               )}
               {trivStatus === "playing" && trivCurrentQ && (
-                <div className="flex flex-col w-full px-4">
+                <div className="flex flex-col w-full">
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {trivQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {trivScore}</span>
                   </div>
@@ -644,6 +669,84 @@ export default function HalamanLatihan() {
                   <h2 className="text-4xl font-black text-amber-500 mb-2">SEMPURNA!</h2><p className="text-gray-500 font-bold mb-6">Skor Kuis Dongeng kamu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{trivScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startTriviaGame} className="bg-sky-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#0369A1] active:translate-y-1 transition-all mb-4 hover:bg-sky-600">🔄 MAIN LAGI</button>
+                  <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* GAME 7: TANTANGAN MENGEJA (TYPING GAME) */}
+          {activeExercise === "typing" && (
+            <div className="flex flex-col w-full h-full pt-4">
+              {typeStatus === "idle" && (
+                <div className="flex flex-col items-center justify-center text-center mt-6">
+                  <div className="text-[100px] mb-4 drop-shadow-lg animate-bounce">⌨️</div>
+                  <h2 className="text-3xl font-black text-gray-800 mb-2">Tantangan Mengeja</h2>
+                  <p className="text-gray-500 font-bold mb-10 px-6">Uji ingatan ejaanmu! Ketik kata bahasa Inggris yang tepat dari gambar yang muncul.</p>
+                  <button onClick={startTypingGame} className="bg-rose-500 text-white font-black text-2xl py-5 w-[80%] rounded-3xl shadow-[0_8px_0_#BE123C] active:translate-y-2 transition-all hover:bg-rose-600">MULAI MENGETIK</button>
+                </div>
+              )}
+              {typeStatus === "playing" && typeCurrentQ && (
+                <div className="flex flex-col w-full">
+                  <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
+                    <span className="font-black text-gray-500 text-lg">Soal {typeQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {typeScore}</span>
+                  </div>
+                  
+                  {/* Soal Visual */}
+                  <div className="bg-rose-50 border-4 border-rose-200 rounded-[2rem] aspect-video flex flex-col items-center justify-center mb-6 shadow-sm">
+                    <span className="text-[90px] drop-shadow-md mb-2">{typeCurrentQ.icon}</span>
+                    <span className="text-xl font-black text-rose-800 bg-white px-4 py-1 rounded-xl shadow-sm uppercase tracking-widest">{typeCurrentQ.id}</span>
+                  </div>
+
+                  {/* Input Form */}
+                  <form onSubmit={handleTypeSubmit} className="flex flex-col gap-4">
+                    <input 
+                      type="text" 
+                      value={typeInput}
+                      onChange={(e) => setTypeInput(e.target.value)}
+                      disabled={typeChecked}
+                      placeholder="Ketik bahasa Inggrisnya..."
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      className={`w-full text-center text-2xl font-black py-5 rounded-2xl border-4 outline-none transition-all ${typeChecked ? (typeIsCorrect ? 'bg-green-50 border-green-400 text-green-700' : 'bg-rose-50 border-rose-400 text-rose-700 line-through') : 'bg-white border-gray-300 focus:border-rose-400 text-gray-800 shadow-sm'}`}
+                    />
+                    
+                    {!typeChecked ? (
+                      <button type="submit" disabled={!typeInput.trim()} className="w-full bg-rose-500 disabled:bg-rose-300 disabled:shadow-none text-white font-black text-xl py-4 rounded-2xl shadow-[0_6px_0_#BE123C] active:translate-y-1 transition-all">
+                        CEK JAWABAN
+                      </button>
+                    ) : null}
+                  </form>
+
+                  {/* Feedback (Hanya muncul jika sudah submit) */}
+                  {typeChecked && (
+                    <div className="mt-6 flex flex-col gap-4">
+                      {typeIsCorrect ? (
+                        <div className="bg-green-100 border-2 border-green-400 p-4 rounded-xl text-center">
+                          <p className="text-lg font-black text-green-700">✅ EJAAN SEMPURNA!</p>
+                        </div>
+                      ) : (
+                        <div className="bg-rose-100 border-2 border-rose-400 p-4 rounded-xl text-center">
+                          <p className="text-sm font-black text-rose-700 mb-1">❌ ADA HURUF YANG SALAH</p>
+                          <p className="text-gray-700 font-bold">Jawaban yang benar adalah:</p>
+                          <p className="text-3xl font-black text-rose-800 tracking-wider mt-1">{typeCurrentQ.en}</p>
+                        </div>
+                      )}
+                      
+                      <button onClick={() => { (typeQnIndex + 1 >= 10) ? setTypeStatus("finished") : (setTypeQnIndex(p => p + 1), setTypeCurrentQ(typeQuestions[typeQnIndex + 1]), setTypeInput(""), setTypeChecked(false)); }} className="w-full py-4 rounded-2xl bg-rose-600 text-white font-black text-xl shadow-[0_6px_0_#9F1239] active:translate-y-1 transition-all">
+                        {typeQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+              {typeStatus === "finished" && (
+                <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">HEBAT!</h2><p className="text-gray-500 font-bold mb-6">Skor Mengeja kamu adalah:</p>
+                  <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{typeScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
+                  <button onClick={startTypingGame} className="bg-rose-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#BE123C] active:translate-y-1 transition-all mb-4 hover:bg-rose-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
                 </div>
               )}
