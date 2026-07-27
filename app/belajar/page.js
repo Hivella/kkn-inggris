@@ -120,7 +120,6 @@ export default function HalamanBelajar() {
   ];
 
   const sayurSayuran = [{id:"Wortel",en:"Carrot",read:"ke-ret",icon:"🥕"},{id:"Kentang",en:"Potato",read:"po-tei-tou",icon:"🥔"},{id:"Jagung",en:"Corn",read:"korn",icon:"🌽"},{id:"Singkong",en:"Cassava",read:"ka-sa-va",icon:"🍠"},{id:"Bayam",en:"Spinach",read:"spi-nic",icon:"🥬"},{id:"Tomat",en:"Tomato",read:"to-ma-tou",icon:"🍅"},{id:"Cabai",en:"Chili",read:"ci-li",icon:"🌶️"},{id:"Brokoli",en:"Broccoli",read:"bro-ko-li",icon:"🥦"},{id:"Bawang",en:"Onion",read:"o-ni-yen",icon:"🧅"}];
-
   const bendaRumahRuangan = [{id:"Rumah",en:"House",read:"haus",icon:"🏠"},{id:"Kamar Tidur",en:"Bedroom",read:"bed-rum",icon:"🛏️"},{id:"Kamar Mandi",en:"Bathroom",read:"bath-rum",icon:"🛁"},{id:"Ruang Keluarga",en:"Living Room",read:"li-ving rum",icon:"🛋️"},{id:"Dapur",en:"Kitchen",read:"ki-cen",icon:"🍳"},{id:"Ruang Tamu",en:"Guest Room",read:"gest rum",icon:"🪑"},{id:"Selasar / Lorong",en:"Hallway",read:"hol-wei",icon:"🚶"},{id:"Halaman Rumah",en:"Yard",read:"yard",icon:"🏡"},{id:"Lantai",en:"Floor",read:"flor",icon:"🟫"},{id:"Dinding",en:"Wall",read:"wol",icon:"🧱"},{id:"Cat Dinding",en:"Wall Paint",read:"wol peint",icon:"🎨"},{id:"Pintu",en:"Door",read:"dor",icon:"🚪"},{id:"Jendela",en:"Window",read:"win-dou",icon:"🪟"},{id:"Pagar",en:"Fence",read:"fens",icon:"⛩️"},{id:"Bambu",en:"Bamboo",read:"bem-bu",icon:"🎋"},{id:"Pohon Bambu",en:"Bamboo Tree",read:"bem-bu tri",icon:"🎋"}];
   const bendaPerabotan = [{id:"Meja",en:"Table",read:"tei-bel",icon:"🪑"},{id:"Kursi",en:"Chair",read:"cer",icon:"🪑"},{id:"Lampu",en:"Lamp",read:"lemp",icon:"💡"},{id:"Kompor",en:"Stove",read:"stouv",icon:"🍳"},{id:"Sapu",en:"Broom",read:"brum",icon:"🧹"},{id:"Pel",en:"Mop",read:"mop",icon:"🧹"},{id:"Tempat Sampah",en:"Trash Can",read:"tres ken",icon:"🗑️"},{id:"Karpet",en:"Carpet",read:"kar-pet",icon:"🟥"},{id:"Tirai",en:"Curtain",read:"ker-ten",icon:"🪟"}];
   const bendaKamar = [{id:"Kasur",en:"Bed",read:"bed",icon:"🛌"},{id:"Bantal",en:"Pillow",read:"pi-lou",icon:"☁️"},{id:"Guling",en:"Bolster",read:"bol-ster",icon:"🥖"},{id:"Selimut",en:"Blanket",read:"bleng-ket",icon:"🛏️"}];
@@ -181,7 +180,6 @@ export default function HalamanBelajar() {
     {scene:5,image:"/Timun_Mas_Raksasa/Timun_Mas_Raksasa_5.png",emoji:"🌊",en:"She throws magic salt. It becomes a very deep and wide sea!",id:"Dia melempar garam ajaib. Itu menjadi lautan yang sangat dalam dan luas!",read:"si throus me-jik solt. it bi-kams e ve-ri dip en waid si!",breakdown:[{word:"She",meaning:"Dia"},{word:"Throws",meaning:"Melempar",note:"throw = melempar, menjadi throws karena she."+nVS},{word:"Magic",meaning:"Ajaib"},{word:"Salt",meaning:"Garam"},{word:"It",meaning:"Itu"},{word:"Becomes",meaning:"Menjadi",note:"become = menjadi, menjadi becomes karena it."+nVS},{word:"A",meaning:"Sebuah"},{word:"Very",meaning:"Sangat"},{word:"Deep",meaning:"Dalam"},{word:"And",meaning:"Dan"},{word:"Wide",meaning:"Luas"},{word:"Sea",meaning:"Lautan"}]},
     {scene:6,image:"/Timun_Mas_Raksasa/Timun_Mas_Raksasa_6.png",emoji:"🌋",en:"Finally, she throws magic mud. The giant sinks and Timun Mas is safe!",id:"Akhirnya, dia melempar lumpur ajaib. Raksasa itu tenggelam dan Timun Mas selamat!",read:"fai-ne-li, si throus me-jik mad. dhe jai-yent sinks en ti-mun mas is seif!",breakdown:[{word:"Finally",meaning:"Akhirnya"},{word:"She",meaning:"Dia"},{word:"Throws",meaning:"Melempar",note:"throw = melempar, menjadi throws karena she."+nVS},{word:"Magic",meaning:"Ajaib"},{word:"Mud",meaning:"Lumpur"},{word:"The",meaning:"Itu"},{word:"Giant",meaning:"Raksasa"},{word:"Sinks",meaning:"Tenggelam",note:"sink = tenggelam, menjadi sinks karena giant tunggal."+nVS},{word:"And",meaning:"Dan"},{word:"Timun Mas",meaning:"Timun Mas"},{word:"Is",meaning:"Keadaan"},{word:"Safe",meaning:"Aman/Selamat"}]}
   ];
-
   const storyKancil = [
     {scene:1,image:"/Kancil_Buaya/Kancil_Buaya_1.png",emoji:"🦌",en:"A smart mouse deer is walking in the forest. He is very hungry.",id:"Seekor kancil yang pintar sedang berjalan di hutan. Dia sangat lapar.",read:"e smart maus dir is wo-king in dhe fo-rest. hi is ve-ri hang-gri.",breakdown:[{word:"A",meaning:"Seekor"},{word:"Smart",meaning:"Pintar"},{word:"Mouse deer",meaning:"Kancil"},{word:"Is walking",meaning:"Sedang berjalan",note:"walk = berjalan, is walking = sedang berjalan."},{word:"In",meaning:"Di dalam"},{word:"The",meaning:"Itu"},{word:"Forest",meaning:"Hutan"},{word:"He",meaning:"Dia"},{word:"Is",meaning:"Keadaan"},{word:"Very",meaning:"Sangat"},{word:"Hungry",meaning:"Lapar"}]},
     {scene:2,image:"/Kancil_Buaya/Kancil_Buaya_2.png",emoji:"🍎",en:"He sees yummy red apples across a big and dangerous river.",id:"Dia melihat apel merah yang lezat di seberang sungai yang besar dan berbahaya.",read:"hi sis ya-mi red e-pels e-kros e big en dein-je-res ri-ver.",breakdown:[{word:"He",meaning:"Dia"},{word:"Sees",meaning:"Melihat",note:"see = melihat, menjadi sees karena he."+nVS},{word:"Yummy",meaning:"Lezat"},{word:"Red",meaning:"Merah"},{word:"Apples",meaning:"Apel-apel",note:"apple = apel, apples = apelnya lebih dari satu."},{word:"Across",meaning:"Di seberang"},{word:"A",meaning:"Sebuah"},{word:"Big",meaning:"Besar"},{word:"And",meaning:"Dan"},{word:"Dangerous",meaning:"Berbahaya"},{word:"River",meaning:"Sungai"}]},
@@ -292,15 +290,15 @@ export default function HalamanBelajar() {
   const StoryBreakdownCard = ({ b }) => {
     const [s, setS] = useState(false);
     return (
-      <div className="flex flex-col bg-amber-50 p-3 rounded-xl border border-amber-100 shadow-sm text-center h-fit">
+      <div className="flex flex-col bg-amber-50 p-3 rounded-xl border border-amber-100 shadow-sm text-center h-fit overflow-hidden w-full">
         <span className="font-black text-amber-600 text-[16px] mb-1">{b.word}</span>
         <span className="font-bold text-gray-500 text-[13px]">{b.meaning}</span>
         {b.note && (
           <div className="mt-2 flex flex-col w-full">
             <button onClick={() => setS(!s)} className="flex items-center justify-between bg-amber-200/50 hover:bg-amber-300/50 active:scale-95 text-amber-800 text-[11px] font-black px-2 py-1.5 rounded-md transition-all w-full">
-              <span>💡 Penjelasan</span><span className="text-[9px]">{s ? '▲' : '▼'}</span>
+              <span>💡 Penjelasan</span><span className="text-[9px] shrink-0 ml-1">{s ? '▲' : '▼'}</span>
             </button>
-            {s && <div className="mt-1 text-[11px] font-bold text-amber-900 bg-amber-100/50 px-2 py-2 rounded-md leading-tight text-left border border-amber-200/50">{b.note}</div>}
+            {s && <div className="mt-1 text-[11px] font-bold text-amber-900 bg-amber-100/50 px-2 py-2 rounded-md leading-relaxed text-left border border-amber-200/50 whitespace-normal break-words w-full">{b.note}</div>}
           </div>
         )}
       </div>
@@ -373,18 +371,36 @@ export default function HalamanBelajar() {
         <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ backgroundImage: "url('/bg-forest.png')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
       )}
       <div ref={scrollContainerRef} className="relative z-10 h-full w-full overflow-y-auto">
-        <div className={`bg-white p-5 shadow-sm flex items-center justify-between sticky top-0 z-50 ${activeMenu.startsWith('story_') ? '' : 'rounded-b-3xl'}`}>
-          <div className="flex items-center gap-4">
+        
+        {/* =======================================================
+            HEADER DENGAN LAYOUT 3 KOLOM SEIMBANG (ANTI GEPENG)
+            ======================================================= */}
+        <div className={`bg-white px-4 py-3 shadow-sm flex items-center justify-between sticky top-0 z-50 gap-2 ${activeMenu.startsWith('story_') ? '' : 'rounded-b-3xl'}`}>
+          
+          <div className="flex-1 flex justify-start">
             {activeMenu === "utama" ? (
-              <Link href="/" className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">⬅️ Kembali</Link>
+              <Link href="/" className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
+                ⬅️ Kembali
+              </Link>
             ) : (
-              <button onClick={handleBack} className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">⬅️ Kembali</button>
+              <button onClick={handleBack} className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
+                ⬅️ Kembali
+              </button>
             )}
-            <h1 className="text-xl font-black text-gray-800 line-clamp-1">{getHeaderTitle()}</h1>
           </div>
-          {(["angka", "orang", "hewan", "buah", "aktivitas"].includes(activeMenu)) && (
-            <button onClick={() => setActiveMenu(activeMenu + "_contoh")} className="bg-purple-100 text-purple-700 px-3 py-2 rounded-xl font-bold text-sm active:scale-95 transition-transform whitespace-nowrap shadow-sm border-2 border-purple-200 shrink-0">💡 Contoh</button>
-          )}
+          
+          <h1 className="text-[16px] sm:text-[17px] font-black text-gray-800 truncate text-center shrink-0 px-1">
+            {getHeaderTitle()}
+          </h1>
+          
+          <div className="flex-1 flex justify-end">
+            {(["angka", "orang", "hewan", "buah", "aktivitas"].includes(activeMenu)) && (
+              <button onClick={() => setActiveMenu(activeMenu + "_contoh")} className="bg-purple-100 text-purple-700 px-3 py-2 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shadow-sm border-2 border-purple-200 shrink-0 flex items-center justify-center h-[40px]">
+                💡 Contoh
+              </button>
+            )}
+          </div>
+
         </div>
 
         <div className={activeMenu.startsWith("story_") ? "pb-12" : "p-5 pb-12"}>

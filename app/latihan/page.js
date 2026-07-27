@@ -4,73 +4,31 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 // ==========================================
-// BANK DATA KOSAKATA & GRAMMAR (MINIFIED)
+// BANK DATA KOSAKATA & GRAMMAR (SUPER MINIFIED - 200+ SOAL)
 // ==========================================
 const kamusKosakata = [
-  {en:"Cat",id:"Kucing",icon:"🐈"},{en:"Dog",id:"Anjing",icon:"🐕"},{en:"Bird",id:"Burung",icon:"🐦"},{en:"Fish",id:"Ikan",icon:"🐟"},{en:"Apple",id:"Apel",icon:"🍎"},{en:"Banana",id:"Pisang",icon:"🍌"},{en:"Carrot",id:"Wortel",icon:"🥕"},{en:"House",id:"Rumah",icon:"🏠"},{en:"Book",id:"Buku",icon:"📖"},{en:"Car",id:"Mobil",icon:"🚗"},{en:"Table",id:"Meja",icon:"🪑"},{en:"Shoes",id:"Sepatu",icon:"👟"},{en:"Man",id:"Pria",icon:"👨"},{en:"Woman",id:"Wanita",icon:"👩"},{en:"Boy",id:"Anak Laki-laki",icon:"👦"},{en:"Girl",id:"Anak Perempuan",icon:"👧"},{en:"Water",id:"Air",icon:"💧"},{en:"Fire",id:"Api",icon:"🔥"},{en:"Tree",id:"Pohon",icon:"🌳"},{en:"Flower",id:"Bunga",icon:"🌸"},{en:"Sun",id:"Matahari",icon:"☀️"},{en:"Moon",id:"Bulan",icon:"🌙"},{en:"Star",id:"Bintang",icon:"⭐"},{en:"Cloud",id:"Awan",icon:"☁️"},{en:"Pants",id:"Celana",icon:"👖"},{en:"Shirt",id:"Kemeja",icon:"👕"},{en:"Glasses",id:"Kacamata",icon:"👓"},{en:"Chicken",id:"Ayam",icon:"🐓"},{en:"Cow",id:"Sapi",icon:"🐄"},{en:"Horse",id:"Kuda",icon:"🐎"}
+  {en:"Cat",id:"Kucing",icon:"🐈"},{en:"Dog",id:"Anjing",icon:"🐕"},{en:"Bird",id:"Burung",icon:"🐦"},{en:"Fish",id:"Ikan",icon:"🐟"},{en:"Apple",id:"Apel",icon:"🍎"},{en:"Banana",id:"Pisang",icon:"🍌"},{en:"Carrot",id:"Wortel",icon:"🥕"},{en:"House",id:"Rumah",icon:"🏠"},{en:"Book",id:"Buku",icon:"📖"},{en:"Car",id:"Mobil",icon:"🚗"},{en:"Table",id:"Meja",icon:"🪑"},{en:"Shoes",id:"Sepatu",icon:"👟"},{en:"Man",id:"Pria",icon:"👨"},{en:"Woman",id:"Wanita",icon:"👩"},{en:"Boy",id:"Anak Laki-laki",icon:"👦"},{en:"Girl",id:"Anak Perempuan",icon:"👧"},{en:"Water",id:"Air",icon:"💧"},{en:"Fire",id:"Api",icon:"🔥"},{en:"Tree",id:"Pohon",icon:"🌳"},{en:"Flower",id:"Bunga",icon:"🌸"},{en:"Sun",id:"Matahari",icon:"☀️"},{en:"Moon",id:"Bulan",icon:"🌙"},{en:"Star",id:"Bintang",icon:"⭐"},{en:"Cloud",id:"Awan",icon:"☁️"},{en:"Pants",id:"Celana",icon:"👖"},{en:"Shirt",id:"Kemeja",icon:"👕"},{en:"Glasses",id:"Kacamata",icon:"👓"},{en:"Chicken",id:"Ayam",icon:"🐓"},{en:"Cow",id:"Sapi",icon:"🐄"},{en:"Horse",id:"Kuda",icon:"🐎"},
+  {en:"Fly",id:"Lalat",icon:"🪰"},{en:"Mosquito",id:"Nyamuk",icon:"🦟"},{en:"Ant",id:"Semut",icon:"🐜"},{en:"Spider",id:"Laba-laba",icon:"🕷️"},{en:"Duck",id:"Bebek",icon:"🦆"},{en:"Goat",id:"Kambing",icon:"🐐"},{en:"Frog",id:"Katak",icon:"🐸"},{en:"Turtle",id:"Kura-kura",icon:"🐢"},{en:"Snake",id:"Ular",icon:"🐍"},{en:"Strawberry",id:"Stroberi",icon:"🍓"},{en:"Pineapple",id:"Nanas",icon:"🍍"},{en:"Mango",id:"Mangga",icon:"🥭"},{en:"Watermelon",id:"Semangka",icon:"🍉"},{en:"Tomato",id:"Tomat",icon:"🍅"},{en:"Broccoli",id:"Brokoli",icon:"🥦"},{en:"Bed",id:"Kasur",icon:"🛌"},{en:"Door",id:"Pintu",icon:"🚪"},{en:"Window",id:"Jendela",icon:"🪟"},{en:"Computer",id:"Komputer",icon:"💻"},{en:"Spoon",id:"Sendok",icon:"🥄"},
+  {en:"One",id:"Satu",icon:"1️⃣"},{en:"Two",id:"Dua",icon:"2️⃣"},{en:"Three",id:"Tiga",icon:"3️⃣"},{en:"Ten",id:"Sepuluh",icon:"🔟"},{en:"Walk",id:"Berjalan",icon:"🚶"},{en:"Run",id:"Berlari",icon:"🏃"},{en:"Jump",id:"Lompat",icon:"🦘"},{en:"Eat",id:"Makan",icon:"🍽️"},{en:"Drink",id:"Minum",icon:"🥤"},{en:"Sleep",id:"Tidur",icon:"😴"},{en:"Sit",id:"Duduk",icon:"🪑"},{en:"Open",id:"Membuka",icon:"🚪"},{en:"Pee",id:"Pipis",icon:"🚽"},{en:"Poop",id:"Eek",icon:"💩"},{en:"Bath",id:"Mandi",icon:"🛁"},{en:"Plant",id:"Menanam",icon:"🌱"},{en:"Harvest",id:"Memanen",icon:"🌾"},{en:"Fish",id:"Memancing",icon:"🎣"},{en:"Ride",id:"Mengendarai",icon:"🚲"},{en:"See",id:"Melihat",icon:"👀"},{en:"Hear",id:"Mendengar",icon:"👂"},{en:"Listen",id:"Mendengarkan",icon:"🎧"},{en:"Watch",id:"Menonton",icon:"📺"},{en:"Read",id:"Membaca",icon:"📖"},{en:"Draw",id:"Menggambar",icon:"🎨"},{en:"Study",id:"Belajar",icon:"📚"},{en:"Sing",id:"Bernyanyi",icon:"🎤"},{en:"Play",id:"Bermain",icon:"🪁"},{en:"Bring",id:"Membawa",icon:"📦"},{en:"Push",id:"Mendorong",icon:"🛒"}
 ];
 
 const kamusGrammar = [
-  { q: "I have 1 ___.", opt: ["apple", "apples"], ans: "apple", note: "Benda tunggal (berjumlah 1) tidak perlu ditambah akhiran -s." },
-  { q: "I have 2 ___.", opt: ["cat", "cats"], ans: "cats", note: "Benda yang lebih dari 1 (jamak) harus ditambah akhiran -s." },
-  { q: "The ___ is walking.", opt: ["dog", "dogs"], ans: "dog", note: "Kata 'is' digunakan untuk subjek yang berjumlah tunggal (1)." },
-  { q: "The ___ are swimming.", opt: ["duck", "ducks"], ans: "ducks", note: "Kata 'are' digunakan untuk subjek yang berjumlah jamak (lebih dari 1)." },
-  { q: "I am eating ___ apple.", opt: ["a", "an"], ans: "an", note: "Gunakan 'an' karena kata 'apple' berawalan huruf vokal (a, i, u, e, o)." },
-  { q: "I need 10 ___.", opt: ["book", "books"], ans: "books", note: "Ada 10 buku (lebih dari satu), jadi kata 'book' ditambah -s." },
-  { q: "We are ___.", opt: ["boy", "boys"], ans: "boys", note: "'We' (kami) artinya lebih dari satu orang, jadi gunakan 'boys'." },
-  { q: "She is ___ girl.", opt: ["a", "an"], ans: "a", note: "Gunakan 'a' karena kata 'girl' berawalan huruf konsonan." },
-  { q: "I see 3 ___ sitting.", opt: ["man", "men"], ans: "men", note: "Bentuk jamak dari 'man' (pria) adalah 'men', bukan mans." },
-  { q: "My father ___ a man.", opt: ["is", "are"], ans: "is", note: "'My father' adalah orang ketiga tunggal (dia), jadi gunakan 'is'." },
-  { q: "The horses ___ running.", opt: ["is", "are"], ans: "are", note: "'Horses' memiliki akhiran -s yang berarti jamak, jadi gunakan 'are'." },
-  { q: "I eat ___ orange.", opt: ["a", "an"], ans: "an", note: "Kata 'orange' berawalan bunyi vokal (o), jadi gunakan 'an'." },
-  { q: "2 ___ running.", opt: ["woman", "women"], ans: "women", note: "Bentuk jamak dari 'woman' (wanita) adalah 'women'." },
-  { q: "The dog ___ inside the house.", opt: ["is", "are"], ans: "is", note: "Hanya ada 1 anjing (the dog), jadi gunakan 'is'." },
-  { q: "I want to buy a ___.", opt: ["toy", "toys"], ans: "toy", note: "Ada kata 'a' (sebuah), yang berarti bendanya hanya ada 1." }
+  {q:"I have 1 ___.",opt:["apple","apples"],ans:"apple",note:"Benda tunggal (berjumlah 1) tidak perlu ditambah akhiran -s."},{q:"I have 2 ___.",opt:["cat","cats"],ans:"cats",note:"Benda yang lebih dari 1 (jamak) harus ditambah akhiran -s."},{q:"The ___ is walking.",opt:["dog","dogs"],ans:"dog",note:"Kata 'is' digunakan untuk subjek yang berjumlah tunggal (1)."},{q:"The ___ are swimming.",opt:["duck","ducks"],ans:"ducks",note:"Kata 'are' digunakan untuk subjek yang berjumlah jamak (lebih dari 1)."},{q:"I am eating ___ apple.",opt:["a","an"],ans:"an",note:"Gunakan 'an' karena kata 'apple' berawalan huruf vokal (a, i, u, e, o)."},{q:"I need 10 ___.",opt:["book","books"],ans:"books",note:"Ada 10 buku (lebih dari satu), jadi kata 'book' ditambah -s."},{q:"We are ___.",opt:["boy","boys"],ans:"boys",note:"'We' (kami) artinya lebih dari satu orang, jadi gunakan 'boys'."},{q:"She is ___ girl.",opt:["a","an"],ans:"a",note:"Gunakan 'a' karena kata 'girl' berawalan huruf konsonan."},{q:"I see 3 ___ sitting.",opt:["man","men"],ans:"men",note:"Bentuk jamak dari 'man' (pria) adalah 'men', bukan mans."},{q:"My father ___ a man.",opt:["is","are"],ans:"is",note:"'My father' adalah orang ketiga tunggal (dia), jadi gunakan 'is'."},{q:"The horses ___ running.",opt:["is","are"],ans:"are",note:"'Horses' memiliki akhiran -s yang berarti jamak, jadi gunakan 'are'."},{q:"I eat ___ orange.",opt:["a","an"],ans:"an",note:"Kata 'orange' berawalan bunyi vokal (o), jadi gunakan 'an'."},{q:"2 ___ running.",opt:["woman","women"],ans:"women",note:"Bentuk jamak dari 'woman' (wanita) adalah 'women'."},{q:"The dog ___ inside the house.",opt:["is","are"],ans:"is",note:"Hanya ada 1 anjing (the dog), jadi gunakan 'is'."},{q:"I want to buy a ___.",opt:["toy","toys"],ans:"toy",note:"Ada kata 'a' (sebuah), yang berarti bendanya hanya ada 1."},{q:"You ___ a mother.",opt:["is","are"],ans:"are",note:"Kata ganti 'You' (kamu) selalu menggunakan pasangan 'are'."},{q:"They ___ eating mangos.",opt:["is","are"],ans:"are",note:"'They' (mereka) berjumlah lebih dari satu, sehingga memakai 'are'."},{q:"I am ___ a man.",opt:["see","seeing"],ans:"seeing",note:"Ada 'am' yang menunjukkan sedang dilakukan, maka kata kerja harus ditambah -ing."},{q:"The cows are ___.",opt:["drink","drinking"],ans:"drinking",note:"Ada 'are' yang menunjukkan sedang dilakukan (Present Continuous), gunakan Verb-ing."},{q:"She ___ playing football.",opt:["like","likes"],ans:"likes",note:"'She' (dia tunggal) maka kata kerjanya ditambah -s (likes)."},{q:"I ___ water.",opt:["drinks","drink"],ans:"drink",note:"Subjek 'I' (aku) tidak memakai tambahan -s pada kata kerja."},{q:"We ___ banana.",opt:["eats","eat"],ans:"eat",note:"Subjek 'We' (kami) jamak, jadi kata kerja tidak ditambah -s."},{q:"They are ___ 5 mangos.",opt:["eat","eating"],ans:"eating",note:"Ada kata 'are', yang berarti sedang dilakukan, jadi tambah -ing."},{q:"I have 2 ___.",opt:["friend","friends"],ans:"friends",note:"Jumlah teman lebih dari satu (2), jadi ditambah akhiran -s."},{q:"I have 1 ___.",opt:["father","fathers"],ans:"father",note:"Karena hanya 1 (tunggal), kata bendanya tidak ditambah -s."},{q:"He ___ a black motorcycle.",opt:["has","have"],ans:"has",note:"Subjek 'He' (orang ketiga tunggal) memakai 'has', bukan 'have'."},{q:"The apple ___ red.",opt:["is","are"],ans:"is",note:"Apelnya hanya ada 1 (tunggal), maka memakai 'is'."},{q:"I ___ happy.",opt:["am","is"],ans:"am",note:"Pasangan 'I' (aku) selalu 'am'."},{q:"I need 3 ___.",opt:["pencil","pencils"],ans:"pencils",note:"Lebih dari 1, tambah akhiran -s."},{q:"The cats ___ walking.",opt:["is","are"],ans:"are",note:"Subjek 'cats' jamak (lebih dari 1), gunakan 'are'."},{q:"I ___ a boy.",opt:["am","is"],ans:"am",note:"Pasangan 'I' selalu 'am'."},{q:"You ___ a girl.",opt:["are","is"],ans:"are",note:"Pasangan 'You' selalu 'are'."},{q:"We ___ boys.",opt:["is","are"],ans:"are",note:"'We' jamak, gunakan 'are'."},{q:"They ___ parents.",opt:["is","are"],ans:"are",note:"'They' jamak, gunakan 'are'."},{q:"I see 1 ___.",opt:["man","men"],ans:"man",note:"Karena 1 (tunggal), gunakan 'man'."},{q:"I see 3 ___.",opt:["man","men"],ans:"men",note:"Karena 3 (jamak), gunakan 'men'."},{q:"We are ___.",opt:["girl","girls"],ans:"girls",note:"'We' jamak, jadi bendanya ditambah -s."},{q:"The fly ___ eating.",opt:["is","are"],ans:"is",note:"'Fly' tunggal, gunakan 'is'."},{q:"The ducks ___ swimming.",opt:["is","are"],ans:"are",note:"'Ducks' jamak, gunakan 'are'."},{q:"The cows ___ drinking.",opt:["is","are"],ans:"are",note:"'Cows' jamak, gunakan 'are'."}
 ];
 
 const kamusPosisi = [
-  { icon: "📦", q: "The ball is ___ the box.", opt: ["in", "on", "under"], ans: "in", note: "'in' digunakan untuk menyatakan posisi di dalam suatu ruang atau wadah." },
-  { icon: "📕", q: "The book is ___ the table.", opt: ["on", "in", "above"], ans: "on", note: "'on' digunakan untuk menyatakan posisi di atas dan menempel pada permukaan." },
-  { icon: "🏫", q: "I am ___ school.", opt: ["at", "on", "under"], ans: "at", note: "'at' digunakan untuk menunjukkan lokasi atau titik tempat yang spesifik." },
-  { icon: "🦅", q: "The bird flies ___ the tree.", opt: ["above", "under", "in"], ans: "above", note: "'above' berarti di atas, namun posisinya melayang atau tidak menempel." },
-  { icon: "🐈", q: "The cat sleeps ___ the chair.", opt: ["under", "in", "above"], ans: "under", note: "'under' berarti berada tepat di bawah suatu benda (tertutupi)." },
-  { icon: "🖼️", q: "The picture is ___ the clock.", opt: ["below", "above", "on"], ans: "below", note: "'below' berarti posisinya lebih rendah dari benda lain." },
-  { icon: "🏠", q: "The dog is ___ the house.", opt: ["inside", "outside", "above"], ans: "inside", note: "'inside' menekankan bahwa subjek benar-benar berada di bagian dalam ruangan." },
-  { icon: "🪁", q: "We play ___.", opt: ["outside", "inside", "under"], ans: "outside", note: "'outside' berarti berada di area luar suatu bangunan." },
-  { icon: "🍎", q: "The apple is ___ the table.", opt: ["on", "in", "under"], ans: "on", note: "'on' berarti di atas dan menempel pada permukaan meja." },
-  { icon: "👟", q: "The shoes are ___ the bed.", opt: ["under", "above", "in"], ans: "under", note: "'under' berarti berada di bawah suatu benda." }
+  {icon:"📦",q:"The ball is ___ the box.",opt:["in","on","under"],ans:"in",note:"'in' digunakan untuk menyatakan posisi di dalam suatu ruang atau wadah."},{icon:"📕",q:"The book is ___ the table.",opt:["on","in","above"],ans:"on",note:"'on' digunakan untuk menyatakan posisi di atas dan menempel pada permukaan."},{icon:"🏫",q:"I am ___ school.",opt:["at","on","under"],ans:"at",note:"'at' digunakan untuk menunjukkan lokasi atau titik tempat yang spesifik."},{icon:"🦅",q:"The bird flies ___ the tree.",opt:["above","under","in"],ans:"above",note:"'above' berarti di atas, namun posisinya melayang atau tidak menempel."},{icon:"🐈",q:"The cat sleeps ___ the chair.",opt:["under","in","above"],ans:"under",note:"'under' berarti berada tepat di bawah suatu benda (tertutupi)."},{icon:"🖼️",q:"The picture is ___ the clock.",opt:["below","above","on"],ans:"below",note:"'below' berarti posisinya lebih rendah dari benda lain."},{icon:"🏠",q:"The dog is ___ the house.",opt:["inside","outside","above"],ans:"inside",note:"'inside' menekankan bahwa subjek benar-benar berada di bagian dalam ruangan."},{icon:"🪁",q:"We play ___.",opt:["outside","inside","under"],ans:"outside",note:"'outside' berarti berada di area luar suatu bangunan."},{icon:"🍎",q:"The apple is ___ the table.",opt:["on","in","under"],ans:"on",note:"'on' berarti di atas dan menempel pada permukaan meja."},{icon:"👟",q:"The shoes are ___ the bed.",opt:["under","above","in"],ans:"under",note:"'under' berarti berada di bawah suatu benda."},{icon:"🥛",q:"The water is ___ the glass.",opt:["in","on","above"],ans:"in",note:"Air berada di dalam ruang gelas, jadi menggunakan 'in'."},{icon:"🛏️",q:"I sleep ___ the bed.",opt:["on","under","above"],ans:"on",note:"Tidur di atas permukaan kasur menggunakan 'on'."},{icon:"🛋️",q:"We sit ___ the chair.",opt:["on","in","under"],ans:"on",note:"Duduk di atas permukaan kursi menempel, jadi 'on'."},{icon:"☁️",q:"The cloud is ___ the tree.",opt:["above","on","in"],ans:"above",note:"Awan ada di atas pohon tapi melayang tidak menempel, jadi 'above'."},{icon:"🧹",q:"The broom is ___ the table.",opt:["under","on","inside"],ans:"under",note:"Sapu diletakkan di bawah meja, jadi 'under'."},{icon:"🗑️",q:"The trash is ___ the trash can.",opt:["inside","outside","above"],ans:"inside",note:"Sampah berada tepat di bagian dalam tempat sampah ('inside')."},{icon:"⚽",q:"We play football ___.",opt:["outside","inside","under"],ans:"outside",note:"Bermain bola dilakukan di area luar ('outside')."},{icon:"📺",q:"The television is ___ the wall.",opt:["on","under","in"],ans:"on",note:"TV yang menempel di dinding menggunakan 'on'."},{icon:"📦",q:"The cat is ___ the box.",opt:["inside","above","on"],ans:"inside",note:"Di dalam kotak menggunakan 'inside' atau 'in'."},{icon:"🌤️",q:"The bird flies ___ the sky.",opt:["in","on","under"],ans:"in",note:"Di langit menggunakan 'in the sky'."},{icon:"🛏️",q:"I am ___ the bedroom.",opt:["in","on","above"],ans:"in",note:"Di dalam ruangan menggunakan 'in'."},{icon:"🪁",q:"We play ___ the house.",opt:["outside","inside","under"],ans:"outside",note:"Bermain layangan di luar rumah ('outside')."},{icon:"🖼️",q:"The picture is ___ the wall.",opt:["on","in","under"],ans:"on",note:"Menempel di dinding menggunakan 'on'."},{icon:"🍎",q:"The apple is ___ my hand.",opt:["in","on","under"],ans:"in",note:"Di dalam genggaman tangan menggunakan 'in'."},{icon:"🐕",q:"The dog sleeps ___ the table.",opt:["under","on","above"],ans:"under",note:"Tidur di bawah meja menggunakan 'under'."}
 ];
 
 const kamusVerbTime = [
-  { q: "Hari ini aku Eat. Kemarin aku ___.", opt: ["Eat", "Ate", "Eaten"], ans: "Ate", note: "Untuk kejadian yang sudah lewat (kemarin), kita menggunakan Verb 2 (V2), yaitu 'Ate'." },
-  { q: "Aku selalu Drink susu. Tadi pagi aku ___ susu.", opt: ["Drink", "Drank", "Drunk"], ans: "Drank", note: "'Drank' adalah Verb 2 dari Drink, digunakan untuk masa lalu." },
-  { q: "Aku Sleep nyenyak. Semalam aku ___ nyenyak.", opt: ["Sleep", "Slept", "Sleeping"], ans: "Slept", note: "Kejadian tadi malam (semalam) menggunakan Verb 2, yaitu 'Slept'." },
-  { q: "Aku suka Run. Kemarin aku ___ sangat cepat.", opt: ["Run", "Ran", "Running"], ans: "Ran", note: "'Ran' adalah bentuk masa lalu (Verb 2) dari Run." },
-  { q: "Aku sudah ___ apel itu.", opt: ["Eat", "Ate", "Eaten"], ans: "Eaten", note: "Setelah kata 'sudah' (have/has), kita menggunakan Kata Kerja bentuk ke-3 (V3), yaitu 'Eaten'." },
-  { q: "Pakaian ini sudah ___ olehku.", opt: ["Wear", "Wore", "Worn"], ans: "Worn", note: "Kalimat pasif (dikenai tindakan / 'di...') selalu menggunakan Kata Kerja bentuk ke-3 (V3), yaitu 'Worn'." },
-  { q: "Setiap pagi aku Walk. Kemarin aku ___ ke sekolah.", opt: ["Walk", "Walked", "Walking"], ans: "Walked", note: "'Walked' adalah bentuk lampau (Verb 2) dari Walk." },
-  { q: "Lagu itu telah ___ dengan indah.", opt: ["Sing", "Sang", "Sung"], ans: "Sung", note: "Untuk kata 'telah' atau kalimat pasif, kita selalu memakai Verb 3 (V3), yaitu 'Sung'." },
-  { q: "Gambar ini ___ oleh Stella.", opt: ["Draw", "Drew", "Drawn"], ans: "Drawn", note: "Kalimat pasif 'digambar' menggunakan Verb 3, yaitu 'Drawn'." },
-  { q: "Aku bisa Throw bola. Kemarin aku ___ bola itu.", opt: ["Throw", "Threw", "Thrown"], ans: "Threw", note: "'Threw' adalah Verb 2, menceritakan kejadian melempar di masa lalu." },
-  { q: "Aku sering Fly layang-layang. Kemarin aku ___ layang-layang.", opt: ["Fly", "Flew", "Flown"], ans: "Flew", note: "'Flew' adalah Verb 2 dari Fly." },
-  { q: "Peti itu telah ___ ke sini.", opt: ["Bring", "Brought", "Bringing"], ans: "Brought", note: "Kalimat pasif menggunakan V3. Kebetulan V2 dan V3 dari Bring sama, yaitu 'Brought'." }
+  {q:"Hari ini aku Eat. Kemarin aku ___.",opt:["Eat","Ate","Eaten"],ans:"Ate",note:"Untuk kejadian yang sudah lewat (kemarin), kita menggunakan Verb 2 (V2), yaitu 'Ate'."},{q:"Aku selalu Drink susu. Tadi pagi aku ___ susu.",opt:["Drink","Drank","Drunk"],ans:"Drank",note:"'Drank' adalah Verb 2 dari Drink, digunakan untuk masa lalu."},{q:"Aku Sleep nyenyak. Semalam aku ___ nyenyak.",opt:["Sleep","Slept","Sleeping"],ans:"Slept",note:"Kejadian tadi malam (semalam) menggunakan Verb 2, yaitu 'Slept'."},{q:"Aku suka Run. Kemarin aku ___ sangat cepat.",opt:["Run","Ran","Running"],ans:"Ran",note:"'Ran' adalah bentuk masa lalu (Verb 2) dari Run."},{q:"Aku sudah ___ apel itu.",opt:["Eat","Ate","Eaten"],ans:"Eaten",note:"Setelah kata 'sudah' (have/has), kita menggunakan Kata Kerja bentuk ke-3 (V3), yaitu 'Eaten'."},{q:"Pakaian ini sudah ___ olehku.",opt:["Wear","Wore","Worn"],ans:"Worn",note:"Kalimat pasif (dikenai tindakan / 'di...') selalu menggunakan Kata Kerja bentuk ke-3 (V3), yaitu 'Worn'."},{q:"Setiap pagi aku Walk. Kemarin aku ___ ke sekolah.",opt:["Walk","Walked","Walking"],ans:"Walked",note:"'Walked' adalah bentuk lampau (Verb 2) dari Walk."},{q:"Lagu itu telah ___ dengan indah.",opt:["Sing","Sang","Sung"],ans:"Sung",note:"Untuk kata 'telah' atau kalimat pasif, kita selalu memakai Verb 3 (V3), yaitu 'Sung'."},{q:"Gambar ini ___ oleh Stella.",opt:["Draw","Drew","Drawn"],ans:"Drawn",note:"Kalimat pasif 'digambar' menggunakan Verb 3, yaitu 'Drawn'."},{q:"Aku bisa Throw bola. Kemarin aku ___ bola itu.",opt:["Throw","Threw","Thrown"],ans:"Threw",note:"'Threw' adalah Verb 2, menceritakan kejadian melempar di masa lalu."},{q:"Aku sering Fly layang-layang. Kemarin aku ___ layang-layang.",opt:["Fly","Flew","Flown"],ans:"Flew",note:"'Flew' adalah Verb 2 dari Fly."},{q:"Peti itu telah ___ ke sini.",opt:["Bring","Brought","Bringing"],ans:"Brought",note:"Kalimat pasif menggunakan V3. Kebetulan V2 dan V3 dari Bring sama, yaitu 'Brought'."},{q:"Aku memasak (Cook). Kemarin aku ___ nasi.",opt:["Cook","Cooked","Cooking"],ans:"Cooked",note:"V2 dari Cook adalah Cooked."},{q:"Aku membuka (Open). Tadi pagi aku ___ pintu.",opt:["Open","Opened","Opening"],ans:"Opened",note:"V2 dari Open adalah Opened."},{q:"Aku melihat (See). Semalam aku ___ bulan.",opt:["See","Saw","Seen"],ans:"Saw",note:"V2 dari See adalah Saw."},{q:"Film ini telah ___ (Watch).",opt:["Watch","Watched","Watching"],ans:"Watched",note:"V3 pasif dari Watch adalah Watched."},{q:"Buku ini sudah ___ (Read) olehku.",opt:["Read","Reading","Reads"],ans:"Read",note:"V1, V2, V3 dari Read tetap 'Read'."},{q:"Dia mendengar (Hear). Kemarin dia ___ suara itu.",opt:["Hear","Heard","Hears"],ans:"Heard",note:"V2 dari Hear adalah Heard."},{q:"Pohon itu telah ___ (Plant).",opt:["Plant","Planted","Plants"],ans:"Planted",note:"V3 (pasif) dari Plant adalah Planted."},{q:"Aku belajar (Study). Semalam aku ___.",opt:["Study","Studied","Studying"],ans:"Studied",note:"V2 dari Study adalah Studied."},{q:"Bermain (Play). Kemarin kami ___ bola.",opt:["Play","Played","Plays"],ans:"Played",note:"V2 dari Play adalah Played."},{q:"Air telah ___ (Drink) oleh anjing.",opt:["Drink","Drank","Drunk"],ans:"Drunk",note:"V3 (pasif) menggunakan 'Drunk'."},{q:"Mendengar (Hear). Kemarin aku ___ musik.",opt:["Hear","Heard","Hearing"],ans:"Heard",note:"V2 dari Hear adalah Heard."},{q:"Bernyanyi (Sing). Dia telah ___ lagu itu.",opt:["Sing","Sang","Sung"],ans:"Sung",note:"V3 dari Sing adalah Sung."},{q:"Mendorong (Push). Tadi pagi dia ___ meja.",opt:["Push","Pushed","Pushing"],ans:"Pushed",note:"V2 dari Push adalah Pushed."},{q:"Menarik (Pull). Kemarin aku ___ pintu.",opt:["Pull","Pulled","Pulling"],ans:"Pulled",note:"V2 dari Pull adalah Pulled."},{q:"Menggendong (Carry). Dia telah ___ tas itu.",opt:["Carry","Carried","Carrying"],ans:"Carried",note:"V3 dari Carry adalah Carried."},{q:"Membawa (Bring). Kemarin paman ___ hadiah.",opt:["Bring","Brought","Bringing"],ans:"Brought",note:"V2 dari Bring adalah Brought."},{q:"Menonton (Watch). Semalam kami ___ TV.",opt:["Watch","Watched","Watching"],ans:"Watched",note:"V2 dari Watch adalah Watched."},{q:"Mendengarkan (Listen). Dia telah ___.",opt:["Listen","Listened","Listening"],ans:"Listened",note:"V3 dari Listen adalah Listened."}
 ];
 
 const kamusTrivia = [
-  { q: "What does the crow drop into the pitcher?", opt: ["Apples", "Stones", "Leaves"], ans: "Stones", note: "Gagak menjatuhkan batu-batu (stones) ke dalam kendi agar airnya naik." },
-  { q: "Who sleeps under a tree?", opt: ["The Turtle", "The Rabbit", "The Crow"], ans: "The Rabbit", note: "Kelinci (rabbit) tidur di bawah pohon karena merasa sudah menang jauh." },
-  { q: "Who walks very slowly?", opt: ["The Turtle", "The Rabbit", "The Mouse Deer"], ans: "The Turtle", note: "Kura-kura (turtle) berjalan dengan sangat lambat (slowly)." },
-  { q: "What grows into a golden cucumber?", opt: ["Magic salt", "Magic seed", "Magic mud"], ans: "Magic seed", note: "Biji ajaib (magic seed) tumbuh menjadi mentimun emas yang besar." },
-  { q: "Who wants to eat Timun Mas?", opt: ["A scary giant", "A crocodile", "A tiger"], ans: "A scary giant", note: "Raksasa yang menakutkan (scary giant) ingin memakan Timun Mas." },
-  { q: "Who is very hungry in the forest?", opt: ["The Rabbit", "The Mouse Deer", "The Crow"], ans: "The Mouse Deer", note: "Kancil (mouse deer) sangat lapar (hungry) saat berjalan di hutan." },
-  { q: "What is the river full of?", opt: ["Crocodiles", "Fish", "Stones"], ans: "Crocodiles", note: "Sungai itu penuh dengan buaya-buaya (crocodiles) yang lapar." },
-  { q: "What does Timun Mas throw to make a sea?", opt: ["Magic mud", "Magic seed", "Magic salt"], ans: "Magic salt", note: "Garam ajaib (magic salt) yang dilempar Timun Mas berubah menjadi lautan luas." },
-  { q: "Who wins the race?", opt: ["The Rabbit", "The Turtle", "The Crow"], ans: "The Turtle", note: "Kura-kura (turtle) terus berjalan tanpa menyerah dan akhirnya menang!" },
-  { q: "What does the mouse deer count?", opt: ["Apples", "Stones", "Crocodiles"], ans: "Crocodiles", note: "Kancil menipu buaya-buaya (crocodiles) dengan berpura-pura menghitung mereka." },
-  { q: "What does Timun Mas throw to sink the giant?", opt: ["Magic mud", "Magic seed", "Magic salt"], ans: "Magic mud", note: "Lumpur ajaib (magic mud) membuat raksasa itu tenggelam ke dalam tanah." },
-  { q: "Why does the mouse deer cross the river?", opt: ["To drink water", "To eat apples", "To sleep"], ans: "To eat apples", note: "Kancil menyeberang sungai untuk memakan apel-apel merah (apples) yang lezat." }
+  {q:"What does the crow drop into the pitcher?",opt:["Apples","Stones","Leaves"],ans:"Stones",note:"Gagak menjatuhkan batu-batu (stones) ke dalam kendi agar airnya naik."},{q:"Who sleeps under a tree?",opt:["The Turtle","The Rabbit","The Crow"],ans:"The Rabbit",note:"Kelinci (rabbit) tidur di bawah pohon karena merasa sudah menang jauh."},{q:"Who walks very slowly?",opt:["The Turtle","The Rabbit","The Mouse Deer"],ans:"The Turtle",note:"Kura-kura (turtle) berjalan dengan sangat lambat (slowly)."},{q:"What grows into a golden cucumber?",opt:["Magic salt","Magic seed","Magic mud"],ans:"Magic seed",note:"Biji ajaib (magic seed) tumbuh menjadi mentimun emas yang besar."},{q:"Who wants to eat Timun Mas?",opt:["A scary giant","A crocodile","A tiger"],ans:"A scary giant",note:"Raksasa yang menakutkan (scary giant) ingin memakan Timun Mas."},{q:"Who is very hungry in the forest?",opt:["The Rabbit","The Mouse Deer","The Crow"],ans:"The Mouse Deer",note:"Kancil (mouse deer) sangat lapar (hungry) saat berjalan di hutan."},{q:"What is the river full of?",opt:["Crocodiles","Fish","Stones"],ans:"Crocodiles",note:"Sungai itu penuh dengan buaya-buaya (crocodiles) yang lapar."},{q:"What does Timun Mas throw to make a sea?",opt:["Magic mud","Magic seed","Magic salt"],ans:"Magic salt",note:"Garam ajaib (magic salt) yang dilempar Timun Mas berubah menjadi lautan luas."},{q:"Who wins the race?",opt:["The Rabbit","The Turtle","The Crow"],ans:"The Turtle",note:"Kura-kura (turtle) terus berjalan tanpa menyerah dan akhirnya menang!"},{q:"What does the mouse deer count?",opt:["Apples","Stones","Crocodiles"],ans:"Crocodiles",note:"Kancil menipu buaya-buaya (crocodiles) dengan berpura-pura menghitung mereka."},{q:"What does Timun Mas throw to sink the giant?",opt:["Magic mud","Magic seed","Magic salt"],ans:"Magic mud",note:"Lumpur ajaib (magic mud) membuat raksasa itu tenggelam ke dalam tanah."},{q:"Why does the mouse deer cross the river?",opt:["To drink water","To eat apples","To sleep"],ans:"To eat apples",note:"Kancil menyeberang sungai untuk memakan apel-apel merah (apples) yang lezat."},{q:"Who is very thirsty in the story?",opt:["The Crow","The Rabbit","The Tiger"],ans:"The Crow",note:"Gagak (the crow) sangat kehausan."},{q:"How is the turtle walking?",opt:["Very slowly","Very fast","Jumping"],ans:"Very slowly",note:"Berjalan sangat lambat (very slowly)."},{q:"What does the widow get from the giant?",opt:["A magic seed","A golden apple","Water"],ans:"A magic seed",note:"Mendapatkan biji ajaib (magic seed)."},{q:"What kind of fruit does the mouse deer want?",opt:["Red apples","Yellow bananas","Green mangos"],ans:"Red apples",note:"Ingin apel merah (red apples)."},{q:"Where does the mouse deer walk?",opt:["In the forest","At school","In the house"],ans:"In the forest",note:"Berjalan di hutan (in the forest)."},{q:"Who makes a long bridge?",opt:["The crocodiles","The rabbits","The crows"],ans:"The crocodiles",note:"Buaya-buaya membuat jembatan."},{q:"How does Timun Mas run?",opt:["Very fast","Very slowly","She does not run"],ans:"Very fast",note:"Berlari sangat cepat (very fast)."},{q:"What is inside the golden cucumber?",opt:["A baby girl","A magic seed","A magic salt"],ans:"A baby girl",note:"Terdapat seorang bayi perempuan."},{q:"Where does the crow see a little water?",opt:["In a pitcher","In the river","In the sea"],ans:"In a pitcher",note:"Melihat air di dalam kendi (pitcher)."},{q:"What color are the crocodiles?",opt:["Green","Red","Blue"],ans:"Green",note:"Buaya berwarna hijau (green)."},{q:"What does the crow want to drink?",opt:["Water","Milk","Tea"],ans:"Water",note:"Gagak ingin meminum air (water)."},{q:"Why does the rabbit sleep?",opt:["He is tired","He is far ahead","He is lazy"],ans:"He is far ahead",note:"Kelinci tidur karena merasa sudah jauh di depan (far ahead)."},{q:"Who gives the magic seed?",opt:["A scary giant","A kind fairy","A king"],ans:"A scary giant",note:"Biji ajaib diberikan oleh raksasa yang menakutkan (scary giant)."},{q:"What is inside the golden cucumber?",opt:["A baby girl","Gold","Magic salt"],ans:"A baby girl",note:"Di dalam mentimun emas ada bayi perempuan (baby girl)."},{q:"Who wants to eat Timun Mas?",opt:["The giant","The tiger","The crocodile"],ans:"The giant",note:"Raksasa (giant) ingin memakan Timun Mas."},{q:"Who has a bright idea?",opt:["The Mouse Deer","The Crocodiles","The King"],ans:"The Mouse Deer",note:"Kancil (mouse deer) punya ide cemerlang."},{q:"Who makes a bridge?",opt:["The crocodiles","The birds","The monkeys"],ans:"The crocodiles",note:"Buaya-buaya (crocodiles) membuat jembatan."},{q:"What color is the cucumber?",opt:["Golden","Green","Red"],ans:"Golden",note:"Mentimun itu berwarna emas (golden)."}
 ];
 
+// Fungsi bantu untuk mengacak urutan elemen di dalam array
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 export default function HalamanLatihan() {
@@ -81,6 +39,7 @@ export default function HalamanLatihan() {
   const [tgStatus, setTgStatus] = useState("idle");
   const [tgScore, setTgScore] = useState(0);
   const [tgQnIndex, setTgQnIndex] = useState(0);
+  const [tgQuestions, setTgQuestions] = useState([]);
   const [tgCurrentQ, setTgCurrentQ] = useState(null);
   const [tgOptions, setTgOptions] = useState([]);
   const [tgSelected, setTgSelected] = useState(null);
@@ -89,6 +48,7 @@ export default function HalamanLatihan() {
   const [listStatus, setListStatus] = useState("idle");
   const [listScore, setListScore] = useState(0);
   const [listQnIndex, setListQnIndex] = useState(0);
+  const [listQuestions, setListQuestions] = useState([]);
   const [listCurrentQ, setListCurrentQ] = useState(null);
   const [listOptions, setListOptions] = useState([]);
   const [listSelected, setListSelected] = useState(null);
@@ -125,7 +85,7 @@ export default function HalamanLatihan() {
   const [trivCurrentQ, setTrivCurrentQ] = useState(null);
   const [trivSelected, setTrivSelected] = useState(null);
 
-  // Auto-scroll & State Reset
+  // Auto-scroll & State Reset saat pindah menu
   useEffect(() => {
     if (scrollContainerRef.current) scrollContainerRef.current.scrollTo(0, 0);
     if (activeExercise !== "tebak_gambar") setTgStatus("idle");
@@ -167,11 +127,17 @@ export default function HalamanLatihan() {
 
   // === LOGIKA GAME 1: TEBAK GAMBAR ===
   const startTebakGambar = () => {
-    setTgScore(0); setTgQnIndex(0); setTgStatus("playing"); generateTgQuestion();
+    setTgScore(0); setTgQnIndex(0); setTgStatus("playing");
+    const selected = shuffleArray(kamusKosakata).slice(0, 10);
+    setTgQuestions(selected);
+    generateTgQuestion(selected, 0);
   };
-  const generateTgQuestion = () => {
-    const shuffled = shuffleArray(kamusKosakata);
-    setTgCurrentQ(shuffled[0]); setTgOptions(shuffleArray([shuffled[0], shuffled[1], shuffled[2]])); setTgSelected(null);
+  const generateTgQuestion = (questions, index) => {
+    const ans = questions[index];
+    const wrongs = shuffleArray(kamusKosakata).filter(i => i.en !== ans.en).slice(0, 2);
+    setTgCurrentQ(ans); 
+    setTgOptions(shuffleArray([ans, ...wrongs])); 
+    setTgSelected(null);
   };
   const handleTgGuess = (option) => {
     if (tgSelected) return; 
@@ -182,12 +148,18 @@ export default function HalamanLatihan() {
 
   // === LOGIKA GAME 2: DENGARKAN & PILIH ===
   const startListeningGame = () => {
-    setListScore(0); setListQnIndex(0); setListStatus("playing"); generateListQuestion();
+    setListScore(0); setListQnIndex(0); setListStatus("playing");
+    const selected = shuffleArray(kamusKosakata).slice(0, 10);
+    setListQuestions(selected);
+    generateListQuestion(selected, 0);
   };
-  const generateListQuestion = () => {
-    const shuffled = shuffleArray(kamusKosakata);
-    setListCurrentQ(shuffled[0]); setListOptions(shuffleArray([shuffled[0], shuffled[1], shuffled[2]])); setListSelected(null);
-    setTimeout(() => playAudio(shuffled[0].en), 500);
+  const generateListQuestion = (questions, index) => {
+    const ans = questions[index];
+    const wrongs = shuffleArray(kamusKosakata).filter(i => i.en !== ans.en).slice(0, 2);
+    setListCurrentQ(ans); 
+    setListOptions(shuffleArray([ans, ...wrongs])); 
+    setListSelected(null);
+    setTimeout(() => playAudio(ans.en), 500);
   };
   const handleListGuess = (option) => {
     if (listSelected) return; 
@@ -335,10 +307,10 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-                  {/* Tombol Lanjut */}
+                  {/* Tombol Lanjut (Muncul setelah memilih) */}
                   {tgSelected && (
                     <button 
-                      onClick={() => { (tgQnIndex + 1 >= 10) ? setTgStatus("finished") : (setTgQnIndex(p => p + 1), generateTgQuestion()); }} 
+                      onClick={() => { (tgQnIndex + 1 >= 10) ? setTgStatus("finished") : (setTgQnIndex(p => p + 1), generateTgQuestion(tgQuestions, tgQnIndex + 1)); }} 
                       className="w-full mt-8 py-4 rounded-2xl bg-blue-600 text-white font-black text-xl shadow-[0_6px_0_#1E3A8A] active:translate-y-1 transition-all"
                     >
                       {tgQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
@@ -348,7 +320,8 @@ export default function HalamanLatihan() {
               )}
               {tgStatus === "finished" && (
                 <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
-                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div><h2 className="text-4xl font-black text-amber-500 mb-2">SELESAI!</h2><p className="text-gray-500 font-bold mb-6">Skor akhir kamu adalah:</p>
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">SELESAI!</h2><p className="text-gray-500 font-bold mb-6">Skor akhir kamu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{tgScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startTebakGambar} className="bg-blue-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#1D4ED8] active:translate-y-1 transition-all mb-4 hover:bg-blue-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
@@ -387,14 +360,16 @@ export default function HalamanLatihan() {
                         else { bs = "bg-gray-50 border-2 border-gray-200 opacity-50"; ss = "shadow-none translate-y-1"; }
                       }
                       return (
-                        <button key={i} onClick={() => handleListGuess(option)} disabled={listSelected !== null} className={`w-full aspect-square rounded-[1.5rem] flex items-center justify-center ${bs} ${ss} ${scale} transition-all ${!listSelected ? 'active:translate-y-1' : ''}`}><span className="text-[50px] drop-shadow-sm">{option.icon}</span></button>
+                        <button key={i} onClick={() => handleListGuess(option)} disabled={listSelected !== null} className={`w-full aspect-square rounded-[1.5rem] flex items-center justify-center ${bs} ${ss} ${scale} transition-all ${!listSelected ? 'active:translate-y-1' : ''}`}>
+                          <span className="text-[50px] drop-shadow-sm">{option.icon}</span>
+                        </button>
                       );
                     })}
                   </div>
                   {/* Tombol Lanjut */}
                   {listSelected && (
                     <button 
-                      onClick={() => { (listQnIndex + 1 >= 10) ? setListStatus("finished") : (setListQnIndex(p => p + 1), generateListQuestion()); }} 
+                      onClick={() => { (listQnIndex + 1 >= 10) ? setListStatus("finished") : (setListQnIndex(p => p + 1), generateListQuestion(listQuestions, listQnIndex + 1)); }} 
                       className="w-full mt-8 py-4 rounded-2xl bg-purple-600 text-white font-black text-xl shadow-[0_6px_0_#581C87] active:translate-y-1 transition-all"
                     >
                       {listQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
@@ -404,7 +379,8 @@ export default function HalamanLatihan() {
               )}
               {listStatus === "finished" && (
                 <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
-                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div><h2 className="text-4xl font-black text-amber-500 mb-2">HEBAT!</h2><p className="text-gray-500 font-bold mb-6">Skor pendengaranmu adalah:</p>
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">HEBAT!</h2><p className="text-gray-500 font-bold mb-6">Skor pendengaranmu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{listScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startListeningGame} className="bg-purple-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#7E22CE] active:translate-y-1 transition-all mb-4 hover:bg-purple-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
@@ -429,8 +405,6 @@ export default function HalamanLatihan() {
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {gramQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {gramScore}</span>
                   </div>
-                  
-                  {/* Kotak Kalimat Rumpang */}
                   <div className="bg-pink-50 border-4 border-pink-200 rounded-[2rem] p-6 flex flex-col items-center justify-center mb-6 shadow-sm min-h-[160px] text-center">
                     <p className="text-3xl font-black text-gray-800 leading-snug">
                       {gramCurrentQ.q.split("___")[0]}
@@ -440,8 +414,6 @@ export default function HalamanLatihan() {
                       {gramCurrentQ.q.split("___")[1]}
                     </p>
                   </div>
-
-                  {/* Tombol Pilihan */}
                   <div className="grid grid-cols-2 gap-4">
                     {gramCurrentQ.opt.map((opt, i) => {
                       let bs = "bg-white border-2 border-gray-200 text-gray-700 hover:bg-pink-50", ss = "shadow-[0_6px_0_#E5E7EB]", tc = "text-gray-800";
@@ -455,21 +427,14 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-
-                  {/* Kotak Feedback (Note Grammar) */}
                   {gramSelected && (
                     <div className={`mt-6 p-4 rounded-xl border-2 ${gramSelected === gramCurrentQ.ans ? 'bg-green-100 border-green-300 text-green-800' : 'bg-rose-100 border-rose-300 text-rose-800'} transition-opacity`}>
                       <p className="text-sm font-black mb-1">{gramSelected === gramCurrentQ.ans ? '✅ TEPAT SEKALI!' : '❌ KURANG TEPAT!'}</p>
                       <p className="text-[13px] font-bold leading-relaxed">{gramCurrentQ.note}</p>
                     </div>
                   )}
-
-                  {/* Tombol Lanjut */}
                   {gramSelected && (
-                    <button 
-                      onClick={() => { (gramQnIndex + 1 >= 10) ? setGramStatus("finished") : (setGramQnIndex(p => p + 1), setGramCurrentQ(gramQuestions[gramQnIndex + 1]), setGramSelected(null)); }} 
-                      className="w-full mt-6 py-4 rounded-2xl bg-pink-600 text-white font-black text-xl shadow-[0_6px_0_#9D174D] active:translate-y-1 transition-all"
-                    >
+                    <button onClick={() => { (gramQnIndex + 1 >= 10) ? setGramStatus("finished") : (setGramQnIndex(p => p + 1), setGramCurrentQ(gramQuestions[gramQnIndex + 1]), setGramSelected(null)); }} className="w-full mt-6 py-4 rounded-2xl bg-pink-600 text-white font-black text-xl shadow-[0_6px_0_#9D174D] active:translate-y-1 transition-all">
                       {gramQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
                     </button>
                   )}
@@ -477,7 +442,8 @@ export default function HalamanLatihan() {
               )}
               {gramStatus === "finished" && (
                 <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
-                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div><h2 className="text-4xl font-black text-amber-500 mb-2">LUAR BIASA!</h2><p className="text-gray-500 font-bold mb-6">Skor Tata Bahasa kamu adalah:</p>
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">LUAR BIASA!</h2><p className="text-gray-500 font-bold mb-6">Skor Tata Bahasa kamu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{gramScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startGrammarGame} className="bg-pink-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#BE185D] active:translate-y-1 transition-all mb-4 hover:bg-pink-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
@@ -502,8 +468,6 @@ export default function HalamanLatihan() {
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {posQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {posScore}</span>
                   </div>
-
-                  {/* Icon Posisi */}
                   <div className="bg-emerald-50 border-4 border-emerald-200 rounded-3xl p-6 flex flex-col items-center justify-center mb-6 shadow-sm">
                     <span className="text-[80px] drop-shadow-md mb-4">{posCurrentQ.icon}</span>
                     <p className="text-2xl font-black text-gray-800 leading-snug text-center">
@@ -514,8 +478,6 @@ export default function HalamanLatihan() {
                       {posCurrentQ.q.split("___")[1]}
                     </p>
                   </div>
-
-                  {/* Tombol Pilihan */}
                   <div className="flex flex-col gap-3">
                     {posCurrentQ.opt.map((opt, i) => {
                       let bs = "bg-white border-2 border-gray-200 text-gray-700 hover:bg-emerald-50", ss = "shadow-[0_6px_0_#E5E7EB]", tc = "text-gray-800";
@@ -529,21 +491,14 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-
-                  {/* Kotak Feedback (Note Posisi) */}
                   {posSelected && (
                     <div className={`mt-5 p-4 rounded-xl border-2 ${posSelected === posCurrentQ.ans ? 'bg-green-100 border-green-300 text-green-800' : 'bg-rose-100 border-rose-300 text-rose-800'} transition-opacity`}>
                       <p className="text-sm font-black mb-1">{posSelected === posCurrentQ.ans ? '✅ TEPAT SEKALI!' : '❌ KURANG TEPAT!'}</p>
                       <p className="text-[13px] font-bold leading-relaxed">{posCurrentQ.note}</p>
                     </div>
                   )}
-
-                  {/* Tombol Lanjut */}
                   {posSelected && (
-                    <button 
-                      onClick={() => { (posQnIndex + 1 >= 10) ? setPosStatus("finished") : (setPosQnIndex(p => p + 1), setPosCurrentQ(posQuestions[posQnIndex + 1]), setPosSelected(null)); }} 
-                      className="w-full mt-6 py-4 rounded-2xl bg-emerald-600 text-white font-black text-xl shadow-[0_6px_0_#065F46] active:translate-y-1 transition-all"
-                    >
+                    <button onClick={() => { (posQnIndex + 1 >= 10) ? setPosStatus("finished") : (setPosQnIndex(p => p + 1), setPosCurrentQ(posQuestions[posQnIndex + 1]), setPosSelected(null)); }} className="w-full mt-6 py-4 rounded-2xl bg-emerald-600 text-white font-black text-xl shadow-[0_6px_0_#065F46] active:translate-y-1 transition-all">
                       {posQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
                     </button>
                   )}
@@ -551,7 +506,8 @@ export default function HalamanLatihan() {
               )}
               {posStatus === "finished" && (
                 <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
-                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div><h2 className="text-4xl font-black text-amber-500 mb-2">PINTAR!</h2><p className="text-gray-500 font-bold mb-6">Skor Posisi & Letak kamu adalah:</p>
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">PINTAR!</h2><p className="text-gray-500 font-bold mb-6">Skor Posisi & Letak kamu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{posScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startPosisiGame} className="bg-emerald-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#047857] active:translate-y-1 transition-all mb-4 hover:bg-emerald-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
@@ -576,8 +532,6 @@ export default function HalamanLatihan() {
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {vtQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {vtScore}</span>
                   </div>
-
-                  {/* Kotak Kalimat Rumpang */}
                   <div className="bg-amber-50 border-4 border-amber-200 rounded-[2rem] p-6 flex flex-col items-center justify-center mb-6 shadow-sm min-h-[160px] text-center">
                     <p className="text-2xl font-black text-gray-800 leading-snug">
                       {vtCurrentQ.q.split("___")[0]}
@@ -587,8 +541,6 @@ export default function HalamanLatihan() {
                       {vtCurrentQ.q.split("___")[1]}
                     </p>
                   </div>
-
-                  {/* Tombol Pilihan */}
                   <div className="flex flex-col gap-3">
                     {vtCurrentQ.opt.map((opt, i) => {
                       let bs = "bg-white border-2 border-gray-200 text-gray-700 hover:bg-amber-50", ss = "shadow-[0_6px_0_#E5E7EB]", tc = "text-gray-800";
@@ -602,21 +554,14 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-
-                  {/* Kotak Feedback (Note Verb) */}
                   {vtSelected && (
                     <div className={`mt-5 p-4 rounded-xl border-2 ${vtSelected === vtCurrentQ.ans ? 'bg-green-100 border-green-300 text-green-800' : 'bg-rose-100 border-rose-300 text-rose-800'} transition-opacity`}>
                       <p className="text-sm font-black mb-1">{vtSelected === vtCurrentQ.ans ? '✅ TEPAT SEKALI!' : '❌ KURANG TEPAT!'}</p>
                       <p className="text-[13px] font-bold leading-relaxed">{vtCurrentQ.note}</p>
                     </div>
                   )}
-
-                  {/* Tombol Lanjut */}
                   {vtSelected && (
-                    <button 
-                      onClick={() => { (vtQnIndex + 1 >= 10) ? setVtStatus("finished") : (setVtQnIndex(p => p + 1), setVtCurrentQ(vtQuestions[vtQnIndex + 1]), setVtSelected(null)); }} 
-                      className="w-full mt-6 py-4 rounded-2xl bg-amber-600 text-white font-black text-xl shadow-[0_6px_0_#92400E] active:translate-y-1 transition-all"
-                    >
+                    <button onClick={() => { (vtQnIndex + 1 >= 10) ? setVtStatus("finished") : (setVtQnIndex(p => p + 1), setVtCurrentQ(vtQuestions[vtQnIndex + 1]), setVtSelected(null)); }} className="w-full mt-6 py-4 rounded-2xl bg-amber-600 text-white font-black text-xl shadow-[0_6px_0_#92400E] active:translate-y-1 transition-all">
                       {vtQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
                     </button>
                   )}
@@ -624,7 +569,8 @@ export default function HalamanLatihan() {
               )}
               {vtStatus === "finished" && (
                 <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
-                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div><h2 className="text-4xl font-black text-amber-500 mb-2">HEBAT!</h2><p className="text-gray-500 font-bold mb-6">Skor Mesin Waktu kamu adalah:</p>
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">HEBAT!</h2><p className="text-gray-500 font-bold mb-6">Skor Mesin Waktu kamu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{vtScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startVerbTimeGame} className="bg-amber-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#B45309] active:translate-y-1 transition-all mb-4 hover:bg-amber-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
@@ -649,15 +595,9 @@ export default function HalamanLatihan() {
                   <div className="flex justify-between items-center mb-6 bg-gray-100 p-3 rounded-2xl">
                     <span className="font-black text-gray-500 text-lg">Soal {trivQnIndex + 1}/10</span><span className="font-black text-amber-500 text-xl bg-amber-100 px-4 py-1 rounded-xl">⭐ {trivScore}</span>
                   </div>
-
-                  {/* Kotak Pertanyaan */}
                   <div className="bg-sky-50 border-4 border-sky-200 rounded-[2rem] p-6 flex flex-col items-center justify-center mb-6 shadow-sm min-h-[160px] text-center">
-                    <p className="text-2xl font-black text-gray-800 leading-snug">
-                      {trivCurrentQ.q}
-                    </p>
+                    <p className="text-2xl font-black text-gray-800 leading-snug">{trivCurrentQ.q}</p>
                   </div>
-
-                  {/* Tombol Pilihan */}
                   <div className="flex flex-col gap-3">
                     {trivCurrentQ.opt.map((opt, i) => {
                       let bs = "bg-white border-2 border-gray-200 text-gray-700 hover:bg-sky-50", ss = "shadow-[0_6px_0_#E5E7EB]", tc = "text-gray-800";
@@ -671,21 +611,14 @@ export default function HalamanLatihan() {
                       );
                     })}
                   </div>
-
-                  {/* Kotak Feedback (Story Note) */}
                   {trivSelected && (
                     <div className={`mt-5 p-4 rounded-xl border-2 ${trivSelected === trivCurrentQ.ans ? 'bg-green-100 border-green-300 text-green-800' : 'bg-rose-100 border-rose-300 text-rose-800'} transition-opacity`}>
                       <p className="text-sm font-black mb-1">{trivSelected === trivCurrentQ.ans ? '✅ BENAR SEKALI!' : '❌ YAH, SALAH!'}</p>
                       <p className="text-[13px] font-bold leading-relaxed">{trivCurrentQ.note}</p>
                     </div>
                   )}
-
-                  {/* Tombol Lanjut */}
                   {trivSelected && (
-                    <button 
-                      onClick={() => { (trivQnIndex + 1 >= 10) ? setTrivStatus("finished") : (setTrivQnIndex(p => p + 1), setTrivCurrentQ(trivQuestions[trivQnIndex + 1]), setTrivSelected(null)); }} 
-                      className="w-full mt-6 py-4 rounded-2xl bg-sky-600 text-white font-black text-xl shadow-[0_6px_0_#0369A1] active:translate-y-1 transition-all"
-                    >
+                    <button onClick={() => { (trivQnIndex + 1 >= 10) ? setTrivStatus("finished") : (setTrivQnIndex(p => p + 1), setTrivCurrentQ(trivQuestions[trivQnIndex + 1]), setTrivSelected(null)); }} className="w-full mt-6 py-4 rounded-2xl bg-sky-600 text-white font-black text-xl shadow-[0_6px_0_#0369A1] active:translate-y-1 transition-all">
                       {trivQnIndex + 1 >= 10 ? "Lihat Hasil 🏆" : "Lanjut ➡️"}
                     </button>
                   )}
@@ -693,7 +626,8 @@ export default function HalamanLatihan() {
               )}
               {trivStatus === "finished" && (
                 <div className="flex flex-col items-center justify-center text-center mt-10 px-6">
-                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div><h2 className="text-4xl font-black text-amber-500 mb-2">SEMPURNA!</h2><p className="text-gray-500 font-bold mb-6">Skor Kuis Dongeng kamu adalah:</p>
+                  <div className="text-[100px] mb-2 drop-shadow-lg">🏆</div>
+                  <h2 className="text-4xl font-black text-amber-500 mb-2">SEMPURNA!</h2><p className="text-gray-500 font-bold mb-6">Skor Kuis Dongeng kamu adalah:</p>
                   <div className="bg-amber-100 border-4 border-amber-300 w-full py-8 rounded-[2rem] mb-10 flex flex-col items-center justify-center"><span className="text-7xl font-black text-amber-600 drop-shadow-sm">{trivScore}</span><span className="text-amber-500 font-bold mt-2">dari 100 poin</span></div>
                   <button onClick={startTriviaGame} className="bg-sky-500 text-white font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#0369A1] active:translate-y-1 transition-all mb-4 hover:bg-sky-600">🔄 MAIN LAGI</button>
                   <button onClick={handleBack} className="bg-gray-200 text-gray-600 font-black text-xl py-4 w-full rounded-2xl shadow-[0_6px_0_#9CA3AF] active:translate-y-1 transition-all hover:bg-gray-300">KEMBALI KE MENU</button>
