@@ -247,15 +247,29 @@ export default function HalamanLatihan() {
       )}
 
       <div ref={scrollContainerRef} className="relative z-10 h-full w-full overflow-y-auto">
-        <div className={`bg-white p-5 shadow-sm flex items-center justify-between sticky top-0 z-50 ${activeExercise !== 'utama' ? '' : 'rounded-b-3xl'}`}>
-          <div className="flex items-center gap-4">
+        
+        {/* =======================================================
+            HEADER DENGAN LAYOUT 3 KOLOM SEIMBANG (ANTI GEPENG)
+            ======================================================= */}
+        <div className={`bg-white px-4 py-3 shadow-sm flex items-center justify-between sticky top-0 z-50 gap-2 ${activeExercise !== 'utama' ? '' : 'rounded-b-3xl'}`}>
+          <div className="flex-1 flex justify-start">
             {activeExercise === "utama" ? (
-              <Link href="/" className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">⬅️ Kembali</Link>
+              <Link href="/" className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
+                ⬅️ Kembali
+              </Link>
             ) : (
-              <button onClick={handleBack} className="bg-orange-100 text-orange-600 p-2 rounded-xl font-bold active:scale-95 transition-transform">⬅️ Kembali</button>
+              <button onClick={handleBack} className="bg-orange-100 text-orange-600 px-3 py-2 border-2 border-orange-200 rounded-xl font-bold text-[13px] active:scale-95 transition-transform whitespace-nowrap shrink-0 flex items-center justify-center h-[40px]">
+                ⬅️ Kembali
+              </button>
             )}
-            <h1 className="text-xl font-black text-gray-800 line-clamp-1">{getHeaderTitle()}</h1>
           </div>
+          
+          <h1 className="text-[16px] sm:text-[17px] font-black text-gray-800 truncate text-center shrink-0 px-1">
+            {getHeaderTitle()}
+          </h1>
+          
+          {/* Kolom kosong untuk menyeimbangkan Header agar Title tetap berada tepat di tengah */}
+          <div className="flex-1 flex justify-end"></div>
         </div>
 
         <div className={activeExercise !== "utama" ? "pb-12" : "p-5 pb-12"}>
