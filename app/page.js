@@ -1,6 +1,34 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 export default function MobileHomePage() {
+  // --- MULAI PENAMBAHAN LOGIKA MUSIK ---
+  const [isPlaying, setIsPlaying] = useState(true);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.3; // Volume diatur 30% agar nyaman
+      audioRef.current.play().catch(err => {
+        console.log("Autoplay dicegah oleh browser, butuh interaksi:", err);
+        setIsPlaying(false);
+      });
+    }
+  }, []);
+
+  const toggleMusic = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+  // --- SELESAI PENAMBAHAN LOGIKA MUSIK ---
+
   return (
     <div 
       className="relative mx-auto w-full max-w-md h-[100dvh] overflow-hidden flex flex-col items-center pt-0"
@@ -10,6 +38,17 @@ export default function MobileHomePage() {
         backgroundPosition: 'center'
       }}
     >
+      {/* --- MULAI PENAMBAHAN ELEMEN MUSIK & TOMBOL --- */}
+      <audio ref={audioRef} src="/bgm.mp3" loop autoPlay />
+      <button 
+        onClick={toggleMusic}
+        className="absolute top-4 right-4 z-50 bg-white/90 p-2.5 rounded-full shadow-sm border-2 border-orange-200 active:scale-95 transition-transform flex items-center justify-center w-11 h-11"
+      >
+        <span className="text-xl leading-none">{isPlaying ? '🎵' : '🔇'}</span>
+      </button>
+      {/* --- SELESAI PENAMBAHAN ELEMEN MUSIK & TOMBOL --- */}
+
+
       {/* Maskot Foxy */}
       <div className="relative z-10 w-[200px] self-start ml-[10%] -mb-12 -mt-2">
         <img 
